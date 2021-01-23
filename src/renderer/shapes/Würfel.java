@@ -13,19 +13,25 @@ public class Würfel {
 		this.setPolygonColor();
 	}
 	public Würfel( Polygon3D... polygons) {
-		this.color = color.WHITE;
+		//this.color = Color.WHITE;
 		this.polygons = polygons;
-		//this.setPolygonColor();
+		
 	}
-
+  
 	public void render (Graphics g) {
 		for(Polygon3D poly : this.polygons) {
 			poly.render(g);
 		}
 	}
-
+	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {
+		for(Polygon3D p : this.polygons) {
+			p.rotate(UZ, xGrad, yGrad, zGrad);
+			
+		}
+		this.sortieren();
+	}
 	private void sortieren() {
-		;
+		Polygon3D.polygonSortieren(this.polygons);
 	}
 	private void setPolygonColor() {
 		for(Polygon3D poly : this.polygons) {

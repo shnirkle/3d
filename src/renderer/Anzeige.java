@@ -83,7 +83,6 @@ public class Anzeige extends Canvas implements Runnable {
 				render();
 				frames++;
 			}
-			
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
@@ -97,27 +96,29 @@ public class Anzeige extends Canvas implements Runnable {
 
 	private void init() {
 		int s = 100;
-		Punkt p1 = new Punkt(s / 2, -s / 2, -s / 2);
-		Punkt p2 = new Punkt(s / 2, s / 2, -s / 2);
+		Punkt p1 = new Punkt(s / 2, -s / 2, -s / 2); // 50 -50 -50
+		Punkt p2 = new Punkt(s / 2, s / 2, -s / 2); // 50 50 -50
 		Punkt p3 = new Punkt(s / 2, s / 2, s / 2);
 		Punkt p4 = new Punkt(s / 2, -s / 2, s / 2);
 		Punkt p5 = new Punkt(-s / 2, -s / 2, -s / 2);
 		Punkt p6 = new Punkt(-s / 2, s / 2, -s / 2);
 		Punkt p7 = new Punkt(-s / 2, s / 2, s / 2);
 		Punkt p8 = new Punkt(-s / 2, -s / 2, s / 2);
-		this.w = new Würfel(
+		
+	
 				
-				new Polygon3D(Color.RED, p1, p2, p3, p4),
-				new Polygon3D(Color.BLUE,p5, p6, p7, p8),
-				new Polygon3D(Color.WHITE,p1, p2, p5, p6),
-				new Polygon3D(Color.GREEN,p1, p5, p8, p4),
-				new Polygon3D(Color.YELLOW,p2, p6, p7, p3),
-				new Polygon3D(Color.ORANGE,p4, p3, p7, p8));
+				
+				
+		 
+		
+		this.w = new Würfel(new Polygon3D(Color.PINK, p5, p6, p7, p8), new Polygon3D(Color.WHITE, p1, p2, p3, p4),
+				new Polygon3D(Color.YELLOW, p1, p2, p6, p5), new Polygon3D(Color.ORANGE, p1, p5, p8, p4),
+				new Polygon3D(Color.CYAN, p2, p6, p7, p3), new Polygon3D(Color.GREEN, p4, p3, p7, p8));
 
 	}
 
 	private void update() {
-
+    this.w.rotate(true, 1, 0, 0);
 	}
 
 	private void render() {

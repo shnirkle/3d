@@ -80,9 +80,10 @@ public class Anzeige extends Canvas implements Runnable {
 
 				update();
 				delta--;
+				render();
+				frames++;
 			}
-			render();
-			frames++;
+			
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
@@ -90,6 +91,7 @@ public class Anzeige extends Canvas implements Runnable {
 				frames = 0;
 			}
 		}
+		stop();
 
 	}
 
@@ -115,12 +117,7 @@ public class Anzeige extends Canvas implements Runnable {
 	}
 
 	private void update() {
-//		try {
-//			Thread.sleep(16);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 	}
 
 	private void render() {

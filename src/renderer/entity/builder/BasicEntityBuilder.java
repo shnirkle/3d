@@ -6,8 +6,11 @@ import java.util.List;
 
 import renderer.entity.Entity;
 import renderer.entity.iEntity;
+import renderer.point.MyPoint;
 import renderer.punkt.Punkt;
+import renderer.shapes.MyPolygon;
 import renderer.shapes.Polygon3D;
+import renderer.shapes.Tetrahedron;
 import renderer.shapes.Würfel;
 
 public class BasicEntityBuilder {
@@ -61,4 +64,58 @@ public class BasicEntityBuilder {
 		
 		return new Entity(ws);
 	}
+	
+public static iEntity createSphere(Color c, Punkt m, double r)  {
+		
+	Punkt[] punkte = new Punkt[200];
+	for (int i = 0; i < 200; i++) {
+		punkte[i] = new Punkt(0, 0, 0);
+	}
+	int count = 0;
+	Punkt punkt = new Punkt(0,0,0);
+	double theta;
+	double phi;
+	double dt = (2*Math.PI)/10;
+	double dp = Math.PI/10;
+	Polygon3D[] polys = new Polygon3D[5000];
+	for (int i = 0; i < 5000; i++) {
+		polys[i] = new Polygon3D(new Punkt(0, 0, 0), new Punkt(0, 0, 0), new Punkt(0, 0, 0));
+	}
+	//Punktmenge der Sphäre berechnen (10 Breitengrade, 10 Längengrade)
+			for(int pi = 0; pi <= 10; pi++) {
+				phi = pi * dp;
+				for(int ti = 0; ti <= 10; ti++) {
+					theta = ti * dt;
+					punkt.x = (r * Math.sin(theta) * Math.sin(phi)) + m.x;
+					punkt.y = r * Math.cos(phi) + m.y;
+					punkt.z = r * Math.cos(theta) * Math.sin(phi) + m.z;
+					punkte[count].x = punkt.x;
+					punkte[count].y = punkt.y;
+					punkte[count].z = punkt.z;
+					count++;
+				}
+			}
+			count = 0;
+	//Dreiecke aus der Punktmenge machen
+			for(int pi = 0; pi <= 10; pi++) {
+				for(int ti = 0; ti < 10; ti++) {
+					int x0 = ti;
+					int x1 = ti+1;
+					int y0 = pi * 11;
+					int y1 = (pi + 1) * 11;
+					polys[count] = new Polygon3D(Color.BLUE, punkte[x0+y0], punkte[x0+y1], punkte[x1+y0]);
+					polys[count+1] = new Polygon3D(Color.RED, punkte[x1+y0], punkte[x0+y1], punkte[x1+y1]);
+					count += 2;
+				}
+			}
+	//aus Dreiecken letztendliche Kugel bauen
+			Würfel sphere = new Würfel(c, polys);
+				
+		
+		List<Würfel> ws = new ArrayList<Würfel>();
+		ws.add(sphere);
+		
+		return new Entity(ws);
+	}
+	
 }

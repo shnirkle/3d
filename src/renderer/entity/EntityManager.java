@@ -1,10 +1,12 @@
 package renderer.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
 import renderer.entity.builder.BasicEntityBuilder;
+import renderer.punkt.Punkt;
 
 public class EntityManager {
 	private List<iEntity> entities;
@@ -15,8 +17,8 @@ public class EntityManager {
 
 	public void init() {
 //		this.entities.add(BasicEntityBuilder.createWürfel(50, 0, 0, 0));
-	this.entities.add(BasicEntityBuilder.createAsteroid(100, 0, 0, 0, 0.8));
-	this.rotate(true, 0, 0, 0);
+	this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(0,0,0), 100));
+//	this.rotate(true, 0, 0, 0);
 	}
 
 	

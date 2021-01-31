@@ -7,6 +7,25 @@ import renderer.Anzeige;
 public class PunktTransform {
 	// 900 600
 	private static double scale = 1;
+	private static final double ZoomFaktor = 1.2;
+	
+	public static void reinzoomen() {
+		scale *= ZoomFaktor;
+		if (scale >= 5) {
+			rauszoomen();
+		}
+	}
+	
+	public static void rauszoomen() {
+		scale /= ZoomFaktor;
+		if (scale <= 0.2) {
+			reinzoomen();
+		}
+	}
+	
+	public static void standardzoom() {
+		scale = 1;
+	}
 
 	public static Point transformPunkt(Punkt punkt3D) {
 

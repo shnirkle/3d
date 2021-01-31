@@ -16,19 +16,19 @@ public class EntityManager {
 	public void init() {
 //		this.entities.add(BasicEntityBuilder.createWürfel(50, 0, 0, 0));
 	this.entities.add(BasicEntityBuilder.createAsteroid(100, 0, 0, 0, 0.8));
-	this.rotate(true, 0, 90, 0);
+	this.rotate(true, 0, 0, 0);
 	}
 
 	
 	public void update() {
-		this.rotate(true, 0, 0, 1);	
+		this.rotate(true, 0, 0, 0);	
 	}
 	public void render(Graphics g) {
 		for(iEntity entity : this.entities) {
 			entity.render(g);
 		}
 	}
-	private void rotate(boolean dir, double xGrad,double yGrad, double zGrad) {
+	public void rotate(boolean dir, double xGrad,double yGrad, double zGrad) {
 		for(iEntity entity : this.entities) {
 			entity.rotate(dir, xGrad, yGrad, zGrad);
 		}

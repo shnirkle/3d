@@ -56,6 +56,8 @@ public class Polygon3D {
 //		System.out.println(poly.xpoints[0] + "  |  " + poly.ypoints[0]);
 		g.setColor(this.color);
 		g.fillPolygon(poly);
+		g.setColor(Color.BLACK);
+		g.drawPolygon(poly);
 		// g.drawPolygon(poly);
 	}
 

@@ -6,11 +6,11 @@ import java.util.List;
 
 import renderer.entity.Entity;
 import renderer.entity.iEntity;
-import renderer.point.MyPoint;
+
 import renderer.punkt.Punkt;
-import renderer.shapes.MyPolygon;
+
 import renderer.shapes.Polygon3D;
-import renderer.shapes.Tetrahedron;
+
 import renderer.shapes.Würfel;
 
 public class BasicEntityBuilder {
@@ -66,7 +66,7 @@ public class BasicEntityBuilder {
 	}
 	
 public static iEntity createSphere(Color c, Punkt m, double r)  {
-		
+
 	Punkt[] punkte = new Punkt[200];
 	for (int i = 0; i < 200; i++) {
 		punkte[i] = new Punkt(0, 0, 0);
@@ -82,7 +82,8 @@ public static iEntity createSphere(Color c, Punkt m, double r)  {
 		polys[i] = new Polygon3D(new Punkt(0, 0, 0), new Punkt(0, 0, 0), new Punkt(0, 0, 0));
 	}
 	//Punktmenge der Sphäre berechnen (10 Breitengrade, 10 Längengrade)
-			for(int pi = 0; pi <= 10; pi++) {
+			
+	for(int pi = 0; pi <= 10; pi++) {
 				phi = pi * dp;
 				for(int ti = 0; ti <= 10; ti++) {
 					theta = ti * dt;

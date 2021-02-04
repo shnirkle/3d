@@ -23,6 +23,13 @@ public class Würfel {
 			poly.render(g);
 		}
 	}
+	
+	public void aendern(double x, double y, double z) {
+		for(Polygon3D p : this.polygons) {
+			p.aendern(x, y, z);
+		}
+	}
+	
 	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {
 		for(Polygon3D p : this.polygons) {
 			p.rotate(UZ, xGrad, yGrad, zGrad);

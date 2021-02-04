@@ -60,6 +60,14 @@ public class Polygon3D {
 		g.drawPolygon(poly);
 		// g.drawPolygon(poly);
 	}
+	
+	public void aendern(double x, double y, double z) {
+		for (Punkt p : punkte) {
+			p.xAb += x;
+			p.yAb += y;
+			p.zAb += z;
+		}
+	}
 
 	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {
 		for (Punkt p : punkte) {

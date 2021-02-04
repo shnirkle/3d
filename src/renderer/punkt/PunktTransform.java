@@ -29,9 +29,9 @@ public class PunktTransform {
 
 	public static Point transformPunkt(Punkt punkt3D) {
 
-		double x3D = punkt3D.y * scale;
-		double y3D = punkt3D.z * scale;
-		double depth = punkt3D.x * scale;
+		double x3D = punkt3D.getAngepasstestY() * scale;
+		double y3D = punkt3D.getAngepasstestZ() * scale;
+		double depth = punkt3D.getAngepasstestX() * scale;
 		double[] newVal = scale(x3D, y3D, depth);
 		int x2D = (int) (Anzeige.WIDTH / 2 + newVal[0]);
 		int y2D = (int) (Anzeige.HEIGHT / 2 - newVal[1]);

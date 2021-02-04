@@ -20,6 +20,13 @@ public class Entity implements iEntity{
 		}
 		
 	}
+	
+	@Override
+	public void aendern(double x, double y, double z) {
+		for( Würfel w : this.ws) {
+			w.aendern(x, y, z);
+		}
+	}
 
 	@Override
 	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {

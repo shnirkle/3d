@@ -13,8 +13,10 @@ import renderer.punkt.Punkt;
 import renderer.punkt.PunktTransform;
 import renderer.shapes.Polygon3D;
 import renderer.shapes.Würfel;
+import renderer.steuerung.Eingabe;
 import renderer.steuerung.KlickTyp;
 import renderer.steuerung.Maus;
+import renderer.steuerung.Tastatur;
 
 public class Anzeige extends Canvas implements Runnable {
 
@@ -30,7 +32,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 	private EntityManager entityManager;
 	
-	private Maus maus;
+	private Eingabe eingabe;
 
 	public static void main(String[] args) {
 		Anzeige display = new Anzeige();
@@ -50,11 +52,13 @@ public class Anzeige extends Canvas implements Runnable {
 		this.entityManager = new EntityManager();
 		Dimension size = new Dimension(WIDTH, HEIGHT);
 		this.setPreferredSize(size);
+
+		this.eingabe = new Eingabe();
 		
-		this.maus = new Maus();
-		this.addMouseListener(this.maus);
-		this.addMouseMotionListener(this.maus);
-		this.addMouseWheelListener(this.maus);
+		this.addMouseListener(this.eingabe.maus);
+		this.addMouseMotionListener(this.eingabe.maus);
+		this.addMouseWheelListener(this.eingabe.maus);
+		this.frame.addKeyListener(this.eingabe.tastatur);
 	}
 
 	public synchronized void start() {
@@ -82,7 +86,7 @@ public class Anzeige extends Canvas implements Runnable {
 		double delta = 0;
 		int frames = 0;
 
-		this.entityManager.init();
+		this.entityManager.init(this.eingabe);
 
 		while (running) {
 			long now = System.nanoTime();
@@ -106,47 +110,13 @@ public class Anzeige extends Canvas implements Runnable {
 
 	}
 
-	int startX, startY;
-	double ges = 2.5; //ges steht für Geschwindigkeit
-	
 	private void update() {
+		
 		this.entityManager.update();
+		this.frame.requestFocus();
 		
-	//Mauskontrolle
-		
-		//System.out.println(this.maus.getX() + "," + this.maus.getY()); //Mauskoordinaten anzeigen
-		//System.out.println(this.maus.getButton()); //Maustaste anzeigen
-			int x = this.maus.getX();
-			int y = this.maus.getY();
-			if (this.maus.getButton() == KlickTyp.Linksklick) { // Höhe - Breite - Rotierung
-				int xDif = x - startX;
-				int yDif = y - startY;
-				
-				this.entityManager.rotate(true, 0, -yDif/ges, -xDif/ges);
-			}
-			else if (this.maus.getButton() == KlickTyp.Rechtsklick) { //Tiefe - Rotierung
-				int xDif = x - startX;
-			
-				this.entityManager.rotate(true, -xDif/ges, 0, 0);
-			}
-			
-			else if (this.maus.getButton() == KlickTyp.Mittelklick) { //Zoom zurücksetzen
-
-				PunktTransform.standardzoom();
-			}
-			
-			if (this.maus.scrollUp()) {
-				PunktTransform.reinzoomen();
-			} else if (this.maus.scrollDown()) {
-				PunktTransform.rauszoomen();
-			}
-			
-			this.maus.resetScroll();
-			
-			startX = x;
-			startY = y;
 	}
-
+	
 	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -163,5 +133,5 @@ public class Anzeige extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-
+	
 }

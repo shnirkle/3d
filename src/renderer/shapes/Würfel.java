@@ -38,7 +38,7 @@ public class Würfel {
 		this.sortieren();
 	}
 	private void sortieren() {
-		Polygon3D.polygonSortieren(this.polygons);
+//		Polygon3D.polygonSortieren(this.polygons);
 	}
 	private void setPolygonColor() {
 		for(Polygon3D poly : this.polygons) {

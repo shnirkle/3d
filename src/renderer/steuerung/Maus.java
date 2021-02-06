@@ -58,14 +58,14 @@ public class Maus implements MouseListener, MouseMotionListener, MouseWheelListe
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		this.mausX = arg0.getX();
-		this.mausY = arg0.getY();
+//		this.mausX = arg0.getX();
+//		this.mausY = arg0.getY();
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		this.mausX = arg0.getX();
-		this.mausY = arg0.getY();
+//		this.mausX = arg0.getX();
+//		this.mausY = arg0.getY();
 	}
 
 	@Override
@@ -88,12 +88,12 @@ public class Maus implements MouseListener, MouseMotionListener, MouseWheelListe
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		this.mausT = arg0.getButton();
+//		this.mausT = arg0.getButton();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		this.mausT = -1;
+//		this.mausT = -1;
 		
 	}
 

@@ -26,7 +26,7 @@ public class Anzeige extends Canvas implements Runnable {
 	private JFrame frame;
 	private static String titel = "Sterne";
 	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 800;
 
 	private static boolean running = false;
 
@@ -92,8 +92,7 @@ public class Anzeige extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while (delta >= 1) { // Code stammt nicht von mir es ist um Fehler zu verhindern
-
+			while (delta >= 1) {  
 				update();
 				delta--;
 				render();
@@ -113,7 +112,7 @@ public class Anzeige extends Canvas implements Runnable {
 	private void update() {
 		
 		this.entityManager.update();
-		this.frame.requestFocus();
+//		this.frame.requestFocus();
 		
 	}
 	

@@ -1,79 +1,46 @@
 package renderer.punkt;
 
 import java.awt.Point;
+import java.awt.Polygon;
 
 import renderer.Anzeige;
 
 public class PunktTransform {
-	// 900 600
-	private static double scale = 1;
-	private static final double ZoomFaktor = 1.2;
-	
-	public static void reinzoomen() {
-		scale *= ZoomFaktor;
-		if (scale >= 5) {
-			rauszoomen();
-		}
-	}
-	
-	public static void rauszoomen() {
-		scale /= ZoomFaktor;
-		if (scale <= 0.2) {
-			reinzoomen();
-		}
-	}
-	
-	public static void standardzoom() {
-		scale = 1;
+
+
+	public static Polygon transformPunkt(Punkt... punkte) {
+
+		return null;
 	}
 
-	public static Point transformPunkt(Punkt punkt3D) {
-
-		double x3D = punkt3D.getAngepasstestY() * scale;
-		double y3D = punkt3D.getAngepasstestZ() * scale;
-		double depth = punkt3D.getAngepasstestX() * scale;
-		double[] newVal = scale(x3D, y3D, depth);
-		int x2D = (int) (Anzeige.WIDTH / 2 + newVal[0]);
-		int y2D = (int) (Anzeige.HEIGHT / 2 - newVal[1]);
-
-		Point punkt2D = new Point(x2D, y2D);
-		return punkt2D;
-	}
-
-	private static double[] scale(double x3D, double y3D, double depth) {
-		double dist = Math.sqrt(x3D * x3D + y3D * y3D); // Math.pow(x3D, x3D) + Math.pow(y3D, y3D)); + Math.pow(depth,
-														// depth));
-		double theta = Math.atan2(y3D, x3D);
-		double depth2 = 15 - depth;
-		double localScale = Math.abs(1000 / (depth2 + 1000));
-		dist *= localScale;
-		double[] newVal = new double[2];
-		newVal[0] = dist * Math.cos(theta);
-		newVal[1] = dist * Math.sin(theta);
-		return newVal;
-
-	}
-	
 	public static void rotateAxisX(Punkt p, boolean UZ, double grad) {
-		double radius = Math.sqrt(p.y*p.y + p.z *p.z);
-		double theta = Math.atan2(p.z, p.y);
-		theta += 2*Math.PI/360*grad*(UZ?-1:1);
-		p.y = radius * Math.cos(theta);
-		p.z = radius * Math.sin(theta);
+
 	}
+
 	public static void rotateAxisY(Punkt p, boolean UZ, double grad) {
-		double radius = Math.sqrt(p.x*p.x + p.z *p.z);
-		double theta = Math.atan2(p.x, p.z);
-		theta += 2*Math.PI/360*grad*(UZ?-1:1);
-		p.z = radius * Math.cos(theta);
-		p.x = radius * Math.sin(theta);
+
 	}
+
 	public static void rotateAxisZ(Punkt p, boolean UZ, double grad) {
-		double radius = Math.sqrt(p.y*p.y + p.x *p.x);
-		double theta = Math.atan2(p.y, p.x);
-		theta += 2*Math.PI/360*grad*(UZ?-1:1);
-		p.y = radius * Math.sin(theta);
-		p.x = radius * Math.cos(theta);
+		
+	}
+
+	public static Punkt multMat(Punkt i, Matritze4 m) {
+		float x = (float) (i.x * m.projMat[0][0] + i.y * m.projMat[1][0] + i.z * m.projMat[2][0] + m.projMat[3][0]);
+		float y = (float) (i.x * m.projMat[0][1] + i.y * m.projMat[1][1] + i.z * m.projMat[2][1] + m.projMat[3][1]);
+		float z = (float) (i.x * m.projMat[0][2] + i.y * m.projMat[1][2] + i.z * m.projMat[2][2] + m.projMat[3][2]);
+		float w = (float) (i.x * m.projMat[0][3] + i.y * m.projMat[1][3] + i.z * m.projMat[2][3] + m.projMat[3][3]);
+		if (w != 0) {
+			x /= w;
+			y /= w;
+			z /= w;
+		}
+		
+		float[] a = new float[3];
+		a[0] = x;
+		a[1] = y;
+		a[2] = z;
+		return new Punkt(a[0], a[1], a[2]);
 	}
 
 }

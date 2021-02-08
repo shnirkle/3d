@@ -26,7 +26,8 @@ public class EntityManager {
 	public void update() {
 		Theta++;
 		float ThetaB = Theta * 0.90f;
-		this.rotate(true,Theta,0,ThetaB * 0.4);
+		this.rotate(true,Theta,0,ThetaB * 0.4f);
+//		this.entities.get(0).aendern(0, 0, Math.sin(Math.toRadians(Theta)) * 8 - 11);
 	
 
 	}

@@ -16,17 +16,20 @@ import renderer.punkt.PunktTransform;
 import renderer.punkt.Vektor;
 
 public class Polygon3D {
-
+	private Vektor licht = new Vektor(0, -1, 0);
 	private Color color;
 	private Punkt[] punkte, versPunkte, prPunkte, rotPunkteX, rotPunkteXY, rotPunkteXYZ;
 	private Punkt cam;
 	private float xRot, yRot, zRot;
-	
+
 	Matritze4 m = new Matritze4();
 	Matritze4 rotX = new Matritze4();
 	Matritze4 rotY = new Matritze4();
 	Matritze4 rotZ = new Matritze4();
-
+	private float xOff;
+	private float yOff;
+	private float zOff = 3;
+	
 	public Polygon3D(Color color, Punkt... punkte) { // Coole Notation die es erlaubt beliebig groﬂe arrays als eingabe
 														// zu haben
 		this.color = color;
@@ -98,9 +101,15 @@ public class Polygon3D {
 
 
 		versPunkte = rotPunkteXYZ;
-		versPunkte[0].z += 3.0f;
-		versPunkte[1].z += 3.0f;
-		versPunkte[2].z += 3.0f;
+		versPunkte[0].z += zOff;
+		versPunkte[1].z += zOff;
+		versPunkte[2].z += zOff;
+		versPunkte[0].x += xOff;
+		versPunkte[1].x += xOff;
+		versPunkte[2].x += xOff;
+		versPunkte[0].y += yOff;
+		versPunkte[1].y += yOff;
+		versPunkte[2].y += yOff;
 
 		Vektor v_0_1 = new Vektor(0, 0, 0);
 		v_0_1.setX(versPunkte[1].x - versPunkte[0].x);
@@ -113,13 +122,25 @@ public class Polygon3D {
 
 		Vektor normale = Vektor.kreuzprodukt(v_0_1, v_0_2);
 
-		System.out.println(normale.length + " / " + normale.x + " / " + normale.y + " / " + normale.z + " / "
-				+ normale.normX + " / " + normale.normY + " / " + normale.normZ);
+//		System.out.println(normale.length + " / " + normale.x + " / " + normale.y + " / " + normale.z + " / "
+//				+ normale.normX + " / " + normale.normY + " / " + normale.normZ);
 
 //		if (Math.round(normale.normZ) <= 0) {
 		if(normale.normX * (versPunkte[0].x - this.cam.x)+
 		   normale.normY * (versPunkte[0].y - this.cam.y)+
 		   normale.normZ * (versPunkte[0].z - this.cam.z) < 0.0f) {
+			// Schattierung
+			float lae =  (float) (normale.normX * licht.normX + normale.normY * licht.normY + normale.normZ * licht.normZ);
+			
+			lae = Math.abs(lae);
+			if(lae < 0) lae =0;
+			if(lae >= 1) lae = 1;
+			System.out.println(lae);
+			Color shade = new Color(lae, lae, lae);
+			
+			
+			
+			// Projektion
 			prPunkte[0] = PunktTransform.multMat(versPunkte[0], m);
 			prPunkte[1] = PunktTransform.multMat(versPunkte[1], m);
 			prPunkte[2] = PunktTransform.multMat(versPunkte[2], m);
@@ -137,20 +158,21 @@ public class Polygon3D {
 			prPunkte[1].y *= 0.5f * Anzeige.HEIGHT;
 			prPunkte[2].x *= 0.5f * Anzeige.WIDTH;
 			prPunkte[2].y *= 0.5f * Anzeige.HEIGHT;
-
+			// Fl‰che Zeichnen
 			Polygon dreieck = new Polygon();
 			dreieck.addPoint((int) prPunkte[0].x, (int) prPunkte[0].y);
 			dreieck.addPoint((int) prPunkte[1].x, (int) prPunkte[1].y);
 			dreieck.addPoint((int) prPunkte[2].x, (int) prPunkte[2].y);
-			g.setColor(Color.WHITE);
-			g.drawPolygon(dreieck);
+			g.setColor(shade);
+//			g.setColor(Color.magenta);
+			g.fillPolygon(dreieck);
 
 		}
 
 	}
 
 	public void aendern(double x, double y, double z) {
-
+		zOff = (float) z;
 	}
 
 	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {

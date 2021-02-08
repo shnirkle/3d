@@ -12,7 +12,7 @@ import renderer.entity.EntityManager;
 import renderer.punkt.Punkt;
 import renderer.punkt.PunktTransform;
 import renderer.shapes.Polygon3D;
-import renderer.shapes.Würfel;
+
 import renderer.steuerung.Eingabe;
 import renderer.steuerung.KlickTyp;
 import renderer.steuerung.Maus;
@@ -25,14 +25,14 @@ public class Anzeige extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private static String titel = "Sterne";
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 1000;
 
 	private static boolean running = false;
 
 	private EntityManager entityManager;
 	
-	private Eingabe eingabe;
+	private Eingabe eingabe; 
 
 	public static void main(String[] args) {
 		Anzeige display = new Anzeige();

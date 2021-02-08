@@ -3,16 +3,16 @@ package renderer.shapes;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Würfel {
+public class Objekt {
 	private Polygon3D[] polygons;
 	private Color color;
 	
-	public Würfel(Color color, Polygon3D... polygons) {
+	public Objekt(Color color, Polygon3D... polygons) {
 		this.color = color;
 		this.polygons = polygons;
 		this.setPolygonColor();
 	}
-	public Würfel( Polygon3D... polygons) {
+	public Objekt( Polygon3D... polygons) {
 		//this.color = Color.WHITE;
 		this.polygons = polygons;
 		

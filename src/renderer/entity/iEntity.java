@@ -9,7 +9,7 @@ public interface iEntity {
 		
 		void aendern(double x, double y, double z);
 		
-		void rotate(boolean UZ, double xGrad, double yGrad, double zGrad);
+		void rotate( double xGrad, double yGrad, double zGrad);
 
 
 

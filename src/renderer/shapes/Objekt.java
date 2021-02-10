@@ -30,9 +30,9 @@ public class Objekt {
 		}
 	}
 	
-	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {
+	public void rotate(double xGrad, double yGrad, double zGrad) {
 		for(Polygon3D p : this.polygons) {
-			p.rotate(UZ, xGrad, yGrad, zGrad);
+			p.rotate(xGrad, yGrad, zGrad);
 			
 		}
 		this.sortieren();
@@ -42,7 +42,7 @@ public class Objekt {
 	}
 	private void setPolygonColor() {
 		for(Polygon3D poly : this.polygons) {
-			poly.setColor(color);
+			
 		}
 	}
 } 

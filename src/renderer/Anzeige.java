@@ -4,19 +4,14 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
 import renderer.entity.EntityManager;
-import renderer.punkt.Punkt;
-import renderer.punkt.PunktTransform;
-import renderer.shapes.Polygon3D;
-
+import renderer.punkt.Matrix;
 import renderer.steuerung.Eingabe;
-import renderer.steuerung.KlickTyp;
-import renderer.steuerung.Maus;
-import renderer.steuerung.Tastatur;
 
 public class Anzeige extends Canvas implements Runnable {
 
@@ -25,28 +20,33 @@ public class Anzeige extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private static String titel = "Sterne";
-	public static final int WIDTH = 1000;
-	public static final int HEIGHT = 1000;
+	public static int WIDTH = 1920;
+	public static int HEIGHT = 1080;
 
 	private static boolean running = false;
 
-	private EntityManager entityManager;
-	
-	private Eingabe eingabe; 
+	public EntityManager entityManager;
+
+	private Eingabe eingabe;
 
 	public static void main(String[] args) {
 		Anzeige display = new Anzeige();
 		display.frame.setTitle(titel);
 		display.frame.add(display);
 		display.frame.pack();
+		display.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int scrW = (int) screenSize.getWidth();
+		int scrH = (int) screenSize.getHeight();
+		Anzeige.WIDTH = scrW;
+		Anzeige.HEIGHT = scrH;
 		display.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		display.frame.setResizable(false);
+		display. frame.setResizable(false);
 		display.frame.setVisible(true);
 		display.start();
 
 	}
-	
-	
+
 	public Anzeige() {
 		this.frame = new JFrame();
 		this.entityManager = new EntityManager();
@@ -54,15 +54,24 @@ public class Anzeige extends Canvas implements Runnable {
 		this.setPreferredSize(size);
 
 		this.eingabe = new Eingabe();
-		
 		this.addMouseListener(this.eingabe.maus);
 		this.addMouseMotionListener(this.eingabe.maus);
 		this.addMouseWheelListener(this.eingabe.maus);
 		this.frame.addKeyListener(this.eingabe.tastatur);
+		
+
+	
+		
+		
+	
 	}
 
 	public synchronized void start() {
 		running = true;
+		float near = 0.1f;
+		float far = 10000f;
+		float fov = 110;
+		Matrix.initialisiereProjMatrix((float) Anzeige.WIDTH, (float) Anzeige.HEIGHT, near, far, fov);
 		thread = new Thread(this, "Anzeige");
 		this.thread.start();
 	}
@@ -92,7 +101,7 @@ public class Anzeige extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while (delta >= 1) {  
+			while (delta >= 1) {
 				update();
 				delta--;
 				render();
@@ -110,12 +119,12 @@ public class Anzeige extends Canvas implements Runnable {
 	}
 
 	private void update() {
-		
+
 		this.entityManager.update();
 //		this.frame.requestFocus();
-		
+
 	}
-	
+
 	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -132,5 +141,5 @@ public class Anzeige extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-	
+
 }

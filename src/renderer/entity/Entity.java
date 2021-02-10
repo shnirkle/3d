@@ -29,9 +29,9 @@ public class Entity implements iEntity{
 	}
 
 	@Override
-	public void rotate(boolean UZ, double xGrad, double yGrad, double zGrad) {
+	public void rotate( double xGrad, double yGrad, double zGrad) {
 		for( Objekt w : this.ws) {
-			w.rotate(UZ, xGrad, yGrad, zGrad);
+			w.rotate( xGrad, yGrad, zGrad);
 		}
 		
 	}

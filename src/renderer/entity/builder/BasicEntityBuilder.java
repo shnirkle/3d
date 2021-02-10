@@ -13,8 +13,6 @@ import renderer.shapes.Polygon3D;
 
 public class BasicEntityBuilder {
 
-	private static Color red = Color.RED;
-	private static Color blue = Color.BLUE;
 
 	public static iEntity createWürfel(float posx, float posy, float posz, float laenge) {
 
@@ -27,22 +25,17 @@ public class BasicEntityBuilder {
 //		Punkt p7 = new Punkt(posx * laenge, (posy + 1) * laenge, (posz + 1) * laenge);// // 0 1 1 p7
 //		Punkt p8 = new Punkt(posx * laenge, posy * laenge, (posz + 1) * laenge);// // 0 0 1 p8
 
-		Punkt p1 = new Punkt(0, 0, 0);
-		Punkt p2 = new Punkt(0, 1, 0);
-		Punkt p3 = new Punkt(1, 1, 0);
-		Punkt p4 = new Punkt(1, 0, 0);
-		Punkt p5 = new Punkt(1, 1, 1);
-		Punkt p6 = new Punkt(1, 0, 1);
-		Punkt p7 = new Punkt(0, 1, 1);
-		Punkt p8 = new Punkt(0, 0, 1);
+		Punkt p1 = new Punkt(posx-0.5f, posy-0.5f, posz-0.5f);
+		Punkt p2 = new Punkt(posx-0.5f, posy+0.5f, posz-0.5f);
+		Punkt p3 = new Punkt(posx+0.5f, posy+0.5f, posz-0.5f);
+		Punkt p4 = new Punkt(posx+0.5f, posy-0.5f, posz-0.5f);
+		Punkt p5 = new Punkt(posx+0.5f, posy+0.5f, posz+0.5f);
+		Punkt p6 = new Punkt(posx+0.5f, posy-0.5f, posz+0.5f);
+		Punkt p7 = new Punkt(posx-0.5f, posy+0.5f, posz+0.5f);
+		Punkt p8 = new Punkt(posx-0.5f, posy-0.5f, posz+0.5f);
 
 		Objekt w = new Objekt(
-				
-				
-				
-				
-				
-				
+
 				new Polygon3D(p1, p2, p3), //
 				new Polygon3D(p1, p3, p4),
 

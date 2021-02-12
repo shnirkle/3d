@@ -1,6 +1,7 @@
 package renderer.shapes;
 
 import java.awt.Color;
+import java.util.List;
 
 public class Objekt {
 
@@ -17,6 +18,10 @@ public class Objekt {
 
 	}
 
+	public Objekt(List<Polygon3D> polys) {
+		this.polygons = polys.toArray(new Polygon3D[polys.size()]);
+	}
+
 	public void render() {
 		for (Polygon3D poly : this.polygons)
 		{
@@ -24,6 +29,7 @@ public class Objekt {
 		}
 	}
 
+		
 	public void aendern(double x, double y, double z) {
 		for (Polygon3D p : this.polygons)
 		{

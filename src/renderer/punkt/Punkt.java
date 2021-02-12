@@ -23,7 +23,7 @@ public class Punkt {
 	}
 
 	public static Vektor[] toVektor(Punkt[] pp) {
-		Vektor[] vv = new Vektor[3];
+		Vektor[] vv= new Vektor[3];
 		for (int i = 0; i < 3; i++)
 		{
 			vv[i] = Punkt.toVektor(pp[i]);

@@ -1,10 +1,64 @@
 package renderer.entity.builder;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 import renderer.punkt.Punkt;
 import renderer.shapes.Objekt;
 import renderer.shapes.Polygon3D;
 
 public class BasicEntityBuilder {
+	public static Objekt createSpaceShip(double posX, double posY, double posZ) {
+		List<Punkt> punkte = new ArrayList<Punkt>();
+		List<Polygon3D> polys = new ArrayList<Polygon3D>();
+		try
+		{
+			File myObj = new File("src/crap.txt");
+			Scanner myReader = new Scanner(myObj);
+
+			while (myReader.hasNextLine())
+			{
+
+				String data = myReader.nextLine();
+				if (data.contains("v"))
+				{
+					data = data.substring(2);
+					data = data.replace(' ', ',');
+					String[] coords = data.split(",");
+					punkte.add(new Punkt(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2])));
+
+				}
+				if (data.contains("f"))
+				{
+					data = data.substring(2);
+					String[] coords = data.split(" ");
+					Punkt p1 = punkte.get(Integer.parseInt(coords[0]) - 1);
+					Punkt p2 = punkte.get(Integer.parseInt(coords[1]) - 1);
+					Punkt p3 = punkte.get(Integer.parseInt(coords[2]) - 1);
+					
+					polys.add(new Polygon3D(p1, p2, p3));
+					
+
+				}
+				System.out.println(data);
+			}
+			myReader.close();
+		} catch (FileNotFoundException e)
+		{
+
+		}
+
+		Objekt w = new Objekt(polys.toArray(new Polygon3D[polys.size()]));
+		for (Polygon3D p : w.getPolygons())
+		{
+			p.aendern(posX, posY, posZ);
+		}
+		return w;
+
+	}
 
 	public static Objekt createQuader(float posx, float posy, float posz, float laengeX, float laengeY, float laengeZ) {
 		Punkt p1 = new Punkt(posx * laengeX, posy * laengeY, posz * laengeZ); // 0 0 0 p1
@@ -14,7 +68,7 @@ public class BasicEntityBuilder {
 		Punkt p5 = new Punkt((posx + 1) * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 1 1 1 p5
 		Punkt p6 = new Punkt((posx + 1) * laengeX, posy * laengeY, (posz + 1) * laengeZ);// 	// 1 0 1 p6
 		Punkt p7 = new Punkt(posx * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 	// 0 1 1 p7
-		Punkt p8 = new Punkt(posx * laengeX, posy * laengeY, + 1 * laengeZ);// 			// 0 0 1 p8
+		Punkt p8 = new Punkt(posx * laengeX, posy * laengeY, +1 * laengeZ);// 			// 0 0 1 p8
 
 		//		Punkt p1 = new Punkt(-0.5f * laengeX, -0.5f * laengeY, -0.5f * laengeZ);
 		//		Punkt p2 = new Punkt(-0.5f * laengeX, +0.5f * laengeY, -0.5f * laengeZ);

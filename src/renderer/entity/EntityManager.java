@@ -21,8 +21,9 @@ public class EntityManager {
 
 	public void init(Eingabe eingabe) {
 //		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1))
-		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 2, 1));
-		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 3, 1));
+//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 2, 1));
+//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 3, 1));
+		this.entities.add(BasicEntityBuilder.createSpaceShip(0,3,6));
 //		this.entities.add(BasicEntityBuilder.createDreieck(new Punkt(0,0,0), new Punkt(0,-1,0), new Punkt(1,-1,0)));
 
 	}
@@ -30,9 +31,9 @@ public class EntityManager {
 	public void update() {
 		Theta++;
 		double ThetaB = Theta * 0.60f;
-		this.rotate(0, 45 + ThetaB, 0);
+		this.rotate(180, 180, 0);
 //		this.rotate(entities.get(1), 45, 45 + ThetaB, 45);
-		this.entities.get(0).aendern(0, Math.sin(Math.toRadians(Theta)) * 1, 2);
+//		this.entities.get(0).aendern(0, Math.sin(Math.toRadians(Theta)) * 1, 20);
 		
 
 	}

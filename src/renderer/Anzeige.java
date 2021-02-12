@@ -69,7 +69,7 @@ public class Anzeige extends Canvas implements Runnable {
 		running = true;
 		float near = 0.1f;
 		float far = 10000f;
-		float fov = 110;
+		float fov= 110;
 		Matrix.initialisiereProjMatrix((float) Anzeige.WIDTH, (float) Anzeige.HEIGHT, near, far, fov);
 		thread = new Thread(this, "Anzeige");
 		this.thread.start();

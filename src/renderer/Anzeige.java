@@ -11,18 +11,19 @@ import javax.swing.JFrame;
 
 import renderer.entity.EntityManager;
 import renderer.punkt.Matrix;
+import renderer.punkt.Vektor;
 import renderer.steuerung.Eingabe;
 
 public class Anzeige extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-
+	private Color cock = new Color(23, 23, 123);
 	private Thread thread;
 	private JFrame frame;
 	private static String titel = "Sterne";
 	public static int WIDTH = 1920;
 	public static int HEIGHT = 1080;
-
+	public Vektor cam = new Vektor(0,0,0);
 	private static boolean running = false;
 
 	public EntityManager entityManager;
@@ -54,9 +55,7 @@ public class Anzeige extends Canvas implements Runnable {
 		this.setPreferredSize(size);
 
 		this.eingabe = new Eingabe();
-		this.addMouseListener(this.eingabe.maus);
-		this.addMouseMotionListener(this.eingabe.maus);
-		this.addMouseWheelListener(this.eingabe.maus);
+		
 		this.frame.addKeyListener(this.eingabe.tastatur);
 		
 
@@ -78,7 +77,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 	public void stop() {
 		running = false;
-		try {
+		try { 
 			this.thread.join();
 		} catch (InterruptedException e) {
 
@@ -134,7 +133,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 
-		g.setColor(Color.BLACK);
+		g.setColor(cock);
 		g.fillRect(0, 0, WIDTH * 2, HEIGHT * 2);
 
 		this.entityManager.render(g);

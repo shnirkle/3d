@@ -5,7 +5,7 @@ import renderer.punkt.Vektor;
 public class Kamera {
 	
 	
-	Vektor vCamera = new Vektor(0,0,0);	
+	public static Vektor vCamera = new Vektor(0,0,0);	
 	public Kamera() {
 		
 	}
@@ -16,16 +16,16 @@ public class Kamera {
 		this.vCamera.setZ(z);
 	}
 	
-	public double getX() {
-		return this.vCamera.x;
+	public static double getX() {
+		return Kamera.vCamera.x;
 	}
 	
-	public double getY() {
-		return this.vCamera.y;
+	public static double getY() {
+		return Kamera.vCamera.y;
 	}
 	
-	public double getZ() {
-		return this.vCamera.z;
+	public static double getZ() {
+		return Kamera.vCamera.z;
 	}
 	
 }

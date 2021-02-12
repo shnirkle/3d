@@ -7,17 +7,18 @@ import renderer.shapes.Polygon3D;
 public class BasicEntityBuilder {
 
 	public static Objekt createQuader(float posx, float posy, float posz, float laengeX, float laengeY, float laengeZ) {
-		Punkt p1 = new Punkt((posx-0.5f) * laengeX, (posy-0.5f) * laengeY, (posz-0.5f) * laengeZ); // 0 0 0 p1
-		Punkt p2 = new Punkt((posx-0.5f) * laengeX, (posyy+0.5f) * laengeY, (posz-0.5f) * laengeZ); // 0 1 0 p2
-		Punkt p3 = new Punkt((posx + 1) * laengeX, (posy-0.5f) * laengeY, (posz-0.5f) * laengeZ); // 1 1 0 p3
-		Punkt p4 = new Punkt((posx + 1) * laengeX, (posy+0.5f) * laengeY, (posz-0.5f) * laengeZ);// 			// 1 0 0 p4
+		Punkt p1 = new Punkt(posx * laengeX, posy * laengeY, posz * laengeZ); // 0 0 0 p1
+		Punkt p2 = new Punkt(posx * laengeX, (posy + 1) * laengeY, posz * laengeZ); // 0 1 0 p2
+		Punkt p3 = new Punkt((posx + 1) * laengeX, (posy + 1) * laengeY, posz * laengeZ); // 1 1 0 p3
+		Punkt p4 = new Punkt((posx + 1) * laengeX, posy * laengeY, posz * laengeZ);// 			// 1 0 0 p4
 		Punkt p5 = new Punkt((posx + 1) * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 1 1 1 p5
-		Punkt p6 = new Punkt((posx + 1) * laengeX, (posy-0.5f) * laengeY, (posz + 1) * laengeZ);// 	// 1 0 1 p6
-		Punkt p7 = new Punkt((posx-0.5f) * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 	// 0 1 1 p7
-		Punkt p8 = new Punkt((posx-0.5f) * laengeX, (posy-0.5f) * laengeY, (posz + 1) * laengeZ);// 			// 0 0 1 p8
+		Punkt p6 = new Punkt((posx + 1) * laengeX, posy * laengeY, (posz + 1) * laengeZ);// 	// 1 0 1 p6
+		Punkt p7 = new Punkt(posx * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 	// 0 1 1 p7
+		Punkt p8 = new Punkt(posx * laengeX, posy * laengeY, + 1 * laengeZ);// 			// 0 0 1 p8
 
 		//		Punkt p1 = new Punkt(-0.5f * laengeX, -0.5f * laengeY, -0.5f * laengeZ);
 		//		Punkt p2 = new Punkt(-0.5f * laengeX, +0.5f * laengeY, -0.5f * laengeZ);
+		//		Punkt p3 = new Punkt(+0.5f * laengeX, +0.5f * laengeY, -0.5f * laengeZ);
 		//		Punkt p4 = new Punkt(+0.5f * laengeX, -0.5f * laengeY, -0.5f * laengeZ);
 		//		Punkt p5 = new Punkt(+0.5f * laengeX, +0.5f * laengeY, +0.5f * laengeZ);
 		//		Punkt p6 = new Punkt(+0.5f * laengeX, -0.5f * laengeY, +0.5f * laengeZ);

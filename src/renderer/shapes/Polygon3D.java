@@ -10,7 +10,8 @@ import renderer.punkt.Vektor;
 import renderer.world.Kamera;
 
 public class Polygon3D {
-	private static Vektor licht = new Vektor(0, 0, -1);
+	
+	private static Vektor licht = new Vektor(90, 0, 0);
 	private static Vektor adjustScreen = new Vektor(Anzeige.WIDTH * 0.5, Anzeige.HEIGHT * 0.5, 1);
 	private static Vektor viewOff = new Vektor(1.0, 1.0, 0.0);
 	private Vektor[] punkte;
@@ -40,7 +41,7 @@ public class Polygon3D {
 		Vektor[] xRotiert = Matrix.rotateAxisX(this.punkte, xGrad);
 		Vektor[] yRotiert = Matrix.rotateAxisY(xRotiert, yGrad);
 		Vektor[] zRotiert = Matrix.rotateAxisZ(yRotiert, zGrad);
-		Vektor[] versPunkte = new Vektor[3];
+		versPunkte = new Vektor[3];
 		versPunkte = Matrix.aender(zRotiert, xOff, yOff, zOff);
 
 		Vektor v_0_1 = new Vektor(0, 0, 0);
@@ -105,13 +106,13 @@ public class Polygon3D {
 		
 		float lae = (float) (Vektor.dot(normal, lightR));
 		lae = Math.abs(lae);
-		if (lae < 0)
+		if (lae < 0.3f)
 		{
-			lae = 0;
+			lae = 0.3f;
 		}
-		if (lae >= 1)
+		if (lae >= 0.8f)
 		{
-			lae = 1;
+			lae = 0.8f;
 		}
 
 		return new Color(lae, lae, lae);

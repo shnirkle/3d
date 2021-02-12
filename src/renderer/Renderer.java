@@ -40,7 +40,6 @@ public class Renderer {
 	        @Override
 	        public int compare(Polygon3D p2, Polygon3D p1)
 	        {
-	        	
 	            return Double.compare(p1.avgZ, p2.avgZ);
 	        }
 	    });

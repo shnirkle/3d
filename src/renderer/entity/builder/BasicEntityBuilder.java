@@ -43,7 +43,7 @@ public class BasicEntityBuilder {
 					
 
 				}
-				System.out.println(data);
+				
 			}
 			myReader.close();
 		} catch (FileNotFoundException e)

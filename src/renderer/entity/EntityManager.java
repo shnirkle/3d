@@ -31,9 +31,9 @@ public class EntityManager {
 	public void update() {
 		Theta++;
 		double ThetaB = Theta * 0.60f;
-		this.rotate(180, 180, 0);
+		this.rotate(180 , 180+ ThetaB, 0);
 //		this.rotate(entities.get(1), 45, 45 + ThetaB, 45);
-//		this.entities.get(0).aendern(0, Math.sin(Math.toRadians(Theta)) * 1, 20);
+//		this.entities.get(0).aendern(0, 0, Math.sin(Math.toRadians(Theta)) * 20);
 		
 
 	}

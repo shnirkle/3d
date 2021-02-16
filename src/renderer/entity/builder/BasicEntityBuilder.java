@@ -11,13 +11,13 @@ import renderer.shapes.Objekt;
 import renderer.shapes.Polygon3D;
 
 public class BasicEntityBuilder {
-	public static Objekt createSpaceShip(double posX, double posY, double posZ) {
+	public static Objekt readFile(String path) {
 		List<Punkt> punkte = new ArrayList<Punkt>();
 		List<Polygon3D> polys = new ArrayList<Polygon3D>();
 		try
 		{
-			File myObj = new File("src/crap.txt");
-			Scanner myReader = new Scanner(myObj);
+			File model = new File(path);
+			Scanner myReader = new Scanner(model);
 
 			while (myReader.hasNextLine())
 			{
@@ -26,13 +26,13 @@ public class BasicEntityBuilder {
 				if (data.contains("v"))
 				{
 					data = data.substring(2);
-					data = data.replace(' ', ',');
-					String[] coords = data.split(",");
+					
+					String[] coords = data.split(" ");
 					punkte.add(new Punkt(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2])));
 
 				}
 				if (data.contains("f"))
-				{
+				{ 
 					data = data.substring(2);
 					String[] coords = data.split(" ");
 					Punkt p1 = punkte.get(Integer.parseInt(coords[0]) - 1);
@@ -52,6 +52,19 @@ public class BasicEntityBuilder {
 		}
 
 		Objekt w = new Objekt(polys.toArray(new Polygon3D[polys.size()]));
+		
+		return w;
+	}
+	public static Objekt createTeapot(double posX, double posY, double posZ) {
+		Objekt w = readFile("src/crap.txt");
+		for (Polygon3D p : w.getPolygons())
+		{
+			p.aendern(posX, posY, posZ);
+		}
+		return w;
+	}
+	public static Objekt createSpaceShip(double posX, double posY, double posZ) {
+		Objekt w = readFile("src/versuch1.txt");
 		for (Polygon3D p : w.getPolygons())
 		{
 			p.aendern(posX, posY, posZ);

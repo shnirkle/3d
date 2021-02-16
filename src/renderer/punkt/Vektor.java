@@ -5,7 +5,7 @@ public class Vektor {
 	public double y = 0;
 	public double x = 0;
 	public double z = 0;
-	public double w;
+	public double w = 1;
 	public double length = 0;
 	public double normX = 0;
 	public double normY = 0;
@@ -24,9 +24,11 @@ public class Vektor {
 	public Vektor() {
 
 	}
+
 	public static Vektor multVektor_Vektor(Vektor vec1, Vektor vec2) {
-		return new Vektor(vec1.x * vec2.x , vec1.y * vec2.y , vec1.z * vec2.z);
+		return new Vektor(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 	}
+
 	public static Vektor kreuzprodukt(Vektor vec1, Vektor vec2) {
 		Vektor ans = new Vektor(0, 0, 0);
 		ans.setX(vec1.y * vec2.z - vec2.y * vec1.z);
@@ -80,9 +82,11 @@ public class Vektor {
 	public static Vektor add(Vektor v1, Vektor v2) {
 		return new Vektor(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 	}
+
 	public static Vektor sub(Vektor v1, Vektor v2) {
 		return new Vektor(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
 	}
+
 	public Punkt toPunkt() {
 		return new Punkt(this.x, this.y, this.z);
 	}

@@ -16,6 +16,10 @@ public class Kamera {
 		this.vCamera.setZ(z);
 	}
 	
+	public static void update() {
+		
+	}
+	
 	public static double getX() {
 		return Kamera.vCamera.x;
 	}

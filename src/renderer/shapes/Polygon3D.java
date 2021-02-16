@@ -11,13 +11,13 @@ import renderer.world.Kamera;
 
 public class Polygon3D {
 	
-	private static Vektor licht = new Vektor(90, 0, 0);
+	private static Vektor licht = new Vektor(1, 0, 0);
 	private static Vektor adjustScreen = new Vektor(Anzeige.WIDTH * 0.5, Anzeige.HEIGHT * 0.5, 1);
 	private static Vektor viewOff = new Vektor(1.0, 1.0, 0.0);
 	private Vektor[] punkte;
 	private Vektor[] prPunkte;
-	public double avgZ;
 	private Vektor[] versPunkte;
+	public double avgZ;
 	public Color shade;
 	Matrix rotX = new Matrix();
 	Matrix rotY = new Matrix();
@@ -44,19 +44,13 @@ public class Polygon3D {
 		versPunkte = new Vektor[3];
 		versPunkte = Matrix.aender(zRotiert, xOff, yOff, zOff);
 
-		Vektor v_0_1 = new Vektor(0, 0, 0);
-		v_0_1.setX(versPunkte[1].x - versPunkte[0].x);
-		v_0_1.setY(versPunkte[1].y - versPunkte[0].y);
-		v_0_1.setZ(versPunkte[1].z - versPunkte[0].z);
-		Vektor v_0_2 = new Vektor(0, 0, 0);
-		v_0_2.setX(versPunkte[2].x - versPunkte[0].x);
-		v_0_2.setY(versPunkte[2].y - versPunkte[0].y);
-		v_0_2.setZ(versPunkte[2].z - versPunkte[0].z);
+		Vektor v_0_1  = Vektor.sub(versPunkte[0], versPunkte[1]);
+		Vektor v_0_2  = Vektor.sub(versPunkte[0], versPunkte[2]);
 
-		Vektor normale = Vektor.kreuzprodukt(v_0_1, v_0_2);
+		Vektor normale = Vektor.kreuzprodukt(v_0_2, v_0_1);
 		Vektor cam = Kamera.vCamera;
 		Vektor camRay = Vektor.sub(versPunkte[0], cam);
-		if (Vektor.dot(normale, camRay) > 0.0f)
+		if (Vektor.dot(normale, camRay) < 0.0f)
 		{
 			
 			shade = this.calcShade(normale, versPunkte[0]);
@@ -87,9 +81,9 @@ public class Polygon3D {
 	}
 
 	public void aendern(double x, double y, double z) {
-		xOff = (float) x;
-		yOff = (float) y;
-		zOff = (float) z;
+		xOff += (float) x;
+		yOff += (float) y;
+		zOff += (float) z;
 	}
 
 	public void rotate(double xGrad, double yGrad, double zGrad) {
@@ -99,21 +93,16 @@ public class Polygon3D {
 	}
 
 	public Vektor[] getPrPunkte() {
-		return prPunkte;                                       //🍆👀🤏
+		return prPunkte;                                       
 	}
 	private Color calcShade(Vektor normal, Vektor vers) {
 		Vektor lightR = Vektor.sub(vers, licht);
 		
 		float lae = (float) (Vektor.dot(normal, lightR));
 		lae = Math.abs(lae);
-		if (lae < 0.3f)
-		{
-			lae = 0.3f;
-		}
-		if (lae >= 0.8f)
-		{
-			lae = 0.8f;
-		}
+		if (lae < 0)lae = 0;
+		
+		
 
 		return new Color(lae, lae, lae);
 	}

@@ -8,11 +8,14 @@ import renderer.Renderer;
 import renderer.entity.builder.BasicEntityBuilder;
 import renderer.shapes.Objekt;
 import renderer.steuerung.Eingabe;
+import renderer.steuerung.Tastatur;
 
 public class EntityManager {
 	private List<Objekt> entities;
 	
 	public int Theta = 1;
+
+	private Tastatur tastatur;
 	 
 	public EntityManager() {
 		this.entities = new ArrayList<Objekt>();
@@ -23,19 +26,32 @@ public class EntityManager {
 //		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1))
 //		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 2, 1));
 //		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 3, 1));
-		this.entities.add(BasicEntityBuilder.createSpaceShip(0,3,6));
+//		this.entities.add(BasicEntityBuilder.createSpaceShip(0,0,18));
+		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 4));
 //		this.entities.add(BasicEntityBuilder.createDreieck(new Punkt(0,0,0), new Punkt(0,-1,0), new Punkt(1,-1,0)));
-
+		this.tastatur = eingabe.tastatur;
 	}
 
 	public void update() {
+		this.tastatur.update();
 		Theta++;
 		double ThetaB = Theta * 0.60f;
-		this.rotate(180 , 180+ ThetaB, 0);
+		this.rotate(180 , 180+ ThetaB, Theta);
 //		this.rotate(entities.get(1), 45, 45 + ThetaB, 45);
 //		this.entities.get(0).aendern(0, 0, Math.sin(Math.toRadians(Theta)) * 20);
 		
-
+		if(this.tastatur.getVorne()) {
+			for(Objekt w : entities) {
+				w.aendern(0, 0, -2);
+			}
+//			System.out.println("skyr");
+		}
+		if(this.tastatur.getHinten()) {
+			for(Objekt w : entities) {
+				w.aendern(0, 0, 2);
+			}
+//			System.out.println("skyr");
+		}
 	}
 
 	public void render(Graphics g) {

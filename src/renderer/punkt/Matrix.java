@@ -86,8 +86,13 @@ public class Matrix {
 
 		return rotPunkte;
 	}
-
-	public static Vektor[] aender(Vektor[] p, float x, float y, float z) {
+	public static void richteKameraMatrix(Vektor Pos, Vektor dir, Vektor orthDir) {
+		Matrix richte = new Matrix();
+	
+		Vektor neuDir = Vektor.sub(dir, Pos);
+	}
+		public static Vektor[] aender(Vektor[] p, float x, float y, float z) {
+	
 		Vektor[] transl = new Vektor[3];
 
 		aender.mat[0][0] = 1.0f;

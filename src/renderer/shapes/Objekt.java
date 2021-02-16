@@ -26,13 +26,14 @@ public class Objekt {
 		for (Polygon3D poly : this.polygons)
 		{
 			poly.calc();
-		}
+		} 
 	}
 
 		
 	public void aendern(double x, double y, double z) {
 		for (Polygon3D p : this.polygons)
 		{
+			
 			p.aendern(x, y, z);
 		}
 	}

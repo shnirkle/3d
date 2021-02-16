@@ -22,11 +22,12 @@ public class Renderer {
 		for(Polygon3D  p3: polys) {
 			Polygon p = new Polygon();
 			g.setColor(p3.shade);
+//			g.setColor(Color.WHITE);
 			Vektor[] pp = p3.getPrPunkte();
 			p.addPoint((int) pp[0].x,(int) pp[0].y);
 			p.addPoint((int) pp[1].x,(int) pp[1].y);
 			p.addPoint((int) pp[2].x,(int) pp[2].y);
-			g.fillPolygon(p);
+			g.fillPolygon(p); 
 		}
 		
 		

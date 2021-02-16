@@ -17,7 +17,7 @@ public class Tastatur implements KeyListener {
 		this.unten = this.tasten[KeyEvent.VK_C] || this.tasten[KeyEvent.VK_CONTROL];
 	}
 	
-	public boolean getLinks() {
+	public boolean getLinks() { 
 		return this.links;
 	}
 	

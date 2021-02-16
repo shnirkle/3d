@@ -28,7 +28,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 	public EntityManager entityManager;
 
-	private Eingabe eingabe;
+	private static Eingabe eingabe;
 
 	public static void main(String[] args) {
 		Anzeige display = new Anzeige();
@@ -98,7 +98,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 		while (running) {
 			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
+			delta += (now - lastTime) / ns; 
 			lastTime = now;
 			while (delta >= 1) {
 				update();
@@ -120,7 +120,7 @@ public class Anzeige extends Canvas implements Runnable {
 	private void update() {
 
 		this.entityManager.update();
-//		this.frame.requestFocus();
+		this.frame.requestFocus();
 
 	}
 

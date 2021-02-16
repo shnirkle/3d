@@ -21,8 +21,8 @@ public class Anzeige extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private static String titel = "Sterne";
-	public static int WIDTH = 1920;
-	public static int HEIGHT = 1080;
+	public static int WIDTH;
+	public static int HEIGHT;
 	public Vektor cam = new Vektor(0,0,0);
 	private static boolean running = false;
 
@@ -31,16 +31,14 @@ public class Anzeige extends Canvas implements Runnable {
 	private static Eingabe eingabe;
 
 	public static void main(String[] args) {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Anzeige.WIDTH = (int) screenSize.getWidth();
+		Anzeige.HEIGHT = (int) screenSize.getHeight();
 		Anzeige display = new Anzeige();
 		display.frame.setTitle(titel);
 		display.frame.add(display);
 		display.frame.pack();
 		display.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int scrW = (int) screenSize.getWidth();
-		int scrH = (int) screenSize.getHeight();
-		Anzeige.WIDTH = scrW;
-		Anzeige.HEIGHT = scrH;
 		display.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		display. frame.setResizable(false);
 		display.frame.setVisible(true);

@@ -1,23 +1,31 @@
 package renderer.world;
 
+import renderer.punkt.Matrix;
 import renderer.punkt.Vektor;
 
 public class Kamera {
 	
 	
 	public static Vektor vCamera = new Vektor(0,0,0);	
-	public Kamera() {
-		
-	}
+	public static Vektor vDir = new Vektor(0,0,1);
+	public static Vektor vUp = new Vektor(0,1,0);
+	public static double yGrad = 0;
 	
-	public void aendern(double x, double y, double z) {
-		this.vCamera.setX(x);
-		this.vCamera.setY(y);
-		this.vCamera.setZ(z);
+
+
+	public static void rot(double ang) {
+		yGrad += ang;
+		Matrix yRot = Matrix.rotateAxisY(yGrad);
+		vDir = Matrix.multMat(vDir, yRot);
+		vUp = Matrix.multMat(vUp, yRot);
 	}
-	
-	public static void update() {
-		
+	public static void forw(double u) {
+		vCamera = Vektor.add(vCamera, Vektor.multvec(vDir, u));
+//		vCamera.setZ(vCamera.normZ + u);
+	}
+	public static void backw(double u) {
+		vCamera = Vektor.sub(vCamera, Vektor.multvec(vDir, u));
+//		vCamera.setZ(vCamera.normZ + u);
 	}
 	
 	public static double getX() {

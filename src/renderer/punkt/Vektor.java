@@ -28,7 +28,8 @@ public class Vektor {
 	public static Vektor multVektor_Vektor(Vektor vec1, Vektor vec2) {
 		return new Vektor(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 	}
-
+	
+	
 	public static Vektor kreuzprodukt(Vektor vec1, Vektor vec2) {
 		Vektor ans = new Vektor(0, 0, 0);
 		ans.setX(vec1.y * vec2.z - vec2.y * vec1.z);
@@ -46,14 +47,29 @@ public class Vektor {
 		double ans = Math.acos(dot / (vec1.length * vec2.length));
 		return Math.toDegrees(ans);
 	}
-
+	public static void printVektor(Vektor... a) {
+		for(Vektor b : a) {
+			System.out.println("X:" + b.x + " | Y:" + b.y + " | Z:"+ b.z + " | W:"+ b.w);
+		}
+	}
+	public static Vektor multvec(Vektor mult, double faktor) {
+		Vektor res = new Vektor();
+		res.setX(mult.x * faktor);
+		res.setY(mult.y * faktor);
+		res.setZ(mult.z * faktor);
+		return res;
+	}
 	public void multvec(double scale) {
 		this.x *= scale;
 		this.y *= scale;
 		this.z *= scale;
 
 	}
-
+	public void normVec() {
+		this.x = this.normX;
+		this.y = this.normY;
+		this.z = this.normZ;
+	}
 	private void reCalc() {
 		this.length = this.length();
 		this.normX = this.x / length;
@@ -84,7 +100,7 @@ public class Vektor {
 	}
 
 	public static Vektor sub(Vektor v1, Vektor v2) {
-		return new Vektor(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
+		return new Vektor(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
 	}
 
 	public Punkt toPunkt() {

@@ -1,6 +1,7 @@
 package renderer.punkt;
 
 import renderer.Anzeige;
+import renderer.world.Kamera;
 
 public class Matrix {
 	public float[][] mat = new float[4][4];
@@ -9,9 +10,9 @@ public class Matrix {
 	public static Matrix yRotMatrix = new Matrix();
 	public static Matrix zRotMatrix = new Matrix();
 	public static Matrix aender = new Matrix();
-	float ar = (float) Anzeige.HEIGHT / Anzeige.WIDTH;
+	public static float ar = (float) Anzeige.HEIGHT / Anzeige.WIDTH;
 	public static Vektor cam = new Vektor(0, 0, 0);
-
+	public static double yGrad = 0;
 	public static Vektor multMat(Vektor i, Matrix m) {
 		Vektor a = new Vektor();
 		float x = (float) (i.x * m.mat[0][0] + i.y * m.mat[1][0] + i.z * m.mat[2][0] + m.mat[3][0]);
@@ -23,6 +24,17 @@ public class Matrix {
 		a.setZ(z);
 		a.w = w;
 		return a;
+	}
+
+	public void printMat() {
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				System.out.println(this.mat[i][j]);
+			}
+		}
 	}
 
 	public static void initialisiereProjMatrix(float w, float h, float near, float far, float fov) {
@@ -37,8 +49,7 @@ public class Matrix {
 		projectionMatrix.mat[3][3] = 0.0f;
 	}
 
-	public static Vektor[] rotateAxisX(Vektor[] p, double Grad) {
-		Vektor[] rotPunkte = new Vektor[3];
+	public static Matrix rotateAxisX(double Grad) {
 
 		xRotMatrix.mat[0][0] = 1.0f;
 		xRotMatrix.mat[1][1] = (float) Math.cos(Grad);
@@ -47,16 +58,11 @@ public class Matrix {
 		xRotMatrix.mat[2][2] = (float) Math.cos(Grad);
 		xRotMatrix.mat[3][3] = 1.0f;
 
-		rotPunkte[0] = Matrix.multMat(p[0], xRotMatrix);
-		rotPunkte[1] = Matrix.multMat(p[1], xRotMatrix);
-		rotPunkte[2] = Matrix.multMat(p[2], xRotMatrix);
-
-		return rotPunkte;
+		return xRotMatrix;
 	}
 
-	public static Vektor[] rotateAxisY(Vektor[] p, double Grad) {
+	public static Matrix rotateAxisY(double Grad) {
 
-		Vektor[] rotPunkte = new Vektor[3];
 		yRotMatrix.mat[0][0] = (float) Math.cos(Grad);
 		yRotMatrix.mat[0][2] = (float) Math.sin(Grad);
 		yRotMatrix.mat[2][0] = (float) -Math.sin(Grad);
@@ -64,14 +70,10 @@ public class Matrix {
 		yRotMatrix.mat[2][2] = (float) Math.cos(Grad);
 		yRotMatrix.mat[3][3] = 1.0f;
 
-		rotPunkte[0] = Matrix.multMat(p[0], yRotMatrix);
-		rotPunkte[1] = Matrix.multMat(p[1], yRotMatrix);
-		rotPunkte[2] = Matrix.multMat(p[2], yRotMatrix);
-		return rotPunkte;
+		return yRotMatrix;
 	}
 
-	public static Vektor[] rotateAxisZ(Vektor[] p, double Grad) {
-		Vektor[] rotPunkte = new Vektor[3];
+	public static Matrix rotateAxisZ(double Grad) {
 
 		zRotMatrix.mat[0][0] = (float) Math.cos(Grad);
 		zRotMatrix.mat[0][1] = (float) Math.sin(Grad);
@@ -80,20 +82,58 @@ public class Matrix {
 		zRotMatrix.mat[2][2] = 1.0f;
 		zRotMatrix.mat[3][3] = 1.0f;
 
-		rotPunkte[0] = Matrix.multMat(p[0], zRotMatrix);
-		rotPunkte[1] = Matrix.multMat(p[1], zRotMatrix);
-		rotPunkte[2] = Matrix.multMat(p[2], zRotMatrix);
+		return zRotMatrix;
+	}
 
-		return rotPunkte;
+	public static Matrix richteKameraMatrix() {
+		Vektor dir = Kamera.vDir;
+		Matrix yRot = Matrix.rotateAxisY(yGrad);
+		dir = Matrix.multMat(dir, yRot);
+		Vektor pos = Kamera.vCamera;
+		Vektor orthDir = Kamera.vUp;
+		
+		Vektor newForward = Vektor.sub(dir, pos);
+		newForward.normVec();
+
+		// Calculate new Up direction
+		Vektor a = Vektor.multvec(newForward, Vektor.dot(orthDir, newForward));
+		Vektor newUp = Vektor.sub(orthDir, a);
+		newUp.normVec();
+
+		// New Right direction is easy, its just cross product
+		Vektor newRight = Vektor.kreuzprodukt(newUp, newForward);
+
+		// Construct Dimensioning and Translation Matrix	
+		Matrix matrix = new Matrix();
+		matrix.mat[0][0] = (float) newRight.x;
+		matrix.mat[0][1] = (float) newRight.y;
+		matrix.mat[0][2] = (float) newRight.z;
+		matrix.mat[0][3] = 0.0f;
+		matrix.mat[1][0] = (float) newUp.x;
+		matrix.mat[1][1] = (float) newUp.y;
+		matrix.mat[1][2] = (float) newUp.z;
+		matrix.mat[1][3] = 0.0f;
+		matrix.mat[2][0] = (float) newForward.x;
+		matrix.mat[2][1] = (float) newForward.y;
+		matrix.mat[2][2] = (float) newForward.z;
+		matrix.mat[2][3] = 0.0f;
+		matrix.mat[3][0] = (float) pos.x;
+		matrix.mat[3][1] = (float) pos.y;
+		matrix.mat[3][2] = (float) pos.z;
+		matrix.mat[3][3] = 1.0f;
+		return matrix;
 	}
-	public static void richteKameraMatrix(Vektor Pos, Vektor dir, Vektor orthDir) {
-		Matrix richte = new Matrix();
-	
-		Vektor neuDir = Vektor.sub(dir, Pos);
+
+	public void matrixInitialisierung() {
+
+		this.mat[0][0] = 1.0f;
+		this.mat[1][1] = 1.0f;
+		this.mat[2][2] = 1.0f;
+		this.mat[3][3] = 1.0f;
+
 	}
-		public static Vektor[] aender(Vektor[] p, float x, float y, float z) {
-	
-		Vektor[] transl = new Vektor[3];
+
+	public static Matrix aender(float x, float y, float z) {
 
 		aender.mat[0][0] = 1.0f;
 		aender.mat[1][1] = 1.0f;
@@ -102,12 +142,7 @@ public class Matrix {
 		aender.mat[3][0] = (float) x;
 		aender.mat[3][1] = (float) y;
 		aender.mat[3][2] = (float) z;
-
-		transl[0] = Matrix.multMat(p[0], aender);
-		transl[1] = Matrix.multMat(p[1], aender);
-		transl[2] = Matrix.multMat(p[2], aender);
-
-		return transl; 
+		return aender;
 	}
 
 	public static Matrix matrixMult(Matrix m1, Matrix m2) {
@@ -122,4 +157,25 @@ public class Matrix {
 		return m3;
 	}
 
+	public static Matrix matrixInvertierung(Matrix m) { // Funkt.
+		Matrix matrix = new Matrix();
+		matrix.mat[0][0] = m.mat[0][0];
+		matrix.mat[0][1] = m.mat[1][0];
+		matrix.mat[0][2] = m.mat[2][0];
+		matrix.mat[0][3] = 0.0f;
+		matrix.mat[1][0] = m.mat[0][1];
+		matrix.mat[1][1] = m.mat[1][1];
+		matrix.mat[1][2] = m.mat[2][1];
+		matrix.mat[1][3] = 0.0f;
+		matrix.mat[2][0] = m.mat[0][2];
+		matrix.mat[2][1] = m.mat[1][2];
+		matrix.mat[2][2] = m.mat[2][2];
+		matrix.mat[2][3] = 0.0f;
+		matrix.mat[3][0] = -(m.mat[3][0] * matrix.mat[0][0] + m.mat[3][1] * matrix.mat[1][0] + m.mat[3][2] * matrix.mat[2][0]);
+		matrix.mat[3][1] = -(m.mat[3][0] * matrix.mat[0][1] + m.mat[3][1] * matrix.mat[1][1] + m.mat[3][2] * matrix.mat[2][1]);
+		matrix.mat[3][2] = -(m.mat[3][0] * matrix.mat[0][2] + m.mat[3][1] * matrix.mat[1][2] + m.mat[3][2] * matrix.mat[2][2]);
+		matrix.mat[3][3] = 1.0f;
+		return matrix;
+
+	}
 }

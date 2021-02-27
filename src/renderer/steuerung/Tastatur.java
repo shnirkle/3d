@@ -44,13 +44,13 @@ public class Tastatur implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		tasten[arg0.getKeyCode()] = true;
-		System.out.println("pressed  " + arg0.getKeyChar());
+//		System.out.println("pressed  " + arg0.getKeyChar());
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		tasten[arg0.getKeyCode()] = false;
-		System.out.println("unpressed");
+//		System.out.println("unpressed");
 		
 	}
 

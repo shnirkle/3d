@@ -55,20 +55,14 @@ public class BasicEntityBuilder {
 		
 		return w;
 	}
-	public static Objekt createTeapot(double posX, double posY, double posZ) {
+	public static Objekt createTeapot(double posx, double posy, double posz) {
 		Objekt w = readFile("src/crap.txt");
-		for (Polygon3D p : w.getPolygons())
-		{
-			p.aendern(posX, posY, posZ);
-		}
+		w.aendern(posx, posy, posz);
 		return w;
 	}
-	public static Objekt createSpaceShip(double posX, double posY, double posZ) {
+	public static Objekt createSpaceShip(double posx, double posy, double posz) {
 		Objekt w = readFile("src/versuch1.txt");
-		for (Polygon3D p : w.getPolygons())
-		{
-			p.aendern(posX, posY, posZ);
-		}
+		w.aendern(posx, posy, posz);
 		return w;
 
 	}
@@ -113,10 +107,7 @@ public class BasicEntityBuilder {
 				new Polygon3D(p4, p8, p1) // Unten
 
 		);
-		for (Polygon3D p : w.getPolygons())
-		{
-			p.aendern(posx, posy, posz);
-		}
+		w.aendern(posx, posy, posz);
 
 		return w;
 
@@ -163,10 +154,7 @@ public class BasicEntityBuilder {
 				new Polygon3D(p4, p8, p1) // Unten
 
 		);
-		for (Polygon3D p : w.getPolygons())
-		{
-			p.aendern(posx, posy, posz);
-		}
+		w.aendern(posx, posy, posz);
 
 		return w;
 	}

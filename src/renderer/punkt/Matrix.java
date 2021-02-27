@@ -1,7 +1,6 @@
 package renderer.punkt;
 
 import renderer.Anzeige;
-import renderer.world.Kamera;
 
 public class Matrix {
 	public float[][] mat = new float[4][4];
@@ -13,6 +12,7 @@ public class Matrix {
 	public static float ar = (float) Anzeige.HEIGHT / Anzeige.WIDTH;
 	public static Vektor cam = new Vektor(0, 0, 0);
 	public static double yGrad = 0;
+
 	public static Vektor multMat(Vektor i, Matrix m) {
 		Vektor a = new Vektor();
 		float x = (float) (i.x * m.mat[0][0] + i.y * m.mat[1][0] + i.z * m.mat[2][0] + m.mat[3][0]);
@@ -27,13 +27,12 @@ public class Matrix {
 	}
 
 	public void printMat() {
-
+		System.out.println("----");
 		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; j++)
-			{
-				System.out.println(this.mat[i][j]);
-			}
+			
+				System.out.println(this.mat[i][0] + "/" +this.mat[i][1] + "/" +this.mat[i][2] + "/" +this.mat[i][3]);
+			
 		}
 	}
 
@@ -85,13 +84,15 @@ public class Matrix {
 		return zRotMatrix;
 	}
 
-	public static Matrix richteKameraMatrix() {
-		Vektor dir = Kamera.vDir;
-		Matrix yRot = Matrix.rotateAxisY(yGrad);
-		dir = Matrix.multMat(dir, yRot);
-		Vektor pos = Kamera.vCamera;
-		Vektor orthDir = Kamera.vUp;
+	public static Matrix richteKameraMatrix(Vektor dirr,Vektor orth, Vektor pos) {
+		Vektor dir = dirr;
 		
+		
+		dir.normVec();
+		
+		Vektor orthDir = orth;
+//		dir = new Vektor(0,0,1);
+//		orthDir = new Vektor(0,1,0);
 		Vektor newForward = Vektor.sub(dir, pos);
 		newForward.normVec();
 

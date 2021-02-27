@@ -30,23 +30,22 @@ public class Anzeige extends Canvas implements Runnable {
 
 	private static Eingabe eingabe;
 
-	public static void main(String[] args) {
-		Anzeige display = new Anzeige();
-		display.frame.setTitle(titel);
-		display.frame.add(display);
-		display.frame.pack();
-		display.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int scrW = (int) screenSize.getWidth();
-		int scrH = (int) screenSize.getHeight();
-		Anzeige.WIDTH = scrW;
-		Anzeige.HEIGHT = scrH;
-		display.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		display. frame.setResizable(false);
-		display.frame.setVisible(true);
-		display.start();
 
-	}
+	public static void main(String[] args) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        HEIGHT = (int) screenSize.getHeight();
+        WIDTH = (int) screenSize.getWidth();
+        Anzeige display = new Anzeige();
+        display.frame.setTitle(titel);
+        display.frame.add(display);
+        display.frame.pack();
+        display.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        display.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        display. frame.setResizable(false);
+        display.frame.setVisible(true);
+        display.start();
+
+    }
 
 	public Anzeige() {
 		this.frame = new JFrame();

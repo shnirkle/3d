@@ -6,7 +6,6 @@ import java.util.List;
 
 import renderer.Renderer;
 import renderer.entity.builder.BasicEntityBuilder;
-import renderer.punkt.Matrix;
 import renderer.shapes.Objekt;
 import renderer.steuerung.Eingabe;
 import renderer.steuerung.Tastatur;
@@ -27,40 +26,52 @@ public class EntityManager {
 	public void init(Eingabe eingabe) {
 		//		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1))
 		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 2, 1));
-		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
+		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
 		//		this.entities.add(BasicEntityBuilder.createSpaceShip(0,0,18));
-//				this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 4));
+		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 16));
 		//		this.entities.add(BasicEntityBuilder.createDreieck(new Punkt(0,0,0), new Punkt(0,-1,0), new Punkt(1,-1,0)));
 		this.tastatur = eingabe.tastatur;
 	}
 
 	public void update() {
+		
 		this.tastatur.update();
 
-//		Theta++;
-//		this.rotate(Theta, 0, 0);
+		//		Theta++;
+		//		this.rotate(Theta, 0, 0);
 		//		this.entities.get(0).aendern(0, 0, Math.sin(Math.toRadians(Theta)) * 20);
 
 		if (this.tastatur.getVorne())
 		{
 
-			Kamera.forw(0.5);
+			Kamera.forw(0.005);
 
 			//			System.out.println("skyr");
 		}
 		if (this.tastatur.getHinten())
 		{
 
-			Kamera.backw(0.5);
+			Kamera.backw(0.005);
 
 			//			System.out.println("skyr");
 		}
-		if (this.tastatur.getLinks()) {
-			Matrix.yGrad -= 0.3;
+		if (this.tastatur.getLinks())
+		{
+			Kamera.rot(-0.03);
 		}
-		if (this.tastatur.getRechts()) {
-			Matrix.yGrad += 0.3;
+		if (this.tastatur.getRechts())
+		{
+			Kamera.rot(0.03);
 		}
+		if (this.tastatur.getOben())
+		{
+			Kamera.up(2);
+		}
+		if (this.tastatur.getUnten())
+		{
+			Kamera.up(-2);
+		}
+		Kamera.updateCam();
 	}
 
 	public void render(Graphics g) {

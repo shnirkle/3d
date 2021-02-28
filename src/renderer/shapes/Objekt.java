@@ -8,7 +8,7 @@ import renderer.punkt.Matrix;
 public class Objekt {
 
 	private Polygon3D[] polygons;
-	private double xGrad, yGrad, zGrad;
+	private float xGrad, yGrad, zGrad;
 	private float xOff, yOff, zOff;
 	public Objekt(Color color, Polygon3D... polygons) {
 		this.polygons = polygons;
@@ -37,7 +37,7 @@ public class Objekt {
 		weltMat.matrixInitialisierung();
 		
 		weltMat = Matrix.matrixMult(zRot, xRot);
-//		weltMat = Matrix.matrixMult(yRot, weltMat);
+		weltMat = Matrix.matrixMult(yRot, weltMat);
 		weltMat = Matrix.matrixMult(weltMat, mTrans);
 		
 		
@@ -48,12 +48,12 @@ public class Objekt {
 	}
 
 		
-	public void aendern(double x, double y, double z) {
-		xOff += (float) x;
-		yOff += (float) y;
-		zOff += (float) z;
+	public void aendern(float x, float y, float z) {
+		xOff +=x;
+		yOff +=y;
+		zOff +=z;
 	}
-	public void rotate(double xGrad, double yGrad, double zGrad) {
+	public void rotate(float xGrad,float yGrad, float zGrad) {
 		this.xGrad += xGrad;
 		this.yGrad += yGrad;
 		this.zGrad += zGrad;

@@ -49,6 +49,7 @@ public class Matrix {
 	}
 
 	public static Matrix rotateAxisX(double Grad) {
+		xRotMatrix.matrixInitialisierung();
 
 		xRotMatrix.mat[0][0] = 1.0f;
 		xRotMatrix.mat[1][1] = (float) Math.cos(Grad);
@@ -61,7 +62,7 @@ public class Matrix {
 	}
 
 	public static Matrix rotateAxisY(double Grad) {
-
+		yRotMatrix.matrixInitialisierung();
 		yRotMatrix.mat[0][0] = (float) Math.cos(Grad);
 		yRotMatrix.mat[0][2] = (float) Math.sin(Grad);
 		yRotMatrix.mat[2][0] = (float) -Math.sin(Grad);
@@ -73,6 +74,7 @@ public class Matrix {
 	}
 
 	public static Matrix rotateAxisZ(double Grad) {
+		zRotMatrix.matrixInitialisierung();
 
 		zRotMatrix.mat[0][0] = (float) Math.cos(Grad);
 		zRotMatrix.mat[0][1] = (float) Math.sin(Grad);
@@ -85,15 +87,14 @@ public class Matrix {
 	}
 
 	public static Matrix richteKameraMatrix(Vektor dirr,Vektor orth, Vektor pos) {
-		Vektor dir = dirr;
 		
 		
-		dir.normVec();
+		
 		
 		Vektor orthDir = orth;
 //		dir = new Vektor(0,0,1);
 //		orthDir = new Vektor(0,1,0);
-		Vektor newForward = Vektor.sub(dir, pos);
+		Vektor newForward = Vektor.sub(dirr, pos);
 		newForward.normVec();
 
 		// Calculate new Up direction
@@ -103,7 +104,7 @@ public class Matrix {
 
 		// New Right direction is easy, its just cross product
 		Vektor newRight = Vektor.kreuzprodukt(newUp, newForward);
-
+		
 		// Construct Dimensioning and Translation Matrix	
 		Matrix matrix = new Matrix();
 		matrix.mat[0][0] = (float) newRight.x;

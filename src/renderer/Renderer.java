@@ -19,6 +19,7 @@ public class Renderer {
 	}
 
 	public static void render(Graphics g) {
+		g.fillRect(0, 0, Anzeige.WIDTH * 2, Anzeige.HEIGHT * 2);
 		for(Polygon3D  p3: polys) {
 			Polygon p = new Polygon();
 			g.setColor(p3.shade);

@@ -12,8 +12,8 @@ import renderer.world.Kamera;
 public class Polygon3D {
 
 	private static Vektor licht = new Vektor(1, 0, 0);
-	private static Vektor adjustScreen = new Vektor(Anzeige.WIDTH * 0.5, Anzeige.HEIGHT * 0.5, 1);
-	private static Vektor viewOff = new Vektor(1.0, 1.0, 0.0);
+	private static Vektor adjustScreen = new Vektor(Anzeige.WIDTH * 0.5f, Anzeige.HEIGHT * 0.5f, 1f);
+	private static Vektor viewOff = new Vektor(1.0f, 1.0f, 0.0f);
 
 	private Vektor[] punkte;
 	private Vektor[] prPunkte;
@@ -50,6 +50,8 @@ public class Polygon3D {
 		Vektor normale = Vektor.kreuzprodukt(v_0_1, v_0_2);
 		normale.normVec();
 		Vektor camRay = Vektor.sub(tranPunkte[0], Kamera.vCamera);
+		
+		
 		if (Vektor.dot(normale, camRay) < 0.0f)
 		{
 
@@ -83,6 +85,7 @@ public class Polygon3D {
 			prPunkte[2] = Vektor.multVektor_Vektor(prPunkte[2], adjustScreen);
 
 			this.avgZ = this.getAvgZ();
+			if(this.getAvgZ(viewed) < 0) return;
 			Renderer.addPoly(this);
 
 		}
@@ -103,7 +106,10 @@ public class Polygon3D {
 
 		return new Color(lae, lae, lae);
 	}
-
+	private double getAvgZ(Vektor[] viewed) {
+		double p1Z = (viewed[0].z + viewed[1].z + viewed[2].z) / 3;
+		return p1Z;
+	}
 	private double getAvgZ() {
 		double p1Z = (this.prPunkte[0].z + this.prPunkte[1].z + this.prPunkte[2].z) / 3;
 		return p1Z;

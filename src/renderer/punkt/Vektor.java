@@ -2,20 +2,20 @@ package renderer.punkt;
 
 public class Vektor {
 
-	public double y = 0;
-	public double x = 0;
-	public double z = 0;
-	public double w = 1;
-	public double length = 0;
-	public double normX = 0;
-	public double normY = 0;
-	public double normZ = 0;
+	public float y = 0;
+	public float x = 0;
+	public float z = 0;
+	public float w = 1;
+	public float length = 0;
+	public float normX = 0;
+	public float normY = 0;
+	public float normZ = 0;
 
-	public Vektor(double x, double y, double z) {
+	public Vektor(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.length = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+		this.length = (float) Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
 		this.normX = this.x / length;
 		this.normY = this.y / length;
 		this.normZ = this.z / length;
@@ -38,8 +38,8 @@ public class Vektor {
 		return ans;
 	}
 
-	public static double dot(Vektor vec1, Vektor vec2) {
-		return (double) vec1.normX * vec2.normX + vec1.normY * vec2.normY + vec1.normZ * vec2.normZ;
+	public static float dot(Vektor vec1, Vektor vec2) {
+		return vec1.normX * vec2.normX + vec1.normY * vec2.normY + vec1.normZ * vec2.normZ;
 	}
 
 	public static double degrees(Vektor vec1, Vektor vec2) {
@@ -52,7 +52,7 @@ public class Vektor {
 			System.out.println("X:" + b.x + " | Y:" + b.y + " | Z:"+ b.z + " | W:"+ b.w);
 		}
 	}
-	public static Vektor multvec(Vektor mult, double faktor) {
+	public static Vektor multvec(Vektor mult, float faktor) {
 		Vektor res = new Vektor();
 		res.setX(mult.x * faktor);
 		res.setY(mult.y * faktor);
@@ -77,19 +77,19 @@ public class Vektor {
 		this.normZ = this.z / length;
 	}
 
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 		this.reCalc();
 
 	}
 
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 		this.reCalc();
 
 	}
 
-	public void setZ(double z) {
+	public void setZ(float z) {
 		this.z = z;
 		this.reCalc();
 
@@ -107,8 +107,8 @@ public class Vektor {
 		return new Punkt(this.x, this.y, this.z);
 	}
 
-	private double length() {
-		return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+	private float length() {
+		return (float) Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
 
 	}
 }

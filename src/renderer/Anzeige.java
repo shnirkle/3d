@@ -21,7 +21,7 @@ public class Anzeige extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private static String titel = "Sterne";
-	public static int WIDTH = 1920;
+	public static int WIDTH = 1080;
 	public static int HEIGHT = 1080;
 	public Vektor cam = new Vektor(0,0,0);
 	private static boolean running = false;
@@ -133,7 +133,7 @@ public class Anzeige extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 
 		g.setColor(cölör);
-		g.fillRect(0, 0, WIDTH * 2, HEIGHT * 2);
+		
 
 		this.entityManager.render(g);
 		g.dispose();

@@ -55,12 +55,12 @@ public class BasicEntityBuilder {
 		
 		return w;
 	}
-	public static Objekt createTeapot(double posx, double posy, double posz) {
+	public static Objekt createTeapot(float posx, float posy, float posz) {
 		Objekt w = readFile("src/crap.txt");
 		w.aendern(posx, posy, posz);
 		return w;
 	}
-	public static Objekt createSpaceShip(double posx, double posy, double posz) {
+	public static Objekt createSpaceShip(float posx, float posy, float posz) {
 		Objekt w = readFile("src/versuch1.txt");
 		w.aendern(posx, posy, posz);
 		return w;

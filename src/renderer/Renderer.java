@@ -7,32 +7,28 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import renderer.punkt.Vektor;
-import renderer.shapes.Polygon3D;
+import renderer.shapes.PrimTri;
 
 public class Renderer {
-	private static List<Polygon3D> polys = new ArrayList<Polygon3D>();
-	public static void addPoly(Polygon3D p) {
+	private static List<PrimTri> polys = new ArrayList<PrimTri>();
+	
+	public static void addPoly(PrimTri p) {
 		polys.add(p);
-		Renderer.sortList();
+		
 
 	}
 
 	public static void render(Graphics g) {
+		Renderer.sortList();
 		g.fillRect(0, 0, Anzeige.WIDTH * 2, Anzeige.HEIGHT * 2);
 		if(polys.isEmpty()) return;
-		for(Polygon3D  p3: polys) {
+		for(PrimTri  pp: polys) {
 			Polygon p = new Polygon();
-			g.setColor(p3.shade);
-//			g.setColor(Color.WHITE);
-			Vektor[] pp = p3.getPrPunkte();
-			if(pp[0] == null || pp[1] == null || pp[2] == null) {
-				return;
-			}
-			p.addPoint((int) pp[0].x,(int) pp[0].y);
-			p.addPoint((int) pp[1].x,(int) pp[1].y);
-			p.addPoint((int) pp[2].x,(int) pp[2].y);
-			g.fillPolygon(p); 
+			g.setColor(pp.color);
+			p.addPoint((int) pp.points[0].x,(int) pp.points[0].y);
+			p.addPoint((int) pp.points[1].x,(int) pp.points[1].y);
+			p.addPoint((int) pp.points[2].x,(int) pp.points[2].y);
+			g.fillPolygon(p);  
 		}
 		
 		
@@ -42,11 +38,11 @@ public class Renderer {
 		
 		
 	
-		Collections.sort(polys, new Comparator<Polygon3D>() {
+		Collections.sort(polys, new Comparator<PrimTri>() {
 	        @Override
-	        public int compare(Polygon3D p2, Polygon3D p1)
+	        public int compare(PrimTri p2, PrimTri p1)
 	        {
-	            return Double.compare(p1.avgZ, p2.avgZ);
+	            return Double.compare(p1.getAvgZ(), p2.getAvgZ());
 	        }
 	    });
 }

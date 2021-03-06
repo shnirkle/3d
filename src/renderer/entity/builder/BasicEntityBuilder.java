@@ -92,7 +92,7 @@ public class BasicEntityBuilder {
 				new Polygon3D(p1, p3, p4), // Front 
 
 				new Polygon3D(p4, p3, p5), //
-				new Polygon3D(p4, p5, p6), // Ost
+				new Polygon3D(p4, p5, p6), // Ost 
 
 				new Polygon3D(p6, p5, p7), //
 				new Polygon3D(p6, p7, p8), // Hinten

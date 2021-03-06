@@ -54,9 +54,9 @@ public class Objekt {
 		zOff +=z;
 	}
 	public void rotate(float xGrad,float yGrad, float zGrad) {
-		this.xGrad += xGrad;
-		this.yGrad += yGrad;
-		this.zGrad += zGrad;
+		this.xGrad = xGrad;
+		this.yGrad = yGrad;
+		this.zGrad = zGrad;
 		this.sortieren();
 	}
 

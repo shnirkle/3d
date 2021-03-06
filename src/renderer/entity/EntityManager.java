@@ -27,8 +27,8 @@ public class EntityManager {
 		//		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1))
 		//				this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 10, 1));
 //				this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
-						this.entities.add(BasicEntityBuilder.createSpaceShip(0,0,8));
-		//		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 16));
+//						this.entities.add(BasicEntityBuilder.createSpaceShip(0,0,8));
+				this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 16));
 		//		this.entities.add(BasicEntityBuilder.createDreieck(new Punkt(0,0,0), new Punkt(0,-1,0), new Punkt(1,-1,0)));
 		this.tastatur = eingabe.tastatur;
 	}
@@ -45,7 +45,7 @@ public class EntityManager {
 		//			Kamera.rot(0.03);
 
 		//		}
-//				this.rotate(Theta * 0.01f, 0, 0);
+				this.rotate(180f, 0, 0);
 		//		this.entities.get(0).aendern(0, 0, Math.sin(Math.toRadians(Theta)) * 20);
 
 		if (this.tastatur.getVorne())

@@ -45,8 +45,8 @@ public class Kamera {
 		return Kamera.vCamera.z;
 	}
 	public static void updateCam() {
-		Vektor.printVektor(vLook);
-		Vektor.printVektor(vCamera);
+//		Vektor.printVektor(vLook);
+//		Vektor.printVektor(vCamera);
 		Vektor vTarget = new Vektor(0,0,1);
 		vUp = new Vektor(0,1,0);
 		Matrix yRot = Matrix.rotateAxisY(yGrad);
@@ -55,6 +55,6 @@ public class Kamera {
 		Matrix camMatrix = Matrix.richteKameraMatrix(vDir, vUp, vCamera); //M
 		
 		sicht = Matrix.matrixInvertierung(camMatrix);
-		sicht.printMat();
+//		sicht.printMat();
 	}
 }

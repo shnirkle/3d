@@ -28,9 +28,9 @@ public class Vektor {
 	public static Vektor multVektor_Vektor(Vektor vec1, Vektor vec2) {
 		return new Vektor(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 	}
-	
-	
+
 	public static Vektor kreuzprodukt(Vektor vec1, Vektor vec2) {
+		
 		Vektor ans = new Vektor(0, 0, 0);
 		ans.setX(vec1.y * vec2.z - vec2.y * vec1.z);
 		ans.setY(vec1.z * vec2.x - vec2.z * vec1.x);
@@ -39,6 +39,7 @@ public class Vektor {
 	}
 
 	public static float dot(Vektor vec1, Vektor vec2) {
+		if(vec1 == null || vec2 == null) return 0.0f;
 		return vec1.normX * vec2.normX + vec1.normY * vec2.normY + vec1.normZ * vec2.normZ;
 	}
 
@@ -47,11 +48,14 @@ public class Vektor {
 		double ans = Math.acos(dot / (vec1.length * vec2.length));
 		return Math.toDegrees(ans);
 	}
+
 	public static void printVektor(Vektor... a) {
-		for(Vektor b : a) {
-			System.out.println("X:" + b.x + " | Y:" + b.y + " | Z:"+ b.z + " | W:"+ b.w);
+		for (Vektor b : a)
+		{
+			System.out.println("X:" + b.x + " | Y:" + b.y + " | Z:" + b.z + " | W:" + b.w);
 		}
 	}
+
 	public static Vektor multvec(Vektor mult, float faktor) {
 		Vektor res = new Vektor();
 		res.setX(mult.x * faktor);
@@ -59,17 +63,20 @@ public class Vektor {
 		res.setZ(mult.z * faktor);
 		return res;
 	}
+
 	public void multvec(double scale) {
 		this.x *= scale;
 		this.y *= scale;
 		this.z *= scale;
 
 	}
+
 	public void normVec() {
 		this.x = this.normX;
 		this.y = this.normY;
 		this.z = this.normZ;
 	}
+
 	private void reCalc() {
 		this.length = this.length();
 		this.normX = this.x / length;
@@ -94,12 +101,33 @@ public class Vektor {
 		this.reCalc();
 
 	}
+	public static float dist(Vektor v, Vektor ebenenNormale, Vektor ebenenPunkt) {
+		//v.normVec();
+		return (ebenenNormale.x * v.x + ebenenNormale.y * v.y + ebenenNormale.z * v.z - Vektor.dot(ebenenNormale, ebenenPunkt));
+	}
+	public static Vektor VektorSchneidetFläche(Vektor ebenenNormale, Vektor ebenenPunkt, Vektor linAnfang, Vektor linEnde) {
+		ebenenNormale.normVec();
+		float ebenenDist = -1.0f *Vektor.dot(ebenenNormale, ebenenPunkt);
+//		System.out.println(1);
+		float aDist = Vektor.dot(linAnfang, ebenenNormale); 
+//		System.out.println(2);
+		float bDist = Vektor.dot(linEnde, ebenenNormale);
+//		System.out.println(3);
+		float t = (-ebenenDist - aDist) / (bDist - aDist);
+//		System.out.println(4);
+		Vektor lin = Vektor.sub(linEnde, linAnfang);
+//		System.out.println(5);
+		Vektor schnittVek = Vektor.multvec(lin, t);
+//		System.out.println(6);
+		return Vektor.add(linAnfang, schnittVek);
+	}
 
 	public static Vektor add(Vektor v1, Vektor v2) {
 		return new Vektor(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 	}
 
 	public static Vektor sub(Vektor v1, Vektor v2) {
+		
 		return new Vektor(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
 	}
 

@@ -109,7 +109,7 @@ public class Anzeige extends Canvas implements Runnable {
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				this.frame.setTitle(titel + " | " + frames + "fps");
-				frames = 0;
+				frames = 0; 
 			}
 		}
 		stop();

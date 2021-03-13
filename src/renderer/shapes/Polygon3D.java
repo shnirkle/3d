@@ -56,14 +56,14 @@ public class Polygon3D {
 		tranPunkte[2] = Matrix.multMat(punkte[2], weltMat);
 
 		Vektor v_0_1 = Vektor.sub(tranPunkte[1], tranPunkte[0]);
-		v_0_1.normVec();
+		v_0_1.normVektor();
 		Vektor v_0_2 = Vektor.sub(tranPunkte[2], tranPunkte[0]);
-		v_0_2.normVec();
+		v_0_2.normVektor();
 		Vektor normale = Vektor.kreuzprodukt(v_0_1, v_0_2);
-		normale.normVec();
+		normale.normVektor();
 		Vektor camRay = Vektor.sub(tranPunkte[0], Kamera.vCamera);
 
-		if (Vektor.dot(normale, camRay) < 0.0f)
+		if (Vektor.skalarprodukt(normale, camRay) < 0.0f)
 		{
 			shade = this.calcShade(normale, tranPunkte[0]);
 			viewed = new Vektor[3];
@@ -116,8 +116,8 @@ public class Polygon3D {
 		{
 			Vektor[] a  = new Vektor[3];
 			a[0] = p[0];
-			a[1] = Vektor.VektorSchneidetFläche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
-			a[2] = Vektor.VektorSchneidetFläche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(1));
+			a[1] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
+			a[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(1));
 			a = Polygon3D.projectTri(a);
 			PrimTri temp = new PrimTri(a, this.shade);
 			Renderer.addPoly(temp);
@@ -130,10 +130,10 @@ public class Polygon3D {
 			Vektor[] c = new Vektor[3];
 			b[0] = insideList.get(0);
 			b[1] = insideList.get(1);
-			b[2] = Vektor.VektorSchneidetFläche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
+			b[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
 			c[0] = insideList.get(1);
 			c[1] = b[2];
-			c[2] = Vektor.VektorSchneidetFläche(ebenenNormale, ebenenPunkt, insideList.get(1), outsideList.get(0));
+			c[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(1), outsideList.get(0));
 			
 //			Renderer.addPoly(temp1);
 //			Renderer.addPoly(temp2);
@@ -160,9 +160,9 @@ public class Polygon3D {
 		prPunkte[1] = Matrix.multMat(p[1], Matrix.projectionMatrix);
 		prPunkte[2] = Matrix.multMat(p[2], Matrix.projectionMatrix);
 
-		prPunkte[0].multvec(1 / prPunkte[0].w);
-		prPunkte[1].multvec(1 / prPunkte[1].w);
-		prPunkte[2].multvec(1 / prPunkte[2].w);
+		prPunkte[0].multVektor_Faktor(1 / prPunkte[0].w);
+		prPunkte[1].multVektor_Faktor(1 / prPunkte[1].w);
+		prPunkte[2].multVektor_Faktor(1 / prPunkte[2].w);
 
 		prPunkte[0] = Vektor.add(prPunkte[0], viewOff);
 		prPunkte[1] = Vektor.add(prPunkte[1], viewOff);
@@ -182,7 +182,7 @@ public class Polygon3D {
 	private Color calcShade(Vektor normal, Vektor vers) {
 		Vektor lightR = Vektor.sub(licht, vers);
 
-		float lae = (float) (Vektor.dot(normal, lightR));
+		float lae = (float) (Vektor.skalarprodukt(normal, lightR));
 		lae = Math.abs(lae);
 		if (lae < 0)
 			lae = 0;

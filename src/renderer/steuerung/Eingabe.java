@@ -1,6 +1,8 @@
 package renderer.steuerung;
 
-public class Eingabe { // Verschiedene Eingabemöglochkeiten werden hier zusammengefasst, um ein späteres Einfügen von bspw. einem Controller einfach zu gestalten
+public class Eingabe { 
+// Verschiedene Eingabemöglochkeiten werden hier zusammengefasst (in unserem Fall nur eine), 
+// um ein späteres Einfügen von bspw. einem Controller, einer Maus, ... einfach zu gestalten
 
 	public Tastatur tastatur;
 

@@ -23,12 +23,16 @@ public class EntityManager {
 
 	}
 
+	//Geschwindigkeit / Sensitivität für die Bewegung
+	float speed = 0.1f;
+	float sens = 0.05f;
+	
 	public void init(Eingabe eingabe) {
 //		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1));
 //		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 10, 1));
 //		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
 //		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 8));
-//		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 16));
+		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 16));
 		for (int i = 0; i < 10; i++)
 		{
 			for (int j = 0; j < 10; j++)
@@ -45,48 +49,44 @@ public class EntityManager {
 
 		Theta++;
 
-		//		if(Theta < 2000000) {
-		//			Kamera.vCamera.setZ(1f - 1f/(1000000000f *Theta));
-		//			Kamera.backw(1);
-		//			Kamera.rot(0.03);
-
-		//		}
 		this.rotate(180f, 0, 0);
-		//		this.entities.get(0).aendern(0, 0, Math.sin(Math.toRadians(Theta)) * 20);
+		//this.entities.get(0).aendern(0, 0, (float) Math.sin(Math.toRadians(Theta)) * 20);	//ein einzelnes Objekt bewegen
 
 		if (this.tastatur.getVorne())
 		{
-
-			Kamera.forw(0.05f);
-
-			//			System.out.println("skyr");
+			Kamera.vorwaerts(speed);
 		}
+		
 		if (this.tastatur.getHinten())
 		{
-
-			Kamera.backw(0.05f);
-
-			//			System.out.println("skyr");
+			Kamera.vorwaerts(-speed);
 		}
+		
 		if (this.tastatur.getLinks())
 		{
-			Kamera.rot(0.1f);
+			Kamera.rotierenLR(sens);
 		}
+		
 		if (this.tastatur.getRechts())
 		{
-			Kamera.rot(-0.1f);
+			Kamera.rotierenLR(-sens);
 		}
+		
 		if (this.tastatur.getOben())
 		{
-			Kamera.up(-0.2f);
+			Kamera.up(-sens);
 		}
+		
 		if (this.tastatur.getUnten())
 		{
-			Kamera.up(0.2f);
+			Kamera.up(sens);
 		}
+		
 		Kamera.updateCam();
 	}
 
+	//alle Objekte rendern
+	
 	public void render(Graphics g) {
 		Renderer.clear();
 		for (Objekt obj : this.entities)
@@ -95,6 +95,8 @@ public class EntityManager {
 		}
 		Renderer.render(g);
 	}
+	
+	//alle Objekte rotieren
 
 	public void rotate(float xGrad, float yGrad, float zGrad) {
 		for (Objekt obj : this.entities)
@@ -104,6 +106,8 @@ public class EntityManager {
 		}
 	}
 
+	//1 Objekt rotieren
+	
 	public void rotate(Objekt w, float xGrad, float yGrad, float zGrad) {
 
 		xGrad = (float) Math.toRadians(xGrad);

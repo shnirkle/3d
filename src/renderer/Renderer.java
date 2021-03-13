@@ -18,11 +18,13 @@ public class Renderer {
 
 	}
 
+	//Rendermethode für die Dreiecke (ursprünglich Polygone, deshalb der Name)
+	
 	public static void render(Graphics g) {
 		Renderer.sortList();
 		g.fillRect(0, 0, Anzeige.WIDTH * 2, Anzeige.HEIGHT * 2);
 		if(polys.isEmpty()) return;
-		for(PrimTri  pp: polys) {
+		for(PrimTri  pp: polys) {										//pp = Projektionspolygone
 			Polygon p = new Polygon();
 			g.setColor(pp.color);
 			p.addPoint((int) pp.points[0].x,(int) pp.points[0].y);
@@ -34,9 +36,9 @@ public class Renderer {
 		
 	}
 
+	//Sortieren der Dreiecke, um sie in die richtige Reihenfolge zum Anzeigen zu bringen
+	
 	private static void sortList() {
-		
-		
 	
 		Collections.sort(polys, new Comparator<PrimTri>() {
 	        @Override

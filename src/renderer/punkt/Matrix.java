@@ -26,6 +26,8 @@ public class Matrix {
 		return a;
 	}
 
+	//Debugmethode, um eine Matrix zu printen
+	
 	public void printMat() {
 		System.out.println("----");
 		for (int i = 0; i < 4; i++)
@@ -35,6 +37,8 @@ public class Matrix {
 			
 		}
 	}
+	
+	//Initialisiere die Projektionsmatrix, welche wir dann tatsächlich sehen (Man könnte sagen, dass sie unser Bildschirm ist)
 
 	public static void initialisiereProjMatrix(float w, float h, float near, float far, float fov) {
 
@@ -47,6 +51,9 @@ public class Matrix {
 		projectionMatrix.mat[2][3] = 1.0f;
 		projectionMatrix.mat[3][3] = 0.0f;
 	}
+	
+	//Methoden zum Rotieren an Achsen
+	//RotMatrix steht dabei für Rotationsmatrixen
 
 	public static Matrix rotateAxisX(double Grad) {
 		xRotMatrix.matrixInitialisierung();
@@ -86,42 +93,42 @@ public class Matrix {
 		return zRotMatrix;
 	}
 
-	public static Matrix richteKameraMatrix(Vektor dirr,Vektor orth, Vektor pos) {
+	//Wohin soll die Kamera schauen? -> Matrix, damit Oben, Vorne und Rechts auch weiterhin Oben, Vorne und Rechts sind
+	
+public static Matrix richteKameraMatrix(Vektor blickrichtung, Vektor orthogonal, Vektor position) {
 		
-		
-		
-		
-		Vektor orthDir = orth;
 //		dir = new Vektor(0,0,1);
 //		orthDir = new Vektor(0,1,0);
-		Vektor newForward = Vektor.sub(dirr, pos);
-		newForward.normVec();
-
-		// Calculate new Up direction
-		Vektor a = Vektor.multvec(newForward, Vektor.dot(orthDir, newForward));
-		Vektor newUp = Vektor.sub(orthDir, a);
-		newUp.normVec();
-
-		// New Right direction is easy, its just cross product
-		Vektor newRight = Vektor.kreuzprodukt(newUp, newForward);
 		
-		// Construct Dimensioning and Translation Matrix	
+		//Neues Vorne
+		Vektor neuVorne = Vektor.sub(blickrichtung, position);
+		neuVorne.normVektor();
+
+		// Neues Oben
+		Vektor a = Vektor.multVektor_Faktor(neuVorne, Vektor.skalarprodukt(orthogonal, neuVorne));
+		Vektor neuOben = Vektor.sub(orthogonal, a);
+		neuOben.normVektor();
+
+		// Neues Rechts
+		Vektor neuRechts = Vektor.kreuzprodukt(neuOben, neuVorne);
+		
+		// Translationsmatrix für unsere neuen Dimensionen konstruieren
 		Matrix matrix = new Matrix();
-		matrix.mat[0][0] = (float) newRight.x;
-		matrix.mat[0][1] = (float) newRight.y;
-		matrix.mat[0][2] = (float) newRight.z;
+		matrix.mat[0][0] = (float) neuRechts.x;
+		matrix.mat[0][1] = (float) neuRechts.y;
+		matrix.mat[0][2] = (float) neuRechts.z;
 		matrix.mat[0][3] = 0.0f;
-		matrix.mat[1][0] = (float) newUp.x;
-		matrix.mat[1][1] = (float) newUp.y;
-		matrix.mat[1][2] = (float) newUp.z;
+		matrix.mat[1][0] = (float) neuOben.x;
+		matrix.mat[1][1] = (float) neuOben.y;
+		matrix.mat[1][2] = (float) neuOben.z;
 		matrix.mat[1][3] = 0.0f;
-		matrix.mat[2][0] = (float) newForward.x;
-		matrix.mat[2][1] = (float) newForward.y;
-		matrix.mat[2][2] = (float) newForward.z;
+		matrix.mat[2][0] = (float) neuVorne.x;
+		matrix.mat[2][1] = (float) neuVorne.y;
+		matrix.mat[2][2] = (float) neuVorne.z;
 		matrix.mat[2][3] = 0.0f;
-		matrix.mat[3][0] = (float) pos.x;
-		matrix.mat[3][1] = (float) pos.y;
-		matrix.mat[3][2] = (float) pos.z;
+		matrix.mat[3][0] = (float) position.x;
+		matrix.mat[3][1] = (float) position.y;
+		matrix.mat[3][2] = (float) position.z;
 		matrix.mat[3][3] = 1.0f;
 		return matrix;
 	}
@@ -135,49 +142,55 @@ public class Matrix {
 
 	}
 
-	public static Matrix aender(float x, float y, float z) {
+	//Matrixkoordinaten ändern
+	
+		public static Matrix aenderKoordinaten(float x, float y, float z) {
 
-		aender.mat[0][0] = 1.0f;
-		aender.mat[1][1] = 1.0f;
-		aender.mat[2][2] = 1.0f;
-		aender.mat[3][3] = 1.0f;
-		aender.mat[3][0] = (float) x;
-		aender.mat[3][1] = (float) y;
-		aender.mat[3][2] = (float) z;
-		return aender;
-	}
-
-	public static Matrix matrixMult(Matrix m1, Matrix m2) {
-		Matrix m3 = new Matrix();
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				m3.mat[j][i] = m1.mat[j][0] * m2.mat[0][i] + m1.mat[j][1] * m2.mat[1][i] + m1.mat[j][2] * m2.mat[2][i] + m1.mat[j][3] * m2.mat[3][i];
-			}
+			aender.mat[0][0] = 1.0f;
+			aender.mat[1][1] = 1.0f;
+			aender.mat[2][2] = 1.0f;
+			aender.mat[3][3] = 1.0f;
+			aender.mat[3][0] = (float) x;
+			aender.mat[3][1] = (float) y;
+			aender.mat[3][2] = (float) z;
+			return aender;
 		}
-		return m3;
-	}
 
-	public static Matrix matrixInvertierung(Matrix m) { // Funkt.
-		Matrix matrix = new Matrix();
-		matrix.mat[0][0] = m.mat[0][0];
-		matrix.mat[0][1] = m.mat[1][0];
-		matrix.mat[0][2] = m.mat[2][0];
-		matrix.mat[0][3] = 0.0f;
-		matrix.mat[1][0] = m.mat[0][1];
-		matrix.mat[1][1] = m.mat[1][1];
-		matrix.mat[1][2] = m.mat[2][1];
-		matrix.mat[1][3] = 0.0f;
-		matrix.mat[2][0] = m.mat[0][2];
-		matrix.mat[2][1] = m.mat[1][2];
-		matrix.mat[2][2] = m.mat[2][2];
-		matrix.mat[2][3] = 0.0f;
-		matrix.mat[3][0] = -(m.mat[3][0] * matrix.mat[0][0] + m.mat[3][1] * matrix.mat[1][0] + m.mat[3][2] * matrix.mat[2][0]);
-		matrix.mat[3][1] = -(m.mat[3][0] * matrix.mat[0][1] + m.mat[3][1] * matrix.mat[1][1] + m.mat[3][2] * matrix.mat[2][1]);
-		matrix.mat[3][2] = -(m.mat[3][0] * matrix.mat[0][2] + m.mat[3][1] * matrix.mat[1][2] + m.mat[3][2] * matrix.mat[2][2]);
-		matrix.mat[3][3] = 1.0f;
-		return matrix;
+		//Multipliziere zwei Matrixen
+		
+		public static Matrix multMatrix_Matrix(Matrix m1, Matrix m2) {
+			Matrix m3 = new Matrix();
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					m3.mat[j][i] = m1.mat[j][0] * m2.mat[0][i] + m1.mat[j][1] * m2.mat[1][i] + m1.mat[j][2] * m2.mat[2][i] + m1.mat[j][3] * m2.mat[3][i];
+				}
+			}
+			return m3;
+		}
 
-	}
+		//Matrix invertieren -> wichtig für Kamera
+		
+		public static Matrix matrixInvertierung(Matrix m) { 
+			Matrix matrix = new Matrix();
+			matrix.mat[0][0] = m.mat[0][0];
+			matrix.mat[0][1] = m.mat[1][0];
+			matrix.mat[0][2] = m.mat[2][0];
+			matrix.mat[0][3] = 0.0f;
+			matrix.mat[1][0] = m.mat[0][1];
+			matrix.mat[1][1] = m.mat[1][1];
+			matrix.mat[1][2] = m.mat[2][1];
+			matrix.mat[1][3] = 0.0f;
+			matrix.mat[2][0] = m.mat[0][2];
+			matrix.mat[2][1] = m.mat[1][2];
+			matrix.mat[2][2] = m.mat[2][2];
+			matrix.mat[2][3] = 0.0f;
+			matrix.mat[3][0] = -(m.mat[3][0] * matrix.mat[0][0] + m.mat[3][1] * matrix.mat[1][0] + m.mat[3][2] * matrix.mat[2][0]);
+			matrix.mat[3][1] = -(m.mat[3][0] * matrix.mat[0][1] + m.mat[3][1] * matrix.mat[1][1] + m.mat[3][2] * matrix.mat[2][1]);
+			matrix.mat[3][2] = -(m.mat[3][0] * matrix.mat[0][2] + m.mat[3][1] * matrix.mat[1][2] + m.mat[3][2] * matrix.mat[2][2]);
+			matrix.mat[3][3] = 1.0f;
+			return matrix;
+
+		}
 }

@@ -8,7 +8,9 @@ public class Tastatur implements KeyListener {
 	private boolean[] tasten = new boolean[66568];
 	private boolean links, rechts, oben, unten, vorne, hinten;
 	
-	public void update() {	//Den boolean-Variablen werden Tasten zugewiesen
+	//Den boolean-Variablen werden Tasten zugewiesen
+	
+	public void update() {	
 		this.links = this.tasten[KeyEvent.VK_LEFT] || this.tasten[KeyEvent.VK_A];
 		this.rechts = this.tasten[KeyEvent.VK_RIGHT] || this.tasten[KeyEvent.VK_D];
 		this.vorne = this.tasten[KeyEvent.VK_UP] || this.tasten[KeyEvent.VK_W];
@@ -16,6 +18,8 @@ public class Tastatur implements KeyListener {
 		this.oben = this.tasten[KeyEvent.VK_SPACE];
 		this.unten = this.tasten[KeyEvent.VK_C] || this.tasten[KeyEvent.VK_CONTROL];
 	}
+	
+	//Methoden um herauszufinden, ob eine Richtungstaste gedrückt wird
 	
 	public boolean getLinks() { 
 		return this.links;

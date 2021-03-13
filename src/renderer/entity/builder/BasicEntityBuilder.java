@@ -10,7 +10,12 @@ import renderer.punkt.Punkt;
 import renderer.shapes.Objekt;
 import renderer.shapes.Polygon3D;
 
+//Hier werden Objekte aus Dreiecken gebaut, bzw. die nötige Textdatei importiert
+
 public class BasicEntityBuilder {
+	
+	//Methode zum Einlesen von Textdateien
+	
 	public static Objekt readFile(String path) {
 		List<Punkt> punkte = new ArrayList<Punkt>();
 		List<Polygon3D> polys = new ArrayList<Polygon3D>();
@@ -55,6 +60,9 @@ public class BasicEntityBuilder {
 		
 		return w;
 	}
+	
+	//Ab hier werden Objekte gebaut
+	
 	public static Objekt createTeapot(float posx, float posy, float posz) {
 		Objekt w = readFile("src/crap.txt");
 		w.aendern(posx, posy, posz);

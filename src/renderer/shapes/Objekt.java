@@ -6,7 +6,7 @@ import java.util.List;
 import renderer.punkt.Matrix;
 
 public class Objekt {
-
+	
 	private Polygon3D[] polygons;
 	private float xGrad, yGrad, zGrad;
 	private float xOff, yOff, zOff;
@@ -15,6 +15,8 @@ public class Objekt {
 
 	}
 
+	//Objekt aus Polygons
+	
 	public Objekt(Polygon3D... polygons) {
 		//this.color = Color.WHITE;
 		this.polygons = polygons;
@@ -24,6 +26,8 @@ public class Objekt {
 	public Objekt(List<Polygon3D> polys) {
 		this.polygons = polys.toArray(new Polygon3D[polys.size()]);
 	}
+	
+	//Rendern für die Rotationen unserer Rotationsmatrixen / Weltmatrix
 
 	public void render() {
 		
@@ -31,14 +35,14 @@ public class Objekt {
 		Matrix yRot = Matrix.rotateAxisY(yGrad);
 		Matrix zRot = Matrix.rotateAxisZ(zGrad);
 		
-		Matrix mTrans = Matrix.aender(xOff, yOff, zOff);
+		Matrix mTrans = Matrix.aenderKoordinaten(xOff, yOff, zOff);
 		
 		Matrix weltMat = new Matrix();
 		weltMat.matrixInitialisierung();
 		
-		weltMat = Matrix.matrixMult(zRot, xRot);
-		weltMat = Matrix.matrixMult(yRot, weltMat);
-		weltMat = Matrix.matrixMult(weltMat, mTrans);
+		weltMat = Matrix.multMatrix_Matrix(zRot, xRot);
+		weltMat = Matrix.multMatrix_Matrix(yRot, weltMat);
+		weltMat = Matrix.multMatrix_Matrix(weltMat, mTrans);
 		
 		
 		for (Polygon3D poly : this.polygons)
@@ -47,12 +51,17 @@ public class Objekt {
 		} 
 	}
 
+	
+	//Abweichung (Offset) beim Rotieren beheben
 		
 	public void aendern(float x, float y, float z) {
 		xOff +=x;
 		yOff +=y;
 		zOff +=z;
 	}
+	
+	//Rotieren, dann sortieren
+	
 	public void rotate(float xGrad,float yGrad, float zGrad) {
 		this.xGrad = xGrad;
 		this.yGrad = yGrad;

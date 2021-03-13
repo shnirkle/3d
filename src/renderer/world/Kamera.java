@@ -15,23 +15,21 @@ public class Kamera {
 	public static void up(float u) {
 		vCamera.setY(vCamera.y + u);
 	}
-	public static void rot(double ang) {
+
+	//Verschiedene Methoden zum Rotieren/Bewegen der Kamera, damit wir die Objekte abhängig von unserer Position behandeln können
+	
+	public static void rotierenLR(double ang) {
 		yGrad += ang;
 		
-		
-		
 	}
-	public static void forw(float u) {
+	public static void vorwaerts(float u) {
 		
-		Vektor vforw = Vektor.multvec(vLook, u);
+		Vektor vforw = Vektor.multVektor_Faktor(vLook, u);
 		vCamera = Vektor.add(vCamera, vforw);
 //		vCamera.setZ(vCamera.normZ + u);
 	}
-	public static void backw(float u) {
-		Vektor vbackw = Vektor.multvec(vLook, u);
-		vCamera = Vektor.sub(vCamera, vbackw);
-//		vCamera.setZ(vCamera.normZ + u);
-	}
+	
+	//Kamerakoordinaten
 	
 	public static float getX() {
 		return Kamera.vCamera.x;
@@ -44,6 +42,9 @@ public class Kamera {
 	public static float getZ() {
 		return Kamera.vCamera.z;
 	}
+
+	//Updaten der Kamerainfos, um Vektoren für "das nächste Sehen" zu erhalten und die Matrixen dementsprechen zu ändern
+	
 	public static void updateCam() {
 //		Vektor.printVektor(vLook);
 //		Vektor.printVektor(vCamera);

@@ -47,6 +47,8 @@ public class Anzeige extends Canvas implements Runnable {
 
     }
 
+	//Konstruktor für unsere Anzeige
+	
 	public Anzeige() {
 		this.frame = new JFrame();
 		this.entityManager = new EntityManager();
@@ -56,14 +58,12 @@ public class Anzeige extends Canvas implements Runnable {
 		this.eingabe = new Eingabe();
 		
 		this.frame.addKeyListener(this.eingabe.tastatur);
-		
-
-	
-		
-		
 	
 	}
-
+	//Start und Stop Methode
+	
+	// Initialisieren des Threads und der Projektionsmatrix, welche auf unserem Bildschirm liegt
+	
 	public synchronized void start() {
 		running = true;
 		float near = 0.1f;
@@ -85,6 +85,8 @@ public class Anzeige extends Canvas implements Runnable {
 
 	}
 
+	//Auf 60FPS setzen, Tastatur initialisieren, ... -> Was alles beim initialisieren gebraucht wird
+	
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
@@ -116,12 +118,16 @@ public class Anzeige extends Canvas implements Runnable {
 
 	}
 
+	//Gibt der Tastatur den Fokus, damit der KeyListener funktioniert. -> Entity Updates im EntityManager	
+	
 	private void update() {
 
 		this.entityManager.update();
 		this.frame.requestFocus();
 
 	}
+	
+	//Rendermethode: Zeichnet Hintergrund, [...] -> Das Interessante ist im EntityManager
 
 	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();

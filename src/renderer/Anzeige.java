@@ -3,10 +3,20 @@ package renderer;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.border.Border;
 
 import renderer.entity.EntityManager;
 import renderer.punkt.Matrix;
@@ -31,6 +41,59 @@ public class Anzeige extends Canvas implements Runnable {
 
 
 	public static void main(String[] args) {
+		JFrame home = new JFrame();
+		JLabel juno = new JLabel("Juno 267", JLabel.CENTER);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Anzeige.WIDTH = (int) screenSize.getWidth();
+		Anzeige.HEIGHT = (int) screenSize.getHeight();
+		home.setTitle(titel);
+		home.pack();
+		home.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		home.setResizable(false);
+		home.setVisible(true);
+		
+		
+		ImageIcon i = new ImageIcon("src\\images\\play.jpg");  //Bildquelle: https://www.freepik.com/free-icon/play_703430.htm
+        Image img = i.getImage();
+        Image imgneu = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        JButton button = new JButton(new ImageIcon(imgneu));
+        
+        i = new ImageIcon("src\\images\\play2.jpg");  //Bildquelle: https://www.freepik.com/free-icon/play_703430.htm
+        img = i.getImage();
+        imgneu = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        
+        button.setRolloverIcon(new ImageIcon(imgneu));
+        Border emptyBorder = BorderFactory.createEmptyBorder();
+        button.setBorder(emptyBorder);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	home.dispose();
+            	init();
+            }
+        });
+        
+        juno.setForeground(Color.WHITE);
+        juno.setFont(new Font("Algerian", Font.PLAIN, 55));
+        
+        ImageIcon ii1 = new ImageIcon("src\\images\\Weltall.png");  //Bildquelle: https://www.deviantart.com/fi3ur/art/Fractal-Space-5-681865162
+        Image img1 = ii1.getImage();
+        Image img2 = img1.getScaledInstance(WIDTH, HEIGHT, java.awt.Image.SCALE_SMOOTH);
+        home.setContentPane(new JLabel(new ImageIcon(img2)));
+        
+        button.setBounds(WIDTH/2, HEIGHT/2, 100, 100);
+        juno.setBounds(WIDTH/2-125, HEIGHT/4, 300, 130);
+        home.add(button);
+        home.add(juno);
+        home.pack();
+        home.setVisible(true);
+	}
+
+	
+	
+	public static void init() {
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //        HEIGHT = (int) screenSize.getHeight();
 //        WIDTH = (int) screenSize.getWidth();

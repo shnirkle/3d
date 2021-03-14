@@ -2,7 +2,6 @@ package renderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -15,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 
 public final class PauseView  implements ActionListener{
@@ -46,12 +44,6 @@ public final class PauseView  implements ActionListener{
 		buttonWeiter = new JButton ("Weiter");
 		buttonOptionen = new JButton("Einstellungen");
 		buttonVerlassen = new JButton("Spiel verlassen");
-		/*
-		buttonWeiter.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        frame.dispose();
-		    }
-		});*/
 		
 		frame = new JFrame();
 		frame.setLayout(new BorderLayout());
@@ -139,11 +131,12 @@ public final class PauseView  implements ActionListener{
 		//frame.setTitle("Pause");
 		frame.setPreferredSize(new Dimension(400, 500));
 		frame.setUndecorated(true);			//versteckt die Titelleiste. Muss vor pack() geschrieben werden.
+		frame.setAlwaysOnTop(true);
 		frame.pack();
 		frame.setLocationRelativeTo(null);	//zentriert das Fenster auf dem Bildschirm
 		frame.setVisible(true);
 	    //frame.setResizable(false);			//Fenster kann nicht vergrößert / verkleinert werden
-	    
+		
 	}
 	
 //	//ein ActionListener für alle Buttons
@@ -170,6 +163,7 @@ public final class PauseView  implements ActionListener{
 		
 		//Button: Weiter
 		if(e.getSource()==buttonWeiter) {
+			Anzeige.isPaused = false;
 			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));	//schließt das PauseScreen Fenster
 		}
 		

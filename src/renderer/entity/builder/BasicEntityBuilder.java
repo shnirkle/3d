@@ -207,8 +207,8 @@ public class BasicEntityBuilder {
 						int x1 = ti+1;
 						int y0 = pi * 11;
 						int y1 = (pi + 1) * 11;
-						polys[count] = new Polygon3D(punkte[x0+y0], punkte[x1+y0], punkte[x0+y1]);
-						polys[count+1] = new Polygon3D(punkte[x1+y0], punkte[x1+y1], punkte[x0+y1]);
+						polys[count] = new Polygon3D(punkte[x0+y0], punkte[x0+y1], punkte[x1+y0]);
+						polys[count+1] = new Polygon3D(punkte[x1+y0], punkte[x0+y1], punkte[x1+y1]);
 						count += 2;
 					}
 				}

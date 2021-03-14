@@ -5,7 +5,7 @@ import renderer.punkt.Vektor;
 
 public class Kamera {
 	
-	public static float ACC = 2.0f;
+	public static float ACC = 0.0f;
 	public static Vektor vCamera = new Vektor(0,1.5f,4.0f);	
 	public static Vektor vLook = new Vektor(0,0,0);
 	public static double yGrad = 0;
@@ -28,9 +28,8 @@ public class Kamera {
 		
 	}
 	public static void vorwaerts(float u) {
+		ACC += u;
 		
-		Vektor vforw = Vektor.multVektor_Faktor(vLook, u);
-		vCamera = Vektor.add(vCamera, vforw);
 //		vCamera.setZ(vCamera.normZ + u);
 	}
 	
@@ -51,6 +50,15 @@ public class Kamera {
 	//Updaten der Kamerainfos, um Vektoren für "das nächste Sehen" zu erhalten und die Matrixen dementsprechen zu ändern
 	
 	public static void updateCam() {
+		if(Math.abs(ACC) < 3) {
+			ACC *= 0.8f;
+			if(Math.abs(ACC) < 0.1f) {
+				ACC = 0;
+			}
+		}
+		Vektor vforw = Vektor.multVektor_Faktor(vLook, ACC);
+		vCamera = Vektor.add(vCamera, vforw);
+		
 		Matrix xRot = Matrix.rotateAxisX(xGrad);
 		Matrix yRot = Matrix.rotateAxisY(yGrad);
 		Matrix zRot = Matrix.rotateAxisZ(zGrad);

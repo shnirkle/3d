@@ -42,7 +42,7 @@ public class Matrix {
 
 	public static void initialisiereProjMatrix(float w, float h, float near, float far, float fov) {
 
-		float invTan = (float) (1 / Math.tan(Math.toRadians(0.5f * fov)));
+		float invTan = (float) (1.0f / Math.tan(Math.toRadians(0.5f * fov)));
 
 		projectionMatrix.mat[0][0] = (h / w) * invTan;
 		projectionMatrix.mat[1][1] = invTan;
@@ -50,6 +50,7 @@ public class Matrix {
 		projectionMatrix.mat[3][2] = (-far * near) / (far - near);
 		projectionMatrix.mat[2][3] = 1.0f;
 		projectionMatrix.mat[3][3] = 0.0f;
+		System.out.println(w);
 	}
 	
 	//Methoden zum Rotieren an Achsen

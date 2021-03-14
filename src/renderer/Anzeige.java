@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
@@ -21,8 +20,8 @@ public class Anzeige extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private static String titel = "Sterne";
-	public static int WIDTH = 1080;
-	public static int HEIGHT = 1080;
+	public static int WIDTH = 1000;
+	public static int HEIGHT = 1000;
 	public Vektor cam = new Vektor(0,0,0);
 	private static boolean running = false;
 
@@ -32,14 +31,15 @@ public class Anzeige extends Canvas implements Runnable {
 
 
 	public static void main(String[] args) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        HEIGHT = (int) screenSize.getHeight();
-        WIDTH = (int) screenSize.getWidth();
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        HEIGHT = (int) screenSize.getHeight();
+//        WIDTH = (int) screenSize.getWidth();
+//        System.out.println(WIDTH);
         Anzeige display = new Anzeige();
         display.frame.setTitle(titel);
         display.frame.add(display);
         display.frame.pack();
-        display.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        display.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         display.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display. frame.setResizable(false);
         display.frame.setVisible(true);

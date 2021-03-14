@@ -13,7 +13,7 @@ import renderer.world.Kamera;
 
 public class EntityManager {
 	private List<Objekt> entities;
-
+	
 	public int Theta = 1;
 
 	private Tastatur tastatur;
@@ -24,7 +24,7 @@ public class EntityManager {
 	}
 
 	//Geschwindigkeit / Sensitivität für die Bewegung
-	float speed = 0.1f;
+	float speed = 1f;
 	float sens = 0.05f;
 
 	public void init(Eingabe eingabe) {
@@ -32,8 +32,18 @@ public class EntityManager {
 		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 10, 1));
 		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
 		//		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 8));
-		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 0));
+		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 0));
 
+		for (int i = 0; i < 15; i++)
+		{
+			for (int j = 0; j < 15; j++)
+			{
+				for (int j2 = 0; j2 < 15; j2++)
+				{
+					this.entities.add(BasicEntityBuilder.createWürfel(i * 10, j * 10, j2 * 10, 1));
+				}
+			}
+		}
 		this.tastatur = eingabe.tastatur;
 	}
 
@@ -43,37 +53,52 @@ public class EntityManager {
 
 		Theta++;
 
-		
-		//this.entities.get(0).aendern(0, 0, (float) Math.sin(Math.toRadians(Theta)) * 20);	//ein einzelnes Objekt bewegen
-
-		if (this.tastatur.getVorne())
+//		this.entities.get(0).aendern(0, 0, 0.02f *Theta);	//ein einzelnes Objekt bewegen
+		//////////////////////////////////////////////////
+		// W     -    Nach oben drehen                    
+		// A     -    Nach links drehen                   
+		// S     -    Nach unten drehen                    
+		// D     -    Nach rechts drehen                   
+		// Q     -    Gegen den Uhrzeigersinn rotieren    
+		// E     -    Mit dem Uhrzeigersinn rotieren        
+		// STRG -    Negative Beschleunigung                
+		// Leer -    Positive Beschleunigung               
+		//////////////////////////////////////////////////
+		if (this.tastatur.getLeer())
 		{
 			Kamera.vorwaerts(speed);
 		}
+		if (this.tastatur.getQ())
+		{
+			Kamera.rotierenLR(0, 0, -sens);
+		}
+		if (this.tastatur.getE())
+		{
+			Kamera.rotierenLR(0, 0, sens);
+		}
+		if (this.tastatur.getA())
+		{
+			Kamera.rotierenLR(0, sens, 0);
+		}
 
-		if (this.tastatur.getHinten())
+		if (this.tastatur.getW())
+		{
+			Kamera.rotierenLR(-sens, 0, 0);
+		}
+
+		if (this.tastatur.getS())
+		{
+			Kamera.rotierenLR(sens, 0, 0);
+		}
+
+		if (this.tastatur.getD())
+		{
+			Kamera.rotierenLR(0, -sens, 0);
+		}
+
+		if (this.tastatur.getSTRG())
 		{
 			Kamera.vorwaerts(-speed);
-		}
-
-		if (this.tastatur.getLinks())
-		{
-			Kamera.rotierenLR(sens);
-		}
-
-		if (this.tastatur.getRechts())
-		{
-			Kamera.rotierenLR(-sens);
-		}
-
-		if (this.tastatur.getOben())
-		{
-			Kamera.up(-sens);
-		}
-
-		if (this.tastatur.getUnten())
-		{
-			Kamera.up(sens);
 		}
 
 		Kamera.updateCam();

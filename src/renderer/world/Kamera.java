@@ -5,21 +5,26 @@ import renderer.punkt.Vektor;
 
 public class Kamera {
 	
-	
-	public static Vektor vCamera = new Vektor(0,0,0);	
+	public static float ACC = 2.0f;
+	public static Vektor vCamera = new Vektor(0,1.5f,4.0f);	
 	public static Vektor vLook = new Vektor(0,0,0);
 	public static double yGrad = 0;
+	public static double xGrad = 0;
+	public static double zGrad = 0;
 	public static Matrix sicht;
 	public static Vektor vDir = new Vektor(0,0,1);
 	public static Vektor vUp = new Vektor(0,1,0);
+	public static Vektor vRight = new Vektor(1,0,0);
 	public static void up(float u) {
 		vCamera.setY(vCamera.y + u);
 	}
 
 	//Verschiedene Methoden zum Rotieren/Bewegen der Kamera, damit wir die Objekte abhängig von unserer Position behandeln können
 	
-	public static void rotierenLR(double ang) {
-		yGrad += ang;
+	public static void rotierenLR(double angX, double angY, double angZ) {
+		yGrad += angY;
+		xGrad += angX;
+		zGrad += angZ;
 		
 	}
 	public static void vorwaerts(float u) {
@@ -46,14 +51,28 @@ public class Kamera {
 	//Updaten der Kamerainfos, um Vektoren für "das nächste Sehen" zu erhalten und die Matrixen dementsprechen zu ändern
 	
 	public static void updateCam() {
-//		Vektor.printVektor(vLook);
-//		Vektor.printVektor(vCamera);
-		Vektor vTarget = new Vektor(0,0,1);
-		vUp = new Vektor(0,1,0);
+		Matrix xRot = Matrix.rotateAxisX(xGrad);
 		Matrix yRot = Matrix.rotateAxisY(yGrad);
-		vLook = Matrix.multMat(vTarget, yRot);
+		Matrix zRot = Matrix.rotateAxisZ(zGrad);
+		
+
+		Vektor vTarget = new Vektor(0,0,1);
+		Vektor vUpTarget = new Vektor(0,1,0);
+		Vektor vRightTarget = new Vektor(0,0,1);
+		
+		
+		
+		vLook = Matrix.multMat(vTarget, xRot);
+		vUpTarget = Matrix.multMat(vUpTarget, xRot);
+		
+		vUpTarget = Matrix.multMat(vUpTarget, yRot);
+		vLook = Matrix.multMat(vLook, yRot);
+		
+		vUpTarget = Matrix.multMat(vUpTarget, zRot);
+		vLook = Matrix.multMat(vLook, zRot);
+		
 		vDir = Vektor.add(vCamera, vLook);
-		Matrix camMatrix = Matrix.richteKameraMatrix(vDir, vUp, vCamera); //M
+		Matrix camMatrix = Matrix.richteKameraMatrix(vDir, vUpTarget, vCamera); //M
 		
 		sicht = Matrix.matrixInvertierung(camMatrix);
 //		sicht.printMat();

@@ -131,11 +131,38 @@ public class Vektor {
 	}
 	public static Vektor VektorSchneidetFlaeche(Vektor ebenenNormale, Vektor ebenenPunkt, Vektor linAnfang, Vektor linEnde) {		
 	
+		
 		Vektor lin = Vektor.sub(linEnde, linAnfang);
-		lin.normVektor();
-		float t = (Vektor.skalarprodukt(ebenenPunkt, ebenenNormale) - Vektor.skalarprodukt(ebenenNormale,linAnfang)) / Vektor.skalarprodukt(ebenenNormale, lin);
-		System.out.println(t);
-		return Vektor.add(linAnfang, Vektor.multVektor_Faktor(lin, t));
+		lin = lin.normVektor2();
+		 //ax × bx + ay × by
+//	    int dot = (int) (ebenenNormale.x * lin.x + ebenenNormale.y * lin.y);
+//	    if (dot == 0) {
+//	        return null;
+//	    }
+
+	    // Ref for dot product calculation: https://www.mathsisfun.com/algebra/vectors-dot-product.html
+	    int dot2 = (int) (ebenenNormale.x * ebenenPunkt.x + ebenenNormale.y * ebenenPunkt.y);
+	    int dot3 = (int) (ebenenNormale.x * lin.x + ebenenNormale.y * linAnfang.y);
+	    int dot4 = (int) (ebenenNormale.x * lin.x + ebenenNormale.y * lin.y);
+
+	    float t = (dot2 - dot3)/ 0.01f;
+
+	    
+	   
+	    Vektor lineDirectionScale =  Vektor.multVektor_Faktor(lin, t);
+
+	    return Vektor.add(lineDirectionScale, linAnfang);
+//	    float xa = (linAnfang.x + lineDirectionScale.x);
+//	    float ya = (linAnfang.y + lineDirectionScale.y);
+//	    float za = (linAnfang.z + lineDirectionScale.z);
+//
+//	    return new Vektor(xa, ya, za);
+	
+//		Vektor lin = Vektor.sub(linAnfang, linEnde);
+//		lin.normVektor();
+//		float t = (Vektor.skalarprodukt(ebenenPunkt, ebenenNormale) - Vektor.skalarprodukt(ebenenNormale,linAnfang)) / Vektor.skalarprodukt(ebenenNormale, lin);
+////		System.out.println(t);
+//		return Vektor.add(linAnfang, Vektor.multVektor_Faktor(lin, t));
 
 
 //		double t = (planeNormal.dot(planePoint) - planeNormal.dot(linePoint)) / planeNormal.dot(lineDirection.normalize());

@@ -77,7 +77,6 @@ public class Polygon3D {
 	}
 
 	public void clipTriangle(Vektor ebenenNormale, Vektor ebenenPunkt, Vektor[] p) {
-
 		float dist0 = Vektor.dist(p[0], ebenenNormale, ebenenPunkt);
 		float dist1 = Vektor.dist(p[1], ebenenNormale, ebenenPunkt);
 		float dist2 = Vektor.dist(p[2], ebenenNormale, ebenenPunkt);
@@ -118,6 +117,7 @@ public class Polygon3D {
 			a[0] = p[0];
 			a[1] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
 			a[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(1));
+//			Vektor.printVektor(a[1]);
 			a = Polygon3D.projectTri(a);
 			PrimTri temp = new PrimTri(a, this.shade);
 			Renderer.addPoly(temp);

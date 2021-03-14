@@ -1,5 +1,6 @@
 package renderer;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.ArrayList;
@@ -26,11 +27,11 @@ public class Renderer {
 		if(polys.isEmpty()) return;
 		for(PrimTri  pp: polys) {										//pp = Projektionspolygone
 			Polygon p = new Polygon();
-			g.setColor(pp.color);
+			g.setColor(Color.WHITE);
 			p.addPoint((int) pp.points[0].x,(int) pp.points[0].y);
 			p.addPoint((int) pp.points[1].x,(int) pp.points[1].y);
 			p.addPoint((int) pp.points[2].x,(int) pp.points[2].y);
-			g.fillPolygon(p);  
+			g.drawPolygon(p);  
 		}
 		
 		

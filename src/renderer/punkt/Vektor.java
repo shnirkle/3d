@@ -94,7 +94,9 @@ public class Vektor {
 		this.y = this.normY;
 		this.z = this.normZ;
 	}
-	
+	public Vektor normVektor2() {
+		return new Vektor(this.normX, this.normY, this.normZ);
+	}
 	//Mache einen Einheitsvektor daraus
 	
 	private void einheitsVektor() {
@@ -124,24 +126,21 @@ public class Vektor {
 
 	}
 	public static float dist(Vektor v, Vektor ebenenNormale, Vektor ebenenPunkt) {
-		//v.normVec();
+		
 		return (ebenenNormale.x * v.x + ebenenNormale.y * v.y + ebenenNormale.z * v.z - Vektor.skalarprodukt(ebenenNormale, ebenenPunkt));
 	}
-	public static Vektor VektorSchneidetFlaeche(Vektor ebenenNormale, Vektor ebenenPunkt, Vektor linAnfang, Vektor linEnde) {
-		ebenenNormale.normVektor();
-		float ebenenDist = -1.0f *Vektor.skalarprodukt(ebenenNormale, ebenenPunkt);
-//		System.out.println(1);
-		float aDist = Vektor.skalarprodukt(linAnfang, ebenenNormale); 
-//		System.out.println(2);
-		float bDist = Vektor.skalarprodukt(linEnde, ebenenNormale);
-//		System.out.println(3);
-		float t = (-ebenenDist - aDist) / (bDist - aDist);
-//		System.out.println(4);
+	public static Vektor VektorSchneidetFlaeche(Vektor ebenenNormale, Vektor ebenenPunkt, Vektor linAnfang, Vektor linEnde) {		
+	
 		Vektor lin = Vektor.sub(linEnde, linAnfang);
-//		System.out.println(5);
-		Vektor schnittVek = Vektor.multVektor_Faktor(lin, t);
-//		System.out.println(6);
-		return Vektor.add(linAnfang, schnittVek);
+		lin.normVektor();
+		float t = (Vektor.skalarprodukt(ebenenPunkt, ebenenNormale) - Vektor.skalarprodukt(ebenenNormale,linAnfang)) / Vektor.skalarprodukt(ebenenNormale, lin);
+		System.out.println(t);
+		return Vektor.add(linAnfang, Vektor.multVektor_Faktor(lin, t));
+
+
+//		double t = (planeNormal.dot(planePoint) - planeNormal.dot(linePoint)) / planeNormal.dot(lineDirection.normalize());
+//    return linePoint.plus(lineDirection.normalize().scale(t));
+	
 	}
 
 	//Addieren und Subtrahieren

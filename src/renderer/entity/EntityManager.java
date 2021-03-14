@@ -26,20 +26,14 @@ public class EntityManager {
 	//Geschwindigkeit / Sensitivität für die Bewegung
 	float speed = 0.1f;
 	float sens = 0.05f;
-	
+
 	public void init(Eingabe eingabe) {
-//		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1));
-//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 10, 1));
-//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
-//		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 8));
-		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 16));
-		for (int i = 0; i < 10; i++)
-		{
-			for (int j = 0; j < 10; j++)
-			{
-				this.entities.add(BasicEntityBuilder.createWürfel(10 * i, 10 * j, 10, 1));
-			}
-		}
+		//		this.entities.add(BasicEntityBuilder.createQuader(0, 0, 0, 1, 1, 1));
+		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 10, 1));
+		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
+		//		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 8));
+		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 0));
+
 		this.tastatur = eingabe.tastatur;
 	}
 
@@ -49,44 +43,44 @@ public class EntityManager {
 
 		Theta++;
 
-		this.rotate(180f, 0, 0);
+		
 		//this.entities.get(0).aendern(0, 0, (float) Math.sin(Math.toRadians(Theta)) * 20);	//ein einzelnes Objekt bewegen
 
 		if (this.tastatur.getVorne())
 		{
 			Kamera.vorwaerts(speed);
 		}
-		
+
 		if (this.tastatur.getHinten())
 		{
 			Kamera.vorwaerts(-speed);
 		}
-		
+
 		if (this.tastatur.getLinks())
 		{
 			Kamera.rotierenLR(sens);
 		}
-		
+
 		if (this.tastatur.getRechts())
 		{
 			Kamera.rotierenLR(-sens);
 		}
-		
+
 		if (this.tastatur.getOben())
 		{
 			Kamera.up(-sens);
 		}
-		
+
 		if (this.tastatur.getUnten())
 		{
 			Kamera.up(sens);
 		}
-		
+
 		Kamera.updateCam();
 	}
 
 	//alle Objekte rendern
-	
+
 	public void render(Graphics g) {
 		Renderer.clear();
 		for (Objekt obj : this.entities)
@@ -95,7 +89,7 @@ public class EntityManager {
 		}
 		Renderer.render(g);
 	}
-	
+
 	//alle Objekte rotieren
 
 	public void rotate(float xGrad, float yGrad, float zGrad) {
@@ -107,7 +101,7 @@ public class EntityManager {
 	}
 
 	//1 Objekt rotieren
-	
+
 	public void rotate(Objekt w, float xGrad, float yGrad, float zGrad) {
 
 		xGrad = (float) Math.toRadians(xGrad);

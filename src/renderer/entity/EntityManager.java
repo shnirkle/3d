@@ -1,11 +1,13 @@
 package renderer.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
 import renderer.Renderer;
 import renderer.entity.builder.BasicEntityBuilder;
+import renderer.punkt.Punkt;
 import renderer.shapes.Objekt;
 import renderer.steuerung.Eingabe;
 import renderer.steuerung.Tastatur;
@@ -32,18 +34,30 @@ public class EntityManager {
 		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 10, 1));
 		//		this.entities.add(BasicEntityBuilder.createWürfel(0, 0, 1, 1));
 		//		this.entities.add(BasicEntityBuilder.createSpaceShip(0, 0, 8));
-		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 0));
-
-		for (int i = 0; i < 15; i++)
-		{
-			for (int j = 0; j < 15; j++)
-			{
-				for (int j2 = 0; j2 < 15; j2++)
-				{
-					this.entities.add(BasicEntityBuilder.createWürfel(i * 10, j * 10, j2 * 10, 1));
-				}
-			}
-		}
+//		this.entities.add(BasicEntityBuilder.createTeapot(0, 0, 0));
+//
+//		for (int i = 0; i < 15; i++)
+//		{
+//			for (int j = 0; j < 15; j++)
+//			{
+//				for (int j2 = 0; j2 < 15; j2++)
+//				{
+//					this.entities.add(BasicEntityBuilder.createWürfel(i * 10, j * 10, j2 * 10, 1));
+//				}
+//			}
+//		}
+		
+		float skale = 1;
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(0,0,500), 100*skale)); //Sonne
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(160*2*skale,0,500), 9*skale)); //Merkur
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(220*2*skale,0,500), 18*skale)); //Venus
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(280*2*skale,0,500), 20*skale)); //Erde
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(360*2*skale,0,500), 12*skale)); //Mars
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(480*2*skale,0,500), 65*skale)); //Jupiter
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(620*2*skale,0,500), 57*skale)); //Saturn
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(770*2*skale,0,500), 35*skale)); //Uranus
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(910*2*skale,0,500), 33*skale)); //Neptun
+		
 		this.tastatur = eingabe.tastatur;
 	}
 

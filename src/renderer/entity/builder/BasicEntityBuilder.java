@@ -1,5 +1,6 @@
 package renderer.entity.builder;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -166,5 +167,55 @@ public class BasicEntityBuilder {
 
 		return w;
 	}
+	
+	public static Objekt createSphere(Color c, Punkt m, float r)  {
+
+		Punkt[] punkte = new Punkt[200];
+		for (int i = 0; i < 200; i++) {
+			punkte[i] = new Punkt(0, 0, 0);
+		}
+		int count = 0;
+		Punkt punkt = new Punkt(0,0,0);
+		double theta;
+		double phi;
+		double dt = (2*Math.PI)/10;
+		double dp = Math.PI/10;
+		Polygon3D[] polys = new Polygon3D[5000];
+		for (int i = 0; i < 5000; i++) {
+			polys[i] = new Polygon3D(new Punkt(0, 0, 0), new Punkt(0, 0, 0), new Punkt(0, 0, 0));
+		}
+		//Punktmenge der Sphäre berechnen (10 Breitengrade, 10 Längengrade)
+				
+		for(int pi = 0; pi <= 10; pi++) {
+					phi = pi * dp;
+					for(int ti = 0; ti <= 10; ti++) {
+						theta = ti * dt;
+						punkt.x = (float) ((r * Math.sin(theta) * Math.sin(phi)) + m.x);
+						punkt.y = (float) (r * Math.cos(phi) + m.y);
+						punkt.z = (float) (r * Math.cos(theta) * Math.sin(phi) + m.z);
+						punkte[count].x = punkt.x;
+						punkte[count].y = punkt.y;
+						punkte[count].z = punkt.z;
+						count++;
+					}
+				}
+				count = 0;
+		//Dreiecke aus der Punktmenge machen
+				for(int pi = 0; pi <= 10; pi++) {
+					for(int ti = 0; ti < 10; ti++) {
+						int x0 = ti;
+						int x1 = ti+1;
+						int y0 = pi * 11;
+						int y1 = (pi + 1) * 11;
+						polys[count] = new Polygon3D(punkte[x0+y0], punkte[x1+y0], punkte[x0+y1]);
+						polys[count+1] = new Polygon3D(punkte[x1+y0], punkte[x1+y1], punkte[x0+y1]);
+						count += 2;
+					}
+				}
+		//aus Dreiecken letztendliche Kugel bauen
+				Objekt sphere = new Objekt(c, polys);
+			
+			return sphere;
+		}
 
 }

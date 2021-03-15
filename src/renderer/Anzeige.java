@@ -48,7 +48,7 @@ public class Anzeige extends Canvas implements Runnable {
 	public Vektor cam = new Vektor(0, 0, 0);
 	private static boolean running = false;
 
-	public EntityManager entityManager;
+	public static EntityManager entityManager;
 
 	private static Eingabe eingabe;
 	private static double viewDistance = 1000;
@@ -123,7 +123,7 @@ public class Anzeige extends Canvas implements Runnable {
 		this.frame = new JFrame();
 		ImageIcon icon = new ImageIcon("src/images/raumschiff.png");
         this.frame.setIconImage(icon.getImage());
-		this.entityManager = new EntityManager();
+		Anzeige.entityManager = new EntityManager();
 		Dimension size = new Dimension(WIDTH, HEIGHT);
 		this.setPreferredSize(size);
 
@@ -185,7 +185,7 @@ public class Anzeige extends Canvas implements Runnable {
 		double delta = 0;
 		int songdauer = 275 * 1000000000;
 
-		this.entityManager.init(Anzeige.eingabe);
+		Anzeige.entityManager.init(Anzeige.eingabe);
 
 		while (running)
 		{
@@ -219,7 +219,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 		if (!Anzeige.isPaused)
 		{
-			this.entityManager.update();
+			Anzeige.entityManager.update();
 			this.frame.requestFocus();
 		}
 
@@ -239,7 +239,7 @@ public class Anzeige extends Canvas implements Runnable {
 
 		g.setColor(cölör);
 
-		this.entityManager.render(g);
+		Anzeige.entityManager.render(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, HEIGHT - 30, WIDTH, 30);
 		g.setColor(Color.WHITE);

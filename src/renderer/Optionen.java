@@ -40,12 +40,14 @@ public class Optionen {
     
 	frame.add(tabpane);	
 	
+	//Wenn das Fenster geschlossen wird
+	
 	WindowListener schliessen = new WindowAdapter() {
 
 		@Override
 	    public void windowClosing(WindowEvent e) {
 	           frame.dispose();
-	           Anzeige.isPaused = false;
+	           PauseView pauseview = new PauseView();
 			}    
 		};
 	frame.addWindowListener(schliessen);

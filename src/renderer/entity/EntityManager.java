@@ -103,12 +103,12 @@ public class EntityManager {
 		
 		if (this.tastatur.getA())
 		{
-			Kamera.rechts(-speed);
+			Kamera.rechts(speed);
 		}
 
 		if (this.tastatur.getD())
 		{
-			Kamera.rechts(speed);
+			Kamera.rechts(-speed);
 		}
 
 		if (this.tastatur.getLeer())

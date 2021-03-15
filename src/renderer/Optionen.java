@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+
+import renderer.world.Kamera;
 
 // Bereiche, die Optionen abdecken:
 // - Leistung / Qualität (FPS Limit, Anzahl der Objekte, View Distance, Orientierungshilfen)
@@ -114,7 +118,7 @@ public class Optionen {
 		
 		
 		
-		
+		//-----------------------------------------------
 		String fpsS = Double.toString(Anzeige.getTargetFps());
 		String vdS = Double.toString(Anzeige.getViewDistance());
 		
@@ -141,7 +145,85 @@ public class Optionen {
 				
 			}
 		});
-	
+		
+		
+		
+		
+		//---------------------------------------------
+		/*
+		 * --> Teapot
+		 * --> Grid
+		 * --> Spaceship
+		 * --> SolarsystemScale
+		 * --> SolarsystemModel
+		 * --> Earth & Moon
+		 * --> Saturn
+		 * 
+		 */
+		List<JButton> buttonList = new ArrayList<JButton>();
+		
+		JButton createTeapot = new JButton("Lade Teekanne");
+		JButton createGrid = new JButton("Lade Grid");
+		JButton createSpaceship = new JButton("Lade Spaceship");
+		JButton createSolarsystemScale = new JButton("Lade Sonnensytem im Maßstab");
+		JButton createSolarsystemModel = new JButton("Lade Sonnensystem nicht im Maßstab");
+		JButton createEarth_Moon = new JButton("Lade Erde und Mond");
+		JButton createSaturn = new JButton("Lade Saturn");
+		
+		buttonList.add(createEarth_Moon);
+		buttonList.add(createSolarsystemScale);
+		buttonList.add(createSolarsystemModel);
+		buttonList.add(createTeapot);
+		buttonList.add(createGrid);
+		buttonList.add(createSpaceship);		
+		buttonList.add(createSaturn);
+		
+		
+		
+		for(JButton jb : buttonList) {
+			weiteres1.add(jb);
+			jb.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					
+					int a = buttonList.indexOf(jb);
+					
+					switch (a)
+					{
+					case 0: 
+						Kamera.KameraZurück();
+						System.out.println("0");
+						Anzeige.entityManager.createEarth_Moon();
+						break;
+					case 1:
+						Kamera.KameraZurück();
+						System.out.println("1");
+						Anzeige.entityManager.createSolarSystem(0.0001f, 0.0001f);
+						break;
+					case 2:
+						Kamera.KameraZurück();
+						System.out.println("2");
+						Anzeige.entityManager.createSolarSystem(0.0001f, 0.0001f);
+						break;
+					case 3:
+						Kamera.KameraZurück();
+						System.out.println("3");
+						Anzeige.entityManager.createTeapot();
+						break;
+					case 4:
+						Kamera.KameraZurück();
+						System.out.println("4");
+						Anzeige.entityManager.createGrid();
+						break;
+					default:
+						System.out.println("def");
+						break;
+					}
+				}
+			});
+			
+		}
+		
+		
 		//	//----------------------- Ästhetik -----------------------
 		//		Color backgroundColor = new Color(48, 52, 64);
 		//		leistung1.setBackground(backgroundColor);

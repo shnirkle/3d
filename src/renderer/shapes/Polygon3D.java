@@ -113,37 +113,37 @@ public class Polygon3D {
 			return;
 		if (inside == 1 && outside == 2)
 		{
-			Vektor[] a  = new Vektor[3];
-			a[0] = p[0];
-			a[1] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
-			a[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(1));
-//			Vektor.printVektor(a[1]);
-			a = Polygon3D.projectTri(a);
-			PrimTri temp = new PrimTri(a, this.shade);
-			Renderer.addPoly(temp);
+//			Vektor[] a  = new Vektor[3];
+//			a[0] = p[0];
+//			a[1] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
+//			a[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(1));
+//		Vektor.printVektor(a[1]);
+//			a = Polygon3D.projectTri(a);
+//			PrimTri temp = new PrimTri(a, this.shade);
+//			Renderer.addPoly(temp);
 		}
 		if (inside == 2 && outside == 1)
 		{
-		
-			Color a = this.shade;
-			Vektor[] b = new Vektor[3];
-			Vektor[] c = new Vektor[3];
-			b[0] = insideList.get(0);
-			b[1] = insideList.get(1);
-			b[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
-			c[0] = insideList.get(1);
-			c[1] = b[2];
-			c[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(1), outsideList.get(0));
-			
+//		
+//			Color a = this.shade;
+//			Vektor[] b = new Vektor[3];
+//			Vektor[] c = new Vektor[3];
+//			b[0] = insideList.get(0);
+//			b[1] = insideList.get(1);
+//			b[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(0), outsideList.get(0));
+//			c[0] = insideList.get(1);
+//			c[1] = b[2];
+//			c[2] = Vektor.VektorSchneidetFlaeche(ebenenNormale, ebenenPunkt, insideList.get(1), outsideList.get(0));
+//			
 //			Renderer.addPoly(temp1);
 //			Renderer.addPoly(temp2);
-			b = Polygon3D.projectTri(b);
-			c = Polygon3D.projectTri(c);
-			
-			PrimTri temp1 = new PrimTri(b,a);
-			PrimTri temp2 = new PrimTri(c,a);
-			Renderer.addPoly(temp1);
-      		Renderer.addPoly(temp2);
+//			b = Polygon3D.projectTri(b);
+//			c = Polygon3D.projectTri(c);
+//			
+//			PrimTri temp1 = new PrimTri(b,a);
+//			PrimTri temp2 = new PrimTri(c,a);
+//			Renderer.addPoly(temp1);
+//      		Renderer.addPoly(temp2);
 		}
 		if (inside == 3 && outside == 0)
 		{

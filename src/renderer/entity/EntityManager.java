@@ -28,7 +28,7 @@ public class EntityManager {
 	}
 
 	//Geschwindigkeit / Sensitivität für die Bewegung
-	float speed = 1f;
+	float speed = 0.2f;
 	float sens = 0.05f;
 
 	public void init(Eingabe eingabe) {
@@ -102,7 +102,7 @@ public class EntityManager {
 
 		if (this.tastatur.getSTRG())
 		{
-			Kamera.vorwaerts(-speed * 5);
+			Kamera.vorwaerts(-speed);
 		}
 		if (this.tastatur.getEcp())
 		{
@@ -136,7 +136,6 @@ public class EntityManager {
 	//1 Objekt rotieren
 
 	public void rotate(Objekt w, float xGrad, float yGrad, float zGrad) {
-
 		xGrad = (float) Math.toRadians(xGrad);
 		yGrad = (float) Math.toRadians(yGrad);
 		zGrad = (float) Math.toRadians(zGrad);
@@ -146,7 +145,7 @@ public class EntityManager {
 	}
 
 	public void createSolarSystem(float groessenskale, float abstandsskale) {
-		this.entities.add(BasicEntityBuilder.createSphere(Color.blue, new Punkt(0,0,500), 1392700 * groessenskale, 120));
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(1,0,500), 1392700 * groessenskale, 70));
 		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(58000000f   * abstandsskale, 0, 500), 4879 * groessenskale, 80)); //Merkur
 		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(108000000f   * abstandsskale, 0, 500), 12104 * groessenskale, 80)); //Venus
 		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(150000000f  * abstandsskale, 0, 500), 12104 * groessenskale, 14)); //Erde

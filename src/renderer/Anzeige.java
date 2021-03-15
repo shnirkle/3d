@@ -59,7 +59,8 @@ public class Anzeige extends Canvas implements Runnable {
 
 		home.setTitle("Startmenü :)");
 		home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		ImageIcon icon = new ImageIcon("src/images/raumschiff.png");
+        home.setIconImage(icon.getImage());
 		juno.setForeground(Color.WHITE);
 		juno.setFont(new Font("Algerian", Font.PLAIN, 55));
 
@@ -120,6 +121,8 @@ public class Anzeige extends Canvas implements Runnable {
 
 	public Anzeige() {
 		this.frame = new JFrame();
+		ImageIcon icon = new ImageIcon("src/images/raumschiff.png");
+        this.frame.setIconImage(icon.getImage());
 		this.entityManager = new EntityManager();
 		Dimension size = new Dimension(WIDTH, HEIGHT);
 		this.setPreferredSize(size);
@@ -242,7 +245,7 @@ public class Anzeige extends Canvas implements Runnable {
 		g.setColor(Color.WHITE);
 		StringBuilder stringBuilder = new StringBuilder();
 		Formatter formatter = new Formatter(stringBuilder);
-		formatter.format("POS(X:Y:Z): (%-4f/%-4f/%-4f) VEL: FPS: %d", Kamera.vCamera.x, Kamera.vCamera.y, Kamera.vCamera.z, framesATM);
+		formatter.format("POS(X:Y:Z): (%-4f/%-4f/%-4f) VEL: %f", Kamera.vCamera.x, Kamera.vCamera.y, Kamera.vCamera.z, Kamera.VEL);
 		String str = stringBuilder.toString();
 //		String str = "POS(X:Y:Z): (" + Kamera.vCamera.x + "/" + Kamera.vCamera.y + "/" + Kamera.vCamera.z +")";
 		g.drawString(str, 0, HEIGHT - 10);

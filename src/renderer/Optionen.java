@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -77,13 +78,13 @@ public class Optionen {
 
 		tabpane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
-		tabpane.addTab("Leistung", panelLeistung);
+		tabpane.addTab("Render Einstellungen", panelLeistung);
 		tabpane.addTab("Raumschiff", panelRaumschiff);
 		tabpane.addTab("Audio", panelAudio);
-		tabpane.addTab("Weiteres", panelWeiteres);
+		tabpane.addTab("Szene", panelWeiteres);
 
 		//------------ Verschönerung der Tab-Titel ---------------
-		JLabel lab = new JLabel("Leistung");
+		JLabel lab = new JLabel("Render Einstellungen");
 		lab.setPreferredSize(new Dimension(50, 30));
 		tabpane.setTabComponentAt(0, lab); // tab index, jLabel
 	}
@@ -110,9 +111,15 @@ public class Optionen {
 		JLabel labRaumschiff = new JLabel("Vorstellbare Einstellungen: Geschwindigkeit, FOV, Steuerung (+ Anzeigen der momentanen Tastenbelegung), ...");
 		JLabel labAudio = new JLabel("Vorstellbare Einstellungen (hätten wir Musik gemacht): Musiklautstärke, SFX-Lautstärke, ...");
 		JLabel labWeiteres = new JLabel("Vorstellbare Einstellungen: Wireframe (nur Kanten der Objekte), andere Einstellungen ohne eindeutige Kategorie");
+		
+		
+		
+		
 		String fpsS = Double.toString(Anzeige.getTargetFps());
-		JTextField fps = new JTextField(fpsS);
 		String vdS = Double.toString(Anzeige.getViewDistance());
+		
+		JCheckBox kettenRahmen = new JCheckBox("", false);
+		JTextField fps = new JTextField(fpsS);
 		JTextField viewDistance = new JTextField(vdS);  
 		JButton labLeistungApply = new JButton("Anpassen");
 		
@@ -121,7 +128,7 @@ public class Optionen {
 		leistung1.add(fps);
 		leistung1.add(labLeistungApply);
 		leistung1.add(viewDistance);
-		
+		leistung1.add(kettenRahmen);
 		raumschiff1.add(labRaumschiff);
 		audio1.add(labAudio);
 		weiteres1.add(labWeiteres);
@@ -130,7 +137,8 @@ public class Optionen {
 				
 				Anzeige.changeFpsTarget(Double.valueOf(fps.getText()));
 				Anzeige.changeViewDistance(Double.valueOf(viewDistance.getText()));
-
+				Renderer.setWireFrame(kettenRahmen.isSelected());
+				
 			}
 		});
 	

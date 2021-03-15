@@ -172,7 +172,7 @@ public class BasicEntityBuilder {
 
         
         
-        Punkt[] punkte = new Punkt[(int) (2*Math.pow(res,2))];
+        Punkt[] punkte = new Punkt[(int) (2*Math.pow(res,2) - 1)];
         for (int i = 0; i < punkte.length; i++) {
             punkte[i] = new Punkt(0, 0, 0);
         }
@@ -182,7 +182,7 @@ public class BasicEntityBuilder {
         double phi;
         double dt = (2*Math.PI)/res;
         double dp = Math.PI/res;
-        Polygon3D[] polys = new Polygon3D[(int) (3*Math.pow(res,2))]; //////////////////
+        Polygon3D[] polys = new Polygon3D[(int) (2*Math.pow(res,2) + res * 2)]; //////////////////
         for (int i = 0; i < polys.length; i++) {
             polys[i] = new Polygon3D(new Punkt(0, 0, 0), new Punkt(0, 0, 0), new Punkt(0, 0, 0));
         }

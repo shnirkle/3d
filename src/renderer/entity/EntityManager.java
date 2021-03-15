@@ -30,6 +30,9 @@ public class EntityManager {
 	//Geschwindigkeit / Sensitivität für die Bewegung
 	float speed = 0.2f;
 	float sens = 0.05f;
+	float acc = 0.01f;
+	float AccVW = 0.0f;
+	float AccRW = 0.0f;
 
 	public void init(Eingabe eingabe) {
 
@@ -66,12 +69,9 @@ public class EntityManager {
 		// Q     -    Gegen den Uhrzeigersinn rotieren    
 		// E     -    Mit dem Uhrzeigersinn rotieren        
 		// STRG -    Negative Beschleunigung                
-		// Leer -    Positive Beschleunigung               
+		// Leer -    Positive Beschleunigung     
+		//STRG + Leer - Bremsen
 		//////////////////////////////////////////////////
-		if (this.tastatur.getLeer())
-		{
-			Kamera.vorwaerts(speed);
-		}
 		if (this.tastatur.getQ())
 		{
 			Kamera.rotierenLR(0, 0, -sens);
@@ -99,11 +99,35 @@ public class EntityManager {
 		{
 			Kamera.rotierenLR(0, -sens, 0);
 		}
+		
+	if (this.tastatur.getSTRG() && this.tastatur.getLeer()) {
+		//Sehr kleine Geschwindigkeiten werden auf Null gesetzt, damit das Steuern angenehmer ist
+			if(Math.abs(Kamera.VEL) < 0.2f) {
+				Kamera.VEL = 0.0f;
+			} else {
+				Kamera.VEL *= 0.75f;
+			}
+		} else {
 
+		if (this.tastatur.getLeer())
+		{	
+			AccRW = 0;
+			if(AccVW < 3) {
+				AccVW += acc;
+			}
+			Kamera.vorwaerts(AccVW);
+		}
+		
 		if (this.tastatur.getSTRG())
 		{
-			Kamera.vorwaerts(-speed);
+			AccVW = 0;
+			if(AccRW > -3) {
+				AccRW -= acc;
+			}
+			Kamera.vorwaerts(AccRW);
 		}
+		
+	}
 		if (this.tastatur.getEcp())
 		{
 			Anzeige.isPaused = true;

@@ -6,6 +6,7 @@ import renderer.punkt.Vektor;
 public class Kamera {
 	
 	public static float VEL = 0.0f;
+	public static float maxspeed = 3.0f;
 	public static Vektor vCamera = new Vektor(0,1.5f,4.0f);	
 	public static Vektor vLook = new Vektor(0,0,0);
 	public static double yGrad = 0;
@@ -30,6 +31,14 @@ public class Kamera {
 	public static void vorwaerts(float u) {
 		VEL += u;
 		
+		//Maximale Geschwindigkeit setzen
+		
+		if (VEL > maxspeed) {
+			VEL = maxspeed;
+		} else if(VEL < -maxspeed) {
+			VEL = -maxspeed;
+		}
+		
 //		vCamera.setZ(vCamera.normZ + u);
 	}
 	
@@ -51,12 +60,6 @@ public class Kamera {
 	
 	public static void updateCam() {
 	
-		if(Math.abs(VEL) < 3) {
-			VEL *= 0.8f;
-			if(Math.abs(VEL) < 0.1f) {
-				VEL = 0;
-			}
-		}
 		Vektor vforw = Vektor.multVektor_Faktor(vLook, VEL);
 		vCamera = Vektor.add(vCamera, vforw);
 		

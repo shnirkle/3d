@@ -12,8 +12,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.util.Formatter;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -108,6 +112,7 @@ public class Anzeige extends Canvas implements Runnable {
 		display.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		display.frame.setVisible(true);
 		display.start();
+		
 
 	}
 
@@ -124,6 +129,21 @@ public class Anzeige extends Canvas implements Runnable {
 		this.frame.addKeyListener(Anzeige.eingabe.tastatur);
 
 	}
+	
+	//Abspielen unserer Hintergrundmusik
+	
+	public void playSound() {
+	    try {
+	        AudioInputStream input = AudioSystem.getAudioInputStream(new File("src/hintergrundmusik.wav").getAbsoluteFile());
+	        Clip hintergrundmusik = AudioSystem.getClip();
+	        hintergrundmusik.open(input);
+	        hintergrundmusik.start();
+	    } catch(Exception ex) {
+	        System.out.println("Error beim Abspielen der Hintergrundmusik");
+	        ex.printStackTrace();
+	    }
+	}
+	
 	//Start und Stop Methode
 
 	// Initialisieren des Threads und der Projektionsmatrix, welche auf unserem Bildschirm liegt
@@ -136,6 +156,7 @@ public class Anzeige extends Canvas implements Runnable {
 		Matrix.initialisiereProjMatrix((float) Anzeige.WIDTH, (float) Anzeige.HEIGHT, near, far, fov);
 		thread = new Thread(this, "Anzeige");
 		this.thread.start();
+		playSound();	//erstes Starten der Hintergrundmethode, dann wiederholen in der run-Methode
 	}
 
 	public void stop() {
@@ -157,33 +178,35 @@ public class Anzeige extends Canvas implements Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
+		final double ns = 1000000000.0 / 60;
 		double delta = 0;
-		int frames = 0;
+		int songdauer = 275 * 1000000000;
 
 		this.entityManager.init(Anzeige.eingabe);
 
 		while (running)
 		{
 			long now = System.nanoTime();
-			delta += (now - lastTime) / Anzeige.ns;
+			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while (delta >= 1)
 			{
 				update();
 				delta--;
 				render();
-				frames++;
 			}
 
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-				this.frame.setTitle(TITEL + " | " + frames + "fps");
-				frames = 0;
+//				this.frame.setTitle(TITEL + " | " + frames + "fps");
+			}
+			if (System.currentTimeMillis() - timer > songdauer)	//Musik loopen
+			{
+				 playSound();
 			}
 		}
 		stop();
-		
 
 	}
 

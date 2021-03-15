@@ -28,7 +28,7 @@ public class EntityManager {
 	}
 
 	//Geschwindigkeit / Sensitivität für die Bewegung
-	float speed = 0.2f;
+	final float speed = 0.5f;
 	float sens = 0.05f;
 	float acc = 0.01f;
 	float AccVW = 0.0f;
@@ -72,44 +72,59 @@ public class EntityManager {
 		// Leer -    Positive Beschleunigung     
 		//STRG + Leer - Bremsen
 		//////////////////////////////////////////////////
-		if (this.tastatur.getQ())
-		{
-			Kamera.rotierenLR(0, 0, -sens);
-		}
-		if (this.tastatur.getE())
-		{
-			Kamera.rotierenLR(0, 0, sens);
-		}
-		if (this.tastatur.getA())
+		if (this.tastatur.getLinks())
 		{
 			Kamera.rotierenLR(0, sens, 0);
 		}
 
-		if (this.tastatur.getW())
+		if (this.tastatur.getOben())
 		{
 			Kamera.rotierenLR(-sens, 0, 0);
 		}
 
-		if (this.tastatur.getS())
+		if (this.tastatur.getUnten())
 		{
 			Kamera.rotierenLR(sens, 0, 0);
 		}
 
-		if (this.tastatur.getD())
+		if (this.tastatur.getRechts())
 		{
 			Kamera.rotierenLR(0, -sens, 0);
 		}
 		
-	if (this.tastatur.getSTRG() && this.tastatur.getLeer()) {
+		if (this.tastatur.getA())
+		{
+			Kamera.rechts(-speed);
+		}
+
+		if (this.tastatur.getD())
+		{
+			Kamera.rechts(speed);
+		}
+
+		if (this.tastatur.getLeer())
+		{
+			Kamera.oben(speed);
+		}
+
+		if (this.tastatur.getSTRG())
+		{
+			Kamera.oben(-speed);
+		}
+		
+		if (this.tastatur.getW() && this.tastatur.getS()) {
+			
 		//Sehr kleine Geschwindigkeiten werden auf Null gesetzt, damit das Steuern angenehmer ist
+			
 			if(Math.abs(Kamera.VEL) < 0.2f) {
 				Kamera.VEL = 0.0f;
 			} else {
 				Kamera.VEL *= 0.75f;
 			}
+			
 		} else {
 
-		if (this.tastatur.getLeer())
+		if (this.tastatur.getW())
 		{	
 			AccRW = 0;
 			if(AccVW < 3) {
@@ -118,7 +133,7 @@ public class EntityManager {
 			Kamera.vorwaerts(AccVW);
 		}
 		
-		if (this.tastatur.getSTRG())
+		if (this.tastatur.getS())
 		{
 			AccVW = 0;
 			if(AccRW > -3) {

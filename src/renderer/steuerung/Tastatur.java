@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class Tastatur implements KeyListener {
 
 	private boolean[] tasten = new boolean[66568];
-	private boolean w, a, s, d, q, e, strg, leer, ecp;
+	private boolean w, a, s, d, links, rechts, oben, unten, strg, leer, ecp;
 
 	//Den boolean-Variablen werden Tasten zugewiesen
 	public void update() {
@@ -14,8 +14,10 @@ public class Tastatur implements KeyListener {
 		this.a = this.tasten[KeyEvent.VK_A];
 		this.s = this.tasten[KeyEvent.VK_S];
 		this.d = this.tasten[KeyEvent.VK_D];
-		this.q = this.tasten[KeyEvent.VK_Q];
-		this.e = this.tasten[KeyEvent.VK_E];
+		this.links = this.tasten[KeyEvent.VK_LEFT];
+		this.rechts = this.tasten[KeyEvent.VK_RIGHT];
+		this.oben = this.tasten[KeyEvent.VK_UP];
+		this.unten = this.tasten[KeyEvent.VK_DOWN];
 		this.strg = this.tasten[KeyEvent.VK_CONTROL];
 		this.leer = this.tasten[KeyEvent.VK_SPACE];
 		this.ecp = this.tasten[KeyEvent.VK_ESCAPE];
@@ -39,12 +41,20 @@ public class Tastatur implements KeyListener {
 		return this.d;
 	}
 
-	public boolean getQ() {
-		return this.q;
+	public boolean getLinks() {
+		return this.links;
 	}
 
-	public boolean getE() {
-		return this.e;
+	public boolean getRechts() {
+		return this.rechts;
+	}
+	
+	public boolean getOben() {
+		return this.oben;
+	}
+
+	public boolean getUnten() {
+		return this.unten;
 	}
 
 	public boolean getSTRG() {

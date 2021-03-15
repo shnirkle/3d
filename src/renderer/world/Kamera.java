@@ -16,9 +16,9 @@ public class Kamera {
 	public static Vektor vDir = new Vektor(0,0,1);
 	public static Vektor vUp = new Vektor(0,1,0);
 	public static Vektor vRight = new Vektor(1,0,0);
-	public static void up(float u) {
-		vCamera.setY(vCamera.y + u);
-	}
+//	public static void up(float u) {
+//		vCamera.setY(vCamera.y + u);
+//	}
 
 	//Verschiedene Methoden zum Rotieren/Bewegen der Kamera, damit wir die Objekte abhängig von unserer Position behandeln können
 	
@@ -40,6 +40,15 @@ public class Kamera {
 		}
 		
 //		vCamera.setZ(vCamera.normZ + u);
+	}
+	
+	public static void rechts(float u) {
+		vRight = Vektor.multVektor_Faktor(vRight, -u);
+		vCamera = Vektor.add(vCamera, vRight);
+	}
+	
+	public static void oben(float u) {
+		vCamera.setY(vCamera.y - u);
 	}
 	
 	//Kamerakoordinaten
@@ -72,8 +81,6 @@ public class Kamera {
 		Vektor vUpTarget = new Vektor(0,1,0);
 		Vektor vRightTarget = new Vektor(0,0,1);
 		
-		
-		
 		vLook = Matrix.multMat(vTarget, xRot);
 		vUpTarget = Matrix.multMat(vUpTarget, xRot);
 		
@@ -82,6 +89,9 @@ public class Kamera {
 		
 		vUpTarget = Matrix.multMat(vUpTarget, zRot);
 		vLook = Matrix.multMat(vLook, zRot);
+		
+		vRight = Vektor.kreuzprodukt(vLook, vUpTarget);
+		
 		
 		vDir = Vektor.add(vCamera, vLook);
 		Matrix camMatrix = Matrix.richteKameraMatrix(vDir, vUpTarget, vCamera); //M

@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
+import java.util.Formatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import renderer.entity.EntityManager;
 import renderer.punkt.Matrix;
 import renderer.punkt.Vektor;
 import renderer.steuerung.Eingabe;
+import renderer.world.Kamera;
 
 public class Anzeige extends Canvas implements Runnable {
 	public static boolean isPaused = false;
@@ -32,6 +34,9 @@ public class Anzeige extends Canvas implements Runnable {
 	private static String TITEL = "Sterne";
 	public static int WIDTH = 1000;
 	public static int HEIGHT = 1000;
+	public static int framesATM = 0;
+	public static double targetfps = 60;
+	public static double ns = 1000000000.0/targetfps;
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static double SCREENWIDTH = screenSize.getWidth();
 	static double SCREENHEIGHT = screenSize.getHeight();
@@ -42,6 +47,7 @@ public class Anzeige extends Canvas implements Runnable {
 	public EntityManager entityManager;
 
 	private static Eingabe eingabe;
+	private static double viewDistance = 1000;
 
 	public static void main(String[] args) {
 		JFrame home = new JFrame();
@@ -84,7 +90,7 @@ public class Anzeige extends Canvas implements Runnable {
 		home.add(button, gBC);
 
 		//--------------------------------
-
+ 
 		home.setBounds((int) (Anzeige.SCREENWIDTH / 2 - WIDTH / 2), 0, 1000, 1000);
 		home.pack();
 		home.setVisible(true);
@@ -151,7 +157,6 @@ public class Anzeige extends Canvas implements Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
-		final double ns = 1000000000.0 / 60;
 		double delta = 0;
 		int frames = 0;
 
@@ -160,7 +165,7 @@ public class Anzeige extends Canvas implements Runnable {
 		while (running)
 		{
 			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
+			delta += (now - lastTime) / Anzeige.ns;
 			lastTime = now;
 			while (delta >= 1)
 			{
@@ -173,11 +178,12 @@ public class Anzeige extends Canvas implements Runnable {
 			if (System.currentTimeMillis() - timer > 1000)
 			{
 				timer += 1000;
-//				this.frame.setTitle(TITEL + " | " + frames + "fps");
+				this.frame.setTitle(TITEL + " | " + frames + "fps");
 				frames = 0;
 			}
 		}
 		stop();
+		
 
 	}
 
@@ -208,8 +214,33 @@ public class Anzeige extends Canvas implements Runnable {
 		g.setColor(cölör);
 
 		this.entityManager.render(g);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, HEIGHT - 30, WIDTH, 30);
+		g.setColor(Color.WHITE);
+		StringBuilder stringBuilder = new StringBuilder();
+		Formatter formatter = new Formatter(stringBuilder);
+		formatter.format("POS(X:Y:Z): (%-4f/%-4f/%-4f) VEL: FPS: %d", Kamera.vCamera.x, Kamera.vCamera.y, Kamera.vCamera.z, framesATM);
+		String str = stringBuilder.toString();
+//		String str = "POS(X:Y:Z): (" + Kamera.vCamera.x + "/" + Kamera.vCamera.y + "/" + Kamera.vCamera.z +")";
+		g.drawString(str, 0, HEIGHT - 10);
 		g.dispose();
 		bs.show();
+		
+	}
+	public static double getTargetFps() {
+		return targetfps;
+	}
+	public static void changeFpsTarget(double fps) {
+		ns = 1000000000.0/fps;
+		targetfps = fps;
 	}
 
+	public static double getViewDistance() {
+		return viewDistance;
+	}
+
+	public static void changeViewDistance(Double valueOf) {
+		viewDistance = valueOf;
+		
+	}
 }

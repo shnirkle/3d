@@ -14,9 +14,9 @@ import renderer.shapes.Polygon3D;
 //Hier werden Objekte aus Dreiecken gebaut, bzw. die nötige Textdatei importiert
 
 public class BasicEntityBuilder {
-	
+
 	//Methode zum Einlesen von Textdateien
-	
+
 	public static Objekt readFile(String path) {
 		List<Punkt> punkte = new ArrayList<Punkt>();
 		List<Polygon3D> polys = new ArrayList<Polygon3D>();
@@ -32,24 +32,23 @@ public class BasicEntityBuilder {
 				if (data.contains("v"))
 				{
 					data = data.substring(2);
-					
+
 					String[] coords = data.split(" ");
 					punkte.add(new Punkt(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2])));
 
 				}
 				if (data.contains("f"))
-				{ 
+				{
 					data = data.substring(2);
 					String[] coords = data.split(" ");
 					Punkt p1 = punkte.get(Integer.parseInt(coords[0]) - 1);
 					Punkt p2 = punkte.get(Integer.parseInt(coords[1]) - 1);
 					Punkt p3 = punkte.get(Integer.parseInt(coords[2]) - 1);
-					
+
 					polys.add(new Polygon3D(p1, p2, p3));
-					
 
 				}
-				
+
 			}
 			myReader.close();
 		} catch (FileNotFoundException e)
@@ -58,17 +57,18 @@ public class BasicEntityBuilder {
 		}
 
 		Objekt w = new Objekt(polys.toArray(new Polygon3D[polys.size()]));
-		
+
 		return w;
 	}
-	
+
 	//Ab hier werden Objekte gebaut
-	
+
 	public static Objekt createTeapot(float posx, float posy, float posz) {
 		Objekt w = readFile("src/crap.txt");
 		w.aendern(posx, posy, posz);
 		return w;
 	}
+
 	public static Objekt createSpaceShip(float posx, float posy, float posz) {
 		Objekt w = readFile("src/versuch1.txt");
 		w.aendern(posx, posy, posz);
@@ -167,55 +167,57 @@ public class BasicEntityBuilder {
 
 		return w;
 	}
-	
-	public static Objekt createSphere(Color c, Punkt m, float r)  {
 
-		Punkt[] punkte = new Punkt[200];
-		for (int i = 0; i < 200; i++) {
-			punkte[i] = new Punkt(0, 0, 0);
-		}
-		int count = 0;
-		Punkt punkt = new Punkt(0,0,0);
-		double theta;
-		double phi;
-		double dt = (2*Math.PI)/10;
-		double dp = Math.PI/10;
-		Polygon3D[] polys = new Polygon3D[5000];
-		for (int i = 0; i < 5000; i++) {
-			polys[i] = new Polygon3D(new Punkt(0, 0, 0), new Punkt(0, 0, 0), new Punkt(0, 0, 0));
-		}
-		//Punktmenge der Sphäre berechnen (10 Breitengrade, 10 Längengrade)
-				
-		for(int pi = 0; pi <= 10; pi++) {
-					phi = pi * dp;
-					for(int ti = 0; ti <= 10; ti++) {
-						theta = ti * dt;
-						punkt.x = (float) ((r * Math.sin(theta) * Math.sin(phi)) + m.x);
-						punkt.y = (float) (r * Math.cos(phi) + m.y);
-						punkt.z = (float) (r * Math.cos(theta) * Math.sin(phi) + m.z);
-						punkte[count].x = punkt.x;
-						punkte[count].y = punkt.y;
-						punkte[count].z = punkt.z;
-						count++;
-					}
-				}
-				count = 0;
-		//Dreiecke aus der Punktmenge machen
-				for(int pi = 0; pi <= 10; pi++) {
-					for(int ti = 0; ti < 10; ti++) {
-						int x0 = ti;
-						int x1 = ti+1;
-						int y0 = pi * 11;
-						int y1 = (pi + 1) * 11;
-						polys[count] = new Polygon3D(punkte[x0+y0], punkte[x0+y1], punkte[x1+y0]);
-						polys[count+1] = new Polygon3D(punkte[x1+y0], punkte[x0+y1], punkte[x1+y1]);
-						count += 2;
-					}
-				}
-		//aus Dreiecken letztendliche Kugel bauen
-				Objekt sphere = new Objekt(c, polys);
-			
-			return sphere;
-		}
+	public static Objekt createSphere(Color c, Punkt m, float r, int res)  {
+
+        
+        
+        Punkt[] punkte = new Punkt[(int) (2*Math.pow(res,2))];
+        for (int i = 0; i < punkte.length; i++) {
+            punkte[i] = new Punkt(0, 0, 0);
+        }
+        int count = 0;
+        Punkt punkt = new Punkt(0,0,0);
+        double theta;
+        double phi;
+        double dt = (2*Math.PI)/res;
+        double dp = Math.PI/res;
+        Polygon3D[] polys = new Polygon3D[(int) (3*Math.pow(res,2))]; //////////////////
+        for (int i = 0; i < polys.length; i++) {
+            polys[i] = new Polygon3D(new Punkt(0, 0, 0), new Punkt(0, 0, 0), new Punkt(0, 0, 0));
+        }
+        //Punktmenge der Sphäre berechnen (10 Breitengrade, 10 Längengrade)
+
+        for(int pi = 0; pi <= res; pi++) {
+                    phi = pi * dp;
+                    for(int ti = 0; ti <= res; ti++) {
+                        theta = ti * dt;
+                        punkt.x = (float) ((r * Math.sin(theta) * Math.sin(phi)) + m.x);
+                        punkt.y = (float) (r * Math.cos(phi) + m.y);
+                        punkt.z = (float) (r * Math.cos(theta) * Math.sin(phi) + m.z);
+                        punkte[count].x = punkt.x;
+                        punkte[count].y = punkt.y;
+                        punkte[count].z = punkt.z;
+                        count++;
+                    }
+                }
+                count = 0;
+//Dreiecke aus der Punktmenge machen
+                for(int pi = 0; pi <= res; pi++) {
+                    for(int ti = 0; ti < res; ti++) {
+                        int x0 = ti;
+                        int x1 = ti+1;
+                        int y0 = pi * (res+1);
+                        int y1 = (pi + 1) * (res+1);
+                        polys[count] = new Polygon3D(punkte[x0+y0], punkte[x0+y1], punkte[x1+y0]);
+                        polys[count+1] = new Polygon3D(punkte[x1+y0], punkte[x0+y1], punkte[x1+y1]);
+                        count += 2;
+                    }
+                }
+        //aus Dreiecken letztendliche Kugel bauen
+                Objekt sphere = new Objekt(c, polys);
+
+            return sphere;
+        }
 
 }

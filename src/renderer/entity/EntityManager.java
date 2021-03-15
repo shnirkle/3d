@@ -45,7 +45,7 @@ public class EntityManager {
 //				}
 //			}
 //		}
-		this.createSolarSystem(0.01f, 0.001f);
+		this.createSolarSystem(0.00001f, 0.00000001f);
 		//		 
 
 		this.tastatur = eingabe.tastatur;
@@ -102,7 +102,7 @@ public class EntityManager {
 
 		if (this.tastatur.getSTRG())
 		{
-			Kamera.vorwaerts(-speed);
+			Kamera.vorwaerts(-speed * 5);
 		}
 		if (this.tastatur.getEcp())
 		{
@@ -146,14 +146,15 @@ public class EntityManager {
 	}
 
 	public void createSolarSystem(float groessenskale, float abstandsskale) {
-
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(58000000f   * abstandsskale, 0, 500), 1392700 * groessenskale)); //Merkur
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(150000000f  * abstandsskale, 0, 500), 12104 * groessenskale)); //Erde
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(228000000f  * abstandsskale, 0, 500), 12742 * groessenskale)); //Mars
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(778000000f  * abstandsskale, 0, 500), 139820 * groessenskale)); //Jupiter
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(1427000000f * abstandsskale, 0, 500), 116460 * groessenskale)); //Saturn
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(2884000000f * abstandsskale, 0, 500), 50724 * groessenskale)); //Uranus
-		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(4509000000f * abstandsskale, 0, 500), 49244 * groessenskale)); //Neptun
+		this.entities.add(BasicEntityBuilder.createSphere(Color.blue, new Punkt(0,0,500), 1392700 * groessenskale, 120));
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(58000000f   * abstandsskale, 0, 500), 4879 * groessenskale, 80)); //Merkur
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(108000000f   * abstandsskale, 0, 500), 12104 * groessenskale, 80)); //Venus
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(150000000f  * abstandsskale, 0, 500), 12104 * groessenskale, 14)); //Erde
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(228000000f  * abstandsskale, 0, 500), 12742 * groessenskale, 14)); //Mars
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(778000000f  * abstandsskale, 0, 500), 139820 * groessenskale, 14)); //Jupiter
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(1427000000f * abstandsskale, 0, 500), 116460 * groessenskale, 14)); //Saturn
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(2884000000f * abstandsskale, 0, 500), 50724 * groessenskale, 14)); //Uranus
+		this.entities.add(BasicEntityBuilder.createSphere(Color.BLUE, new Punkt(4509000000f * abstandsskale, 0, 500), 49244 * groessenskale, 14)); //Neptun
 	}
 
 }

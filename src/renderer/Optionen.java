@@ -2,6 +2,9 @@ package renderer;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,10 +40,18 @@ public class Optionen {
     
 	frame.add(tabpane);	
 	
-	
+	WindowListener schliessen = new WindowAdapter() {
+
+		@Override
+	    public void windowClosing(WindowEvent e) {
+	           frame.dispose();
+	           Anzeige.isPaused = false;
+			}    
+		};
+	frame.addWindowListener(schliessen);
 	
 	//----------------------- Frame Einstellungen ------------------------
-	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Frame wird beim Klick auf rotes Kreuz geschlossen, aber nicht das ganze Programm (dispose statt exit)
+	frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //Frame wird beim Klick auf rotes Kreuz geschlossen, aber nicht das ganze Programm (dispose statt exit)
 	frame.setPreferredSize(new Dimension(900, 500));
 	frame.pack();
 	frame.setLocationRelativeTo(null); 

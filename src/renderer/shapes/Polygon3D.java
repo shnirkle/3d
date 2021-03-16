@@ -24,7 +24,7 @@ public class Polygon3D {
 
 	public double avgZ;
 	public Color shade;
-
+	public Color baseColor;
 	Matrix rotX = new Matrix();
 	Matrix rotY = new Matrix();
 	Matrix rotZ = new Matrix();
@@ -184,13 +184,29 @@ public class Polygon3D {
 
 		float lae = (float) (Vektor.skalarprodukt(normal, lightR));
 		
-		if (lae < 0)
-			lae = 0;
-
-		return new Color(lae, lae, lae);
+		lae += 1.0f;
+		lae /= 2;
+		
+		float[] compR = baseColor.getColorComponents(null);
+		compR[0] *= lae;
+		compR[1] *= lae;
+		compR[2] *= lae;
+		
+	
+		return new Color(compR[0],compR[1],compR[2]);
 	}
 
 	public Color getShade() {
 		return this.shade;
+	}
+
+	public void scale(float scale) {
+		this.punkte[0] = Vektor.multVektor_Faktor(this.punkte[0], scale);
+		this.punkte[1] = Vektor.multVektor_Faktor(this.punkte[1], scale);
+		this.punkte[2] = Vektor.multVektor_Faktor(this.punkte[2], scale);
+		
+		
+		
+		
 	}
 }

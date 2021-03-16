@@ -192,31 +192,31 @@ public class Optionen {
 					{
 					case 0: 
 						Kamera.KameraZurück();
-						System.out.println("0");
+//						System.out.println("0");
 						Anzeige.entityManager.createEarth_Moon();
 						break;
 					case 1:
 						Kamera.KameraZurück();
-						System.out.println("1");
+//						System.out.println("1");
 						Anzeige.entityManager.createSolarSystem(0.0001f, 0.0001f);
 						break;
 					case 2:
 						Kamera.KameraZurück();
-						System.out.println("2");
-						Anzeige.entityManager.createSolarSystem(0.0001f, 0.0001f);
+//						System.out.println("2");
+						Anzeige.entityManager.createSolarSystemNOTSCALE();;
 						break;
 					case 3:
 						Kamera.KameraZurück();
-						System.out.println("3");
+//						System.out.println("3");
 						Anzeige.entityManager.createTeapot();
 						break;
 					case 4:
 						Kamera.KameraZurück();
-						System.out.println("4");
+//						System.out.println("4");
 						Anzeige.entityManager.createGrid();
 						break;
 					default:
-						System.out.println("def");
+//						System.out.println("def");
 						break;
 					}
 				}

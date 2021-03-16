@@ -12,10 +12,13 @@ public class Objekt {
 
 	private Polygon3D[] polygons;
 	private float xGrad, yGrad, zGrad;
-	private float xOff, yOff, zOff;
+	public float xOff, yOff, zOff;
 
 	public Objekt(Color color, Polygon3D... polygons) {
 		this.polygons = polygons;
+		for(Polygon3D p : polygons) {
+			p.baseColor = color;
+		}
 
 	}
 
@@ -32,7 +35,7 @@ public class Objekt {
 	}
 
 	//Rendern für die Rotationen unserer Rotationsmatrixen / Weltmatrix
-
+	
 	public void render() {
 		if(Vektor.sub(new Vektor(xOff, yOff, zOff), Kamera.vCamera).length < Anzeige.getViewDistance()) {
 		Matrix xRot = Matrix.rotateAxisX(xGrad);
@@ -52,6 +55,7 @@ public class Objekt {
 		
 		for (Polygon3D poly : this.polygons)
 		{
+			
 			poly.calc(weltMat);
 		} 
 		}
@@ -68,7 +72,11 @@ public class Objekt {
 	}
 
 	//Rotieren, dann sortieren
-
+	public void changeBaseColor(Color color) {
+		for(Polygon3D p : polygons) {
+			p.baseColor = color;
+		}
+	}
 	public void rotate(float xGrad, float yGrad, float zGrad) {
 		this.xGrad = xGrad;
 		this.yGrad = yGrad;
@@ -82,5 +90,12 @@ public class Objekt {
 
 	public Polygon3D[] getPolygons() {
 		return this.polygons;
+	}
+
+	public void scale(float scale) {
+		for(Polygon3D p : this.polygons) {
+			p.scale(scale);
+		}
+		
 	}
 }

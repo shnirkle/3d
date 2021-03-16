@@ -63,75 +63,29 @@ public class BasicEntityBuilder {
 
 	//Ab hier werden Objekte gebaut
 
-	public static Objekt createTeapot(float posx, float posy, float posz) {
+	public static Objekt createTeapot(Color c, float posx, float posy, float posz) {
 		Objekt w = readFile("src/crap.txt");
 		w.aendern(posx, posy, posz);
+		w.changeBaseColor(c);
+		w.rotate(180f, 0, 0);
 		return w;
 	}
 
-	public static Objekt createSpaceShip(float posx, float posy, float posz) {
+	public static Objekt createSpaceShip(Color c, float posx, float posy, float posz) {
 		Objekt w = readFile("src/versuch1.txt");
 		w.aendern(posx, posy, posz);
+		w.changeBaseColor(c);
 		return w;
 
 	}
-
-	public static Objekt createQuader(float posx, float posy, float posz, float laengeX, float laengeY, float laengeZ) {
-		Punkt p1 = new Punkt(posx * laengeX, posy * laengeY, posz * laengeZ); // 0 0 0 p1
-		Punkt p2 = new Punkt(posx * laengeX, (posy + 1) * laengeY, posz * laengeZ); // 0 1 0 p2
-		Punkt p3 = new Punkt((posx + 1) * laengeX, (posy + 1) * laengeY, posz * laengeZ); // 1 1 0 p3
-		Punkt p4 = new Punkt((posx + 1) * laengeX, posy * laengeY, posz * laengeZ);// 			// 1 0 0 p4
-		Punkt p5 = new Punkt((posx + 1) * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 1 1 1 p5
-		Punkt p6 = new Punkt((posx + 1) * laengeX, posy * laengeY, (posz + 1) * laengeZ);// 	// 1 0 1 p6
-		Punkt p7 = new Punkt(posx * laengeX, (posy + 1) * laengeY, (posz + 1) * laengeZ);// 	// 0 1 1 p7
-		Punkt p8 = new Punkt(posx * laengeX, posy * laengeY, +1 * laengeZ);// 			// 0 0 1 p8
-
-		//		Punkt p1 = new Punkt(-0.5f * laengeX, -0.5f * laengeY, -0.5f * laengeZ);
-		//		Punkt p2 = new Punkt(-0.5f * laengeX, +0.5f * laengeY, -0.5f * laengeZ);
-		//		Punkt p3 = new Punkt(+0.5f * laengeX, +0.5f * laengeY, -0.5f * laengeZ);
-		//		Punkt p4 = new Punkt(+0.5f * laengeX, -0.5f * laengeY, -0.5f * laengeZ);
-		//		Punkt p5 = new Punkt(+0.5f * laengeX, +0.5f * laengeY, +0.5f * laengeZ);
-		//		Punkt p6 = new Punkt(+0.5f * laengeX, -0.5f * laengeY, +0.5f * laengeZ);
-		//		Punkt p7 = new Punkt(-0.5f * laengeX, +0.5f * laengeY, +0.5f * laengeZ);
-		//		Punkt p8 = new Punkt(-0.5f * laengeX, -0.5f * laengeY, +0.5f * laengeZ);
-
-		Objekt w = new Objekt(
-
-				new Polygon3D(p1, p2, p3), //
-				new Polygon3D(p1, p3, p4), // Front 
-
-				new Polygon3D(p4, p3, p5), //
-				new Polygon3D(p4, p5, p6), // Ost 
-
-				new Polygon3D(p6, p5, p7), //
-				new Polygon3D(p6, p7, p8), // Hinten
-
-				new Polygon3D(p8, p7, p2), //
-				new Polygon3D(p8, p2, p1), // Westen
-
-				new Polygon3D(p2, p7, p5), //
-				new Polygon3D(p2, p5, p3), // Top
-
-				new Polygon3D(p4, p6, p8), //
-				new Polygon3D(p4, p8, p1) // Unten
-
-		);
+	public static Objekt createRing(Color c, float posx, float posy, float posz) {
+		Objekt w = readFile("src/ring.txt");
 		w.aendern(posx, posy, posz);
-
+		w.changeBaseColor(c);
 		return w;
-
+		
 	}
-
 	public static Objekt createWürfel(float posx, float posy, float posz, float laenge) {
-
-		//		Punkt p1 = new Punkt(posx * laenge, posy * laenge, posz * laenge);				 	// 0 0 0 p1
-		//		Punkt p2 = new Punkt(posx * laenge, (posy + 1) * laenge, posz * laenge);		 	// 0 1 0 p2
-		//		Punkt p3 = new Punkt((posx + 1) * laenge, (posy + 1) * laenge, posz * laenge);	 	// 1 1 0 p3
-		//		Punkt p4 = new Punkt((posx + 1) * laenge, posy * laenge, posz * laenge);// 			// 1 0 0 p4
-		//		Punkt p5 = new Punkt((posx + 1) * laenge, (posy + 1) * laenge, (posz + 1) * laenge);// 1 1 1 p5
-		//		Punkt p6 = new Punkt((posx + 1) * laenge, posy * laenge, (posz + 1) * laenge);// 	// 1 0 1 p6
-		//		Punkt p7 = new Punkt(posx * laenge, (posy + 1) * laenge, (posz + 1) * laenge);// 	// 0 1 1 p7
-		//		Punkt p8 = new Punkt(posx * laenge, posy * laenge, (posz + 1) * laenge);// 			// 0 0 1 p8
 
 		Punkt p1 = new Punkt(-0.5f * laenge, -0.5f * laenge, -0.5f * laenge);
 		Punkt p2 = new Punkt(-0.5f * laenge, +0.5f * laenge, -0.5f * laenge);
@@ -167,10 +121,13 @@ public class BasicEntityBuilder {
 
 		return w;
 	}
-
+	
 	public static Objekt createSphere(Color c, Punkt m, float r, int res)  {
 
-        
+		if (res < 4)
+		{
+			res = 4;
+		}
         
         Punkt[] punkte = new Punkt[(int) (2*Math.pow(res,2) - 1)];
         for (int i = 0; i < punkte.length; i++) {

@@ -51,7 +51,7 @@ public class Anzeige extends Canvas implements Runnable {
 	public static EntityManager entityManager;
 
 	private static Eingabe eingabe;
-	private static double viewDistance = 1000;
+	private static double viewDistance = 100000;
 
 	public static void main(String[] args) {
 		JFrame home = new JFrame();

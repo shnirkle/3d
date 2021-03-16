@@ -7,7 +7,7 @@ public class Kamera {
 	
 	public static float VEL = 0.0f;
 	public static float maxspeed = 3.0f;
-	public static Vektor vCamera = new Vektor(0,1.5f,4.0f);	
+	public static Vektor vCamera = new Vektor(0,0,0);	
 	public static Vektor vLook = new Vektor(0,0,0);
 	public static double yGrad = 0;
 	public static double xGrad = 0;

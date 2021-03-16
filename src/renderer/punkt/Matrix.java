@@ -50,7 +50,7 @@ public class Matrix {
 		projectionMatrix.mat[3][2] = (-far * near) / (far - near);
 		projectionMatrix.mat[2][3] = 1.0f;
 		projectionMatrix.mat[3][3] = 0.0f;
-		System.out.println(w);
+		
 	}
 	
 	//Methoden zum Rotieren an Achsen

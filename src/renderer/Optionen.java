@@ -93,8 +93,8 @@ public class Optionen {
 		tabpane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
 		tabpane.addTab("Render Einstellungen", panelLeistung);
-		tabpane.addTab("Raumschiff", panelRaumschiff);
-		tabpane.addTab("Audio", panelAudio);
+//		tabpane.addTab("Raumschiff", panelRaumschiff);
+//		tabpane.addTab("Audio", panelAudio);
 		tabpane.addTab("Szene", panelWeiteres);
 
 		//------------ Verschönerung der Tab-Titel ---------------
@@ -111,53 +111,66 @@ public class Optionen {
 		//Je nach Einstellung kann man dafür Slider, Textfelder, usw. benutzen.
 
 		JPanel leistung1 = new JPanel();
-		JPanel raumschiff1 = new JPanel();
-		JPanel audio1 = new JPanel();
+		//JPanel raumschiff1 = new JPanel();
+		//JPanel audio1 = new JPanel();
 		JPanel weiteres1 = new JPanel();
 
 		panelLeistung.add(leistung1);
-		panelRaumschiff.add(raumschiff1);
-		panelAudio.add(audio1);
+		//panelRaumschiff.add(raumschiff1);
+		//panelAudio.add(audio1);
 		panelWeiteres.add(weiteres1);
 		
 		panelLeistung.setBackground(bgc);
-		panelRaumschiff.setBackground(bgc);
-		panelAudio.setBackground(bgc);
+		//panelRaumschiff.setBackground(bgc);
+		//panelAudio.setBackground(bgc);
 		panelWeiteres.setBackground(bgc);
 
 		//---------- Hinzufügen von GUI-Elementen auf den Subpanels - erstmal nur JLabels als Platzhalter ----------
-		JLabel labLeistung = new JLabel("Vorstellbare Einstellungen: Maximale FPS, Renderdistanz der Objekte, maximale Anzahl an Objekten, ...");
-		JLabel labRaumschiff = new JLabel("Vorstellbare Einstellungen: Geschwindigkeit, FOV, Steuerung (+ Anzeigen der momentanen Tastenbelegung), ...");
-		JLabel labAudio = new JLabel("Vorstellbare Einstellungen (hätten wir Musik gemacht): Musiklautstärke, SFX-Lautstärke, ...");
-		JLabel labWeiteres = new JLabel("Vorstellbare Einstellungen: Wireframe (nur Kanten der Objekte), andere Einstellungen ohne eindeutige Kategorie");
+		JLabel labLeistung = new JLabel("");
+		//JLabel labRaumschiff = new JLabel("");
+		//JLabel labAudio = new JLabel("");
+		JLabel labWeiteres = new JLabel("");
 		
 		GridLayout l = new GridLayout(0,1,2,5);
 		
 		labLeistung.setLayout(l);
-		labRaumschiff.setLayout(l);
-		labAudio.setLayout(l);
+		//labRaumschiff.setLayout(l);
+		//labAudio.setLayout(l);
 		labWeiteres.setLayout(l);
 		
 		//-----------------------------------------------
 		String fpsS = Double.toString(Anzeige.getTargetFps());
 		String vdS = Double.toString(Anzeige.getViewDistance());
-		
-		JCheckBox kettenRahmen = new JCheckBox("", false);
+
+		JCheckBox kettenRahmen = new JCheckBox("WireFrame-Modus", false);
+		JLabel fpsBeschreibung = new JLabel("Maximale Fps");
 		JTextField fps = new JTextField(fpsS);
+		JLabel viewDistanceBeschreibung = new JLabel("Maximale View Distnace");
 		JTextField viewDistance = new JTextField(vdS);  
 		JButton labLeistungApply = new JButton("Anpassen");
+		
+		
+		viewDistanceBeschreibung.setFocusable(false);
+		viewDistanceBeschreibung.setBackground(bgc);
+		viewDistanceBeschreibung.setForeground(Color.white);
+		viewDistanceBeschreibung.setFont(new Font("Calibri", Font.BOLD ,20));
 		
 		kettenRahmen.setFocusable(false);
 		kettenRahmen.setBackground(bgc);
 		kettenRahmen.setForeground(Color.white);
 		kettenRahmen.setFont(new Font("Calibri", Font.BOLD ,20));
 		
-		fps.setFocusable(false);
+		fpsBeschreibung.setFocusable(false);
+		fpsBeschreibung.setBackground(bgc);
+		fpsBeschreibung.setForeground(Color.white);
+		fpsBeschreibung.setFont(new Font("Calibri", Font.BOLD ,20));
+		
+		fps.setFocusable(true);
 		fps.setBackground(bgc);
 		fps.setForeground(Color.white);
 		fps.setFont(new Font("Calibri", Font.BOLD ,20));
 		
-		viewDistance.setFocusable(false);
+		viewDistance.setFocusable(true);
 		viewDistance.setBackground(bgc);
 		viewDistance.setForeground(Color.white);
 		viewDistance.setFont(new Font("Calibri", Font.BOLD ,20));
@@ -169,19 +182,21 @@ public class Optionen {
 		
 		leistung1.setLayout(l);
 		leistung1.add(labLeistung);
+		leistung1.add(fpsBeschreibung);
 		leistung1.add(fps);
+		leistung1.add(viewDistanceBeschreibung);
 		leistung1.add(viewDistance);
 		leistung1.add(kettenRahmen);
 		leistung1.add(labLeistungApply);
 		leistung1.setBackground(bgc);
 		
-		raumschiff1.add(labRaumschiff);
-		raumschiff1.setLayout(l);
-		raumschiff1.setBackground(bgc);
-		
-		audio1.add(labAudio);
-		audio1.setLayout(l);
-		audio1.setBackground(bgc);
+//		raumschiff1.add(labRaumschiff);
+//		raumschiff1.setLayout(l);
+//		raumschiff1.setBackground(bgc);
+//		
+//		audio1.add(labAudio);
+//		audio1.setLayout(l);
+//		audio1.setBackground(bgc);
 		
 		weiteres1.add(labWeiteres);
 		weiteres1.setLayout(l);
@@ -252,12 +267,12 @@ public class Optionen {
 					case 1:
 						Kamera.KameraZurück();
 //						System.out.println("1");
-						Anzeige.entityManager.createSolarSystem(0.0001f, 0.0001f);
+						Anzeige.entityManager.createSolarSystem(0.0001f, 0.001f);
 						break;
 					case 2:
 						Kamera.KameraZurück();
 //						System.out.println("2");
-						Anzeige.entityManager.createSolarSystemNOTSCALE();;
+						Anzeige.entityManager.createSolarSystemNOTSCALE();
 						break;
 					case 3:
 						Kamera.KameraZurück();
@@ -277,7 +292,7 @@ public class Optionen {
 					case 6:
 						Kamera.KameraZurück();
 //						System.out.println("4");
-						//Anzeige.entityManager.createSaturn();
+						Anzeige.entityManager.createSaturn();
 						break;
 					default:
 //						System.out.println("def");

@@ -78,10 +78,11 @@ public class BasicEntityBuilder {
 		return w;
 
 	}
-	public static Objekt createRing(Color c, float posx, float posy, float posz) {
+	public static Objekt createRing(Color c, float posx, float posy, float posz, float scale) {
 		Objekt w = readFile("src/ring.txt");
-		w.aendern(posx, posy, posz);
+		w.scale(scale);
 		w.changeBaseColor(c);
+		w.aendern(posx, posy, posz);
 		return w;
 		
 	}

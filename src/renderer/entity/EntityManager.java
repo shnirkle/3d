@@ -136,7 +136,7 @@ public class EntityManager {
 				{
 					AccVW += acc;
 				}
-				Kamera.vorwaerts(AccVW);
+				Kamera.vorwaerts(AccVW*0.1f);
 			}
 
 			if (this.tastatur.getS())
@@ -146,7 +146,7 @@ public class EntityManager {
 				{
 					AccRW -= acc;
 				}
-				Kamera.vorwaerts(AccRW);
+				Kamera.vorwaerts(AccRW*0.1f);
 			}
 
 		}
@@ -248,6 +248,7 @@ public class EntityManager {
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(189, 128, 97), new Punkt(-320, 0, 150), 12.7f, 14)); //Mars
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(201, 177, 158), new Punkt(-878, 0, 150), 70.0f, 14)); //Jupiter
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(192, 166, 140), new Punkt(-1527, 0, 150), 70.0f, 14)); //Saturn
+		tempEntities.add(BasicEntityBuilder.createRing(Color.GRAY, -1527, 0, 150, 110)); //Saturnringe
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(209, 249, 244), new Punkt(-2884, 0, 150), 50.7f, 14)); //Uranus
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(60, 82, 199), new Punkt(-4509, 0, 150), 49.2f, 14)); //Neptun
 	}
@@ -261,8 +262,15 @@ public class EntityManager {
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(189, 128, 97), new Punkt(228000000f * abstandsskale, 0, 500), 12742 * groessenskale, 14)); //Mars
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(201, 177, 158), new Punkt(778000000f * abstandsskale, 0, 500), 139820 * groessenskale, 14)); //Jupiter
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(192, 166, 140), new Punkt(1427000000f * abstandsskale, 0, 500), 116460 * groessenskale, 14)); //Saturn
+		tempEntities.add(BasicEntityBuilder.createRing(Color.GRAY, 1427000000f * abstandsskale, 0, 500, 110)); //Saturnringe
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(209, 249, 244), new Punkt(2884000000f * abstandsskale, 0, 500), 50724 * groessenskale, 14)); //Uranus
 		tempEntities.add(BasicEntityBuilder.createSphere(new Color(60, 82, 199), new Punkt(4509000000f * abstandsskale, 0, 500), 49244 * groessenskale, 14)); //Neptun
+	}
+
+	public void createSaturn() {
+		clearentities();
+		tempEntities.add(BasicEntityBuilder.createSphere(new Color(192, 166, 140), new Punkt(0, 0, 200), 120, 110)); //Saturn
+		tempEntities.add(BasicEntityBuilder.createRing(Color.GRAY, 0, 0, 200, 150)); //Saturnringe
 	}
 
 }

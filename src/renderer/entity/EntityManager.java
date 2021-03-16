@@ -155,6 +155,7 @@ public class EntityManager {
 		if (this.tastatur.getEcp())
 		{
 			Anzeige.isPaused = true;
+			@SuppressWarnings("unused")
 			PauseView pauseview = new PauseView();
 		}
 		Kamera.updateCam();

@@ -183,21 +183,11 @@ public class Polygon3D {
 		Vektor lightR = Vektor.sub(licht, vers);
 
 		float lae = (float) (Vektor.skalarprodukt(normal, lightR));
-		lae = Math.abs(lae);
+		
 		if (lae < 0)
 			lae = 0;
 
 		return new Color(lae, lae, lae);
-	}
-
-	private double getAvgZ(Vektor[] viewed) {
-		double p1Z = (viewed[0].z + viewed[1].z + viewed[2].z) / 3;
-		return p1Z;
-	}
-
-	private double getAvgZ() {
-		double p1Z = (this.prPunkte[0].z + this.prPunkte[1].z + this.prPunkte[2].z) / 3;
-		return p1Z;
 	}
 
 	public Color getShade() {

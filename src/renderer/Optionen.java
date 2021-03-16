@@ -51,6 +51,7 @@ public class Optionen {
 
 		WindowListener schliessen = new WindowAdapter() {
 
+			@SuppressWarnings("unused")
 			@Override
 			public void windowClosing(WindowEvent e) {
 				frame.dispose();

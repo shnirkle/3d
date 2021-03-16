@@ -244,6 +244,7 @@ public class Anzeige extends Canvas implements Runnable {
 		g.fillRect(0, HEIGHT - 30, WIDTH, 30);
 		g.setColor(Color.WHITE);
 		StringBuilder stringBuilder = new StringBuilder();
+		@SuppressWarnings("resource")
 		Formatter formatter = new Formatter(stringBuilder);
 		formatter.format("POS(X:Y:Z): (%-4f/%-4f/%-4f) VEL: %f", Kamera.vCamera.x, Kamera.vCamera.y, Kamera.vCamera.z, Kamera.VEL);
 		String str = stringBuilder.toString();

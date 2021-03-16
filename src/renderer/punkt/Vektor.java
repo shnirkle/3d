@@ -143,8 +143,6 @@ public class Vektor {
 	    // Ref for dot product calculation: https://www.mathsisfun.com/algebra/vectors-dot-product.html
 	    int dot2 = (int) (ebenenNormale.x * ebenenPunkt.x + ebenenNormale.y * ebenenPunkt.y);
 	    int dot3 = (int) (ebenenNormale.x * lin.x + ebenenNormale.y * linAnfang.y);
-	    int dot4 = (int) (ebenenNormale.x * lin.x + ebenenNormale.y * lin.y);
-
 	    float t = (dot2 - dot3)/ 0.01f;
 
 	    

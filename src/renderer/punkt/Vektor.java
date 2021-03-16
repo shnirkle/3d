@@ -35,7 +35,7 @@ public class Vektor {
 		}
 	}	
 	
-	//Mathematik f�r Vektoren
+	//Mathematik fuer Vektoren
 	
 	//multipliziere Vektor mit Vektor
 	

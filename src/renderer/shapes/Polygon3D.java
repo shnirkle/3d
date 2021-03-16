@@ -47,6 +47,9 @@ public class Polygon3D {
 
 	}
 
+	//Weltmatrix wird berechnet. Dafür multiplizieren wir immer die Punktematrix, 
+	//welche dargestellt bzw. verändert werden soll, mit der Weltmatrix 
+	
 	public void calc(Matrix weltMat) {
 
 		Vektor[] tranPunkte = new Vektor[3];
@@ -76,6 +79,8 @@ public class Polygon3D {
 		}
 	}
 
+	//Clipping, damit wir nur sehen, was wir sehen sollen
+	
 	public void clipTriangle(Vektor ebenenNormale, Vektor ebenenPunkt, Vektor[] p) {
 		float dist0 = Vektor.dist(p[0], ebenenNormale, ebenenPunkt);
 		float dist1 = Vektor.dist(p[1], ebenenNormale, ebenenPunkt);
@@ -153,6 +158,8 @@ public class Polygon3D {
 		}
 	}
 
+	//Projezieren der Dreiecke
+	
 	private static Vektor[] projectTri(Vektor[] p) {
 		Vektor[] prPunkte = new Vektor[3];
 
@@ -175,10 +182,14 @@ public class Polygon3D {
 		return prPunkte;
 	}
 
+	//Methode für die Werte der projezierten Punkte
+	
 	public Vektor[] getPrPunkte() {
 		return prPunkte;
 	}
 
+	//Shading berechnen -> Objekte werden Schatten haben
+	
 	private Color calcShade(Vektor normal, Vektor vers) {
 		Vektor lightR = Vektor.sub(licht, vers);
 

@@ -64,7 +64,7 @@ public class BasicEntityBuilder {
 	//Ab hier werden Objekte gebaut
 
 	public static Objekt createTeapot(Color c, float posx, float posy, float posz) {
-		Objekt w = readFile("src/crap.txt");
+		Objekt w = readFile("src/teapot.txt");
 		w.aendern(posx, posy, posz);
 		w.changeBaseColor(c);
 		w.rotate(180f, 0, 0);
@@ -72,7 +72,7 @@ public class BasicEntityBuilder {
 	}
 
 	public static Objekt createSpaceShip(Color c, float posx, float posy, float posz) {
-		Objekt w = readFile("src/versuch1.txt");
+		Objekt w = readFile("src/spaceship.txt");
 		w.aendern(posx, posy, posz);
 		w.changeBaseColor(c);
 		return w;
@@ -85,7 +85,7 @@ public class BasicEntityBuilder {
 		return w;
 		
 	}
-	public static Objekt createWürfel(float posx, float posy, float posz, float laenge) {
+	public static Objekt createWürfel(Color c, float posx, float posy, float posz, float laenge) {
 
 		Punkt p1 = new Punkt(-0.5f * laenge, -0.5f * laenge, -0.5f * laenge);
 		Punkt p2 = new Punkt(-0.5f * laenge, +0.5f * laenge, -0.5f * laenge);
@@ -118,7 +118,8 @@ public class BasicEntityBuilder {
 
 		);
 		w.aendern(posx, posy, posz);
-
+		w.changeBaseColor(c);
+		
 		return w;
 	}
 	

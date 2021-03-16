@@ -1,6 +1,9 @@
 package renderer;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -9,6 +12,7 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -39,6 +43,8 @@ public class Optionen {
 	JPanel panelRaumschiff;
 	JPanel panelAudio;
 	JPanel panelWeiteres;
+	
+	Color bgc = new Color(48, 52, 64);	//Hintergrundfarbe für Elemente
 
 	public Optionen() {
 		init(); //Initialisierung der Variablen (zusammengefasst in Funktion)
@@ -77,6 +83,9 @@ public class Optionen {
 		panelRaumschiff = new JPanel();
 		panelAudio = new JPanel();
 		panelWeiteres = new JPanel();
+		
+		ImageIcon icon = new ImageIcon("src/images/raumschiff.png");
+        frame.setIconImage(icon.getImage());
 	}
 
 	public void setupTabbedLayout() {
@@ -110,6 +119,11 @@ public class Optionen {
 		panelRaumschiff.add(raumschiff1);
 		panelAudio.add(audio1);
 		panelWeiteres.add(weiteres1);
+		
+		panelLeistung.setBackground(bgc);
+		panelRaumschiff.setBackground(bgc);
+		panelAudio.setBackground(bgc);
+		panelWeiteres.setBackground(bgc);
 
 		//---------- Hinzufügen von GUI-Elementen auf den Subpanels - erstmal nur JLabels als Platzhalter ----------
 		JLabel labLeistung = new JLabel("Vorstellbare Einstellungen: Maximale FPS, Renderdistanz der Objekte, maximale Anzahl an Objekten, ...");
@@ -117,7 +131,12 @@ public class Optionen {
 		JLabel labAudio = new JLabel("Vorstellbare Einstellungen (hätten wir Musik gemacht): Musiklautstärke, SFX-Lautstärke, ...");
 		JLabel labWeiteres = new JLabel("Vorstellbare Einstellungen: Wireframe (nur Kanten der Objekte), andere Einstellungen ohne eindeutige Kategorie");
 		
+		GridLayout l = new GridLayout(0,1,2,5);
 		
+		labLeistung.setLayout(l);
+		labRaumschiff.setLayout(l);
+		labAudio.setLayout(l);
+		labWeiteres.setLayout(l);
 		
 		//-----------------------------------------------
 		String fpsS = Double.toString(Anzeige.getTargetFps());
@@ -128,15 +147,46 @@ public class Optionen {
 		JTextField viewDistance = new JTextField(vdS);  
 		JButton labLeistungApply = new JButton("Anpassen");
 		
+		kettenRahmen.setFocusable(false);
+		kettenRahmen.setBackground(bgc);
+		kettenRahmen.setForeground(Color.white);
+		kettenRahmen.setFont(new Font("Calibri", Font.BOLD ,20));
 		
+		fps.setFocusable(false);
+		fps.setBackground(bgc);
+		fps.setForeground(Color.white);
+		fps.setFont(new Font("Calibri", Font.BOLD ,20));
+		
+		viewDistance.setFocusable(false);
+		viewDistance.setBackground(bgc);
+		viewDistance.setForeground(Color.white);
+		viewDistance.setFont(new Font("Calibri", Font.BOLD ,20));
+		
+		labLeistungApply.setFocusable(false);
+		labLeistungApply.setBackground(new Color(42, 145, 23));
+		labLeistungApply.setForeground(Color.white);
+		labLeistungApply.setFont(new Font("Calibri", Font.BOLD ,20));
+		
+		leistung1.setLayout(l);
 		leistung1.add(labLeistung);
 		leistung1.add(fps);
-		leistung1.add(labLeistungApply);
 		leistung1.add(viewDistance);
 		leistung1.add(kettenRahmen);
+		leistung1.add(labLeistungApply);
+		leistung1.setBackground(bgc);
+		
 		raumschiff1.add(labRaumschiff);
+		raumschiff1.setLayout(l);
+		raumschiff1.setBackground(bgc);
+		
 		audio1.add(labAudio);
+		audio1.setLayout(l);
+		audio1.setBackground(bgc);
+		
 		weiteres1.add(labWeiteres);
+		weiteres1.setLayout(l);
+		weiteres1.setBackground(bgc);
+		
 		labLeistungApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				
@@ -154,7 +204,7 @@ public class Optionen {
 		/*
 		 * --> Teapot
 		 * --> Grid
-		 * --> Spaceship
+		 * --> RainbowGrid
 		 * --> SolarsystemScale
 		 * --> SolarsystemModel
 		 * --> Earth & Moon
@@ -165,7 +215,7 @@ public class Optionen {
 		
 		JButton createTeapot = new JButton("Lade Teekanne");
 		JButton createGrid = new JButton("Lade Grid");
-		JButton createSpaceship = new JButton("Lade Spaceship");
+		JButton createRainbowGrid = new JButton("Lade RainbowGrid");
 		JButton createSolarsystemScale = new JButton("Lade Sonnensytem im Maßstab");
 		JButton createSolarsystemModel = new JButton("Lade Sonnensystem nicht im Maßstab");
 		JButton createEarth_Moon = new JButton("Lade Erde und Mond");
@@ -176,13 +226,17 @@ public class Optionen {
 		buttonList.add(createSolarsystemModel);
 		buttonList.add(createTeapot);
 		buttonList.add(createGrid);
-		buttonList.add(createSpaceship);		
+		buttonList.add(createRainbowGrid);		
 		buttonList.add(createSaturn);
-		
-		
 		
 		for(JButton jb : buttonList) {
 			weiteres1.add(jb);
+			
+			jb.setFocusable(false);
+			jb.setBackground(bgc);
+			jb.setForeground(Color.white);
+			jb.setFont(new Font("Calibri", Font.BOLD ,20));
+			
 			jb.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					
@@ -214,6 +268,16 @@ public class Optionen {
 						Kamera.KameraZurück();
 //						System.out.println("4");
 						Anzeige.entityManager.createGrid();
+						break;
+					case 5:
+						Kamera.KameraZurück();
+//						System.out.println("4");
+						Anzeige.entityManager.createRainbowGrid();
+						break;
+					case 6:
+						Kamera.KameraZurück();
+//						System.out.println("4");
+						//Anzeige.entityManager.createSaturn();
 						break;
 					default:
 //						System.out.println("def");

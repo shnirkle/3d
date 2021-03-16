@@ -54,7 +54,7 @@ public class EntityManager {
 
 			entities = tempEntities;
 //			this.entities.get(0).aendern(0, 0, entities.get(0).zOff / 2);
-			this.scale(entities.get(0), 0.5f);
+//			this.scale(entities.get(0), 0.5f);
 			
 			changed = false;
 		}
@@ -64,15 +64,14 @@ public class EntityManager {
 		
 		//		this.entities.get(0).aendern(0, 0, 0.02f *Theta);	//ein einzelnes Objekt bewegen
 		//////////////////////////////////////////////////
-		// W     -    Nach oben drehen                    
-		// A     -    Nach links drehen                   
-		// S     -    Nach unten drehen                    
-		// D     -    Nach rechts drehen                   
-		// Q     -    Gegen den Uhrzeigersinn rotieren    
-		// E     -    Mit dem Uhrzeigersinn rotieren        
-		// STRG -    Negative Beschleunigung                
-		// Leer -    Positive Beschleunigung     
-		//STRG + Leer - Bremsen
+		// W     -    Nach vorne gehen                    
+		// A     -    Nach links gehen                   
+		// S     -    Nach hinten gehen                    
+		// D     -    Nach rechts gehen                     
+		// STRG -    Nach unten gehen                
+		// Leer -    Nach oben gehen      
+		//W + S - Bremsen
+		//Pfeiltasten - Sicht/Umschauen
 		//////////////////////////////////////////////////
 		if (this.tastatur.getLinks())
 		{
@@ -198,6 +197,9 @@ public class EntityManager {
 	public void scale(Objekt w, float scale) {
 		w.scale(scale);
 	}
+	
+	//Objektemethoden für die Buttons in Optionen
+	
 	public void createTeapot() {
 		clearentities();
 		tempEntities.add(BasicEntityBuilder.createTeapot(new Color(109,188,254), 0, 0, 8));
@@ -211,7 +213,21 @@ public class EntityManager {
 			{
 				for (int j2 = 0; j2 < 15; j2++)
 				{
-					tempEntities.add(BasicEntityBuilder.createWürfel(i * 10, j * 10, j2 * 10, 1));
+					tempEntities.add(BasicEntityBuilder.createWürfel(Color.WHITE, i * 10, j * 10, j2 * 10, 1));
+				}
+			}
+		}
+	}
+	
+	public void createRainbowGrid() {
+		clearentities();
+		for (int i = 0; i < 15; i++)
+		{
+			for (int j = 0; j < 15; j++)
+			{
+				for (int j2 = 0; j2 < 15; j2++)
+				{
+					tempEntities.add(BasicEntityBuilder.createWürfel(new Color((float)Math.random(),(float)Math.random(),(float)Math.random()), i * 10, j * 10, j2 * 10, 1));
 				}
 			}
 		}
